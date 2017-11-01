@@ -328,17 +328,22 @@ public class Methods {
 
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException {
         System.out.println("switchLine");
-        if (browser == "chrome") {
+        if (browser.equals("chrome")) {
+            System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
             WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
             Thread.sleep(1000);
+            System.out.println("Slept 1000 ms.");
             lineElement.click();
+            System.out.println("Line switched by webdriver.");
         } else {
+            System.out.println("Browser is not chrome.");
             try {
                 if (driver instanceof JavascriptExecutor) {
                     ((JavascriptExecutor) driver)
                             .executeScript("wp_common.wp_ChangeLine(" + line + "); log(event);");
+                    System.out.println("Line switched by javascript.");
                 }
             } catch (Exception e) {
                 if (debug == true)
