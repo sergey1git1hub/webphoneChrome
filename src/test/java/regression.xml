@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="regression" verbose = "10">
+<suite name="regression" verbose="10">
 
     <test name="TwoLinesAgentHangup">
         <classes>
-            <class name = "Methods"/>
+            <class name="Methods"/>
             <class name="TwoLinesAgentHangup"/>
         </classes>
     </test>
- <!--   <test name="TwoLinesClientHangup">
+    <test name="TwoLinesClientHangup">
         <classes>
             <class name="TwoLinesClientHangup"/>
         </classes>
@@ -25,15 +25,15 @@
         </classes>
     </test>
     <test name="PDPreviewFreeAUX">
-         <classes>
-             <class name="PDPreviewFreeAUX">
-                 <methods>
-                     <include name="pDPreviewFreeAUX"/>
-                 </methods>
-             </class>
-         </classes>
-     </test>
-     <test name="PDProgressiveReleasedAgentHangup">
+        <classes>
+            <class name="PDPreviewFreeAUX">
+                <methods>
+                    <include name="pDPreviewFreeAUX"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="PDProgressiveReleasedAgentHangup">
         <classes>
             <class name="PDProgressiveReleasedAgentHangup">
                 <methods>
@@ -50,5 +50,5 @@
                 </methods>
             </class>
         </classes>
-    </test>-->
+    </test>
 </suite>

@@ -13,17 +13,17 @@ import java.net.UnknownHostException;
  */
 public class PreviewFree {
 
-    static IEData data;
+    static ChromeData data;
     static WebDriver driver;
 
     public static void createData() {
-        data = new IEData();
+        data = new ChromeData();
         data.group = "pasha_G_5_copy_preview";
-        Methods.browser = "ie";
+        Methods.browser = data.browser;
         Methods.onJenkins = false;
     }
 
-    public static void IELoginAD() throws InterruptedException, IOException {
+    public static void LoginAD() throws InterruptedException, IOException {
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Тренинг", 10);

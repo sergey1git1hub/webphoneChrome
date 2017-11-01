@@ -18,7 +18,7 @@ public class PDPreviewFreeAUX {
     @Test
     public static void pDPreviewFreeAUX() throws InterruptedException, IOException, FindFailed, SQLException, ClassNotFoundException {
         PreviewFree.createData();
-        PreviewFree.IELoginAD();
+        PreviewFree.LoginAD();
         Methods.switchToAdTab(PreviewFree.driver);
         PreviewFree.changeStatusToAUX();
         Methods.runSqlQuery("pd_5009_3", "94949");

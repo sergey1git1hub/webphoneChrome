@@ -12,12 +12,12 @@ import java.sql.SQLException;
  * Created by SChubuk on 04.10.2017.
  */
 public class PDProgressiveReleasedAgentHangup {
-    static IEData data;
+    static ChromeData data;
     static WebDriver driver;
     static boolean debug = true;
     @Test
     public static void IELogin() throws InterruptedException, IOException {
-        data = new IEData();
+        data = new ChromeData();
         data.group = "\\!test_group5_5220";
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);

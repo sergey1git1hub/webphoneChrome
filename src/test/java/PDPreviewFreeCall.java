@@ -16,7 +16,7 @@ public class PDPreviewFreeCall {
     @Test
     public static void pDPreviewFreeCall() throws InterruptedException, IOException, FindFailed, SQLException, ClassNotFoundException {
         PreviewFree.createData();
-        PreviewFree.IELoginAD();
+        PreviewFree.LoginAD();
         PreviewFree.changeStatusToAvailable();
         Methods.switchToAdTab(PreviewFree.driver);
         Methods.runSqlQuery("pd_5009_3", "94949");

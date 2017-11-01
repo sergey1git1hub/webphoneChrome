@@ -46,6 +46,7 @@ public class Methods {
     public static boolean onJenkins;
     static boolean killProcess = true;
     static boolean debug = true;
+
     @BeforeSuite
     public void confSikulilogs() throws IOException {
         int level = 3;
@@ -59,9 +60,12 @@ public class Methods {
         Settings.DebugLogs = true;*/
         /*****************IMPROVEMENT******************/
         if (browser.equals("chrome")) {
-        /**********************************************/
+            /**********************************************/
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
-            System.setProperty("webdriver.chrome.verboseLogging", "true");
+            /*********SETUP IEDRIVER LOGGING****************/
+            System.setProperty("webdriver.chrome.verboseLogging", "false");
+            /************************************************/
+
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--start-maximized");
             driver = new ChromeDriver(chromeOptions);
@@ -77,7 +81,7 @@ public class Methods {
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
 
             /*********SETUP IEDRIVER LOGGING****************/
-            System.setProperty("webdriver.ie.driver.loglevel","INFO");
+            System.setProperty("webdriver.ie.driver.loglevel", "INFO");
             /************************************************/
             System.setProperty("webdriver.ie.driver", "C:/iedriver32/IEDriverServer.exe");
 
@@ -234,23 +238,24 @@ public class Methods {
             /*byte bytes[] = status.getBytes("UTF-8");
             status = new String(bytes, "UTF-8");*/
 
-        } else { }
+        } else {
+        }
         /*System.out.println("String converted.");*/
-        if ((hostName.equalsIgnoreCase("kv1-it-pc-jtest"))&&(status.equals("Тренинг"))) {
+        if ((hostName.equalsIgnoreCase("kv1-it-pc-jtest")) && (status.equals("Тренинг"))) {
             Thread.sleep(10000);
-        } else{
-        WebDriverWait waitForStatus = new WebDriverWait(driver, waitTime);
-        waitForStatus.until(ExpectedConditions.textMatches(By.cssSelector(
-                "#statusButton > span.ui-button-text.ui-c"), Pattern.compile(".*\\b" + status + "\\b.*")));
-        System.out.println("Wait for status.");
+        } else {
+            WebDriverWait waitForStatus = new WebDriverWait(driver, waitTime);
+            waitForStatus.until(ExpectedConditions.textMatches(By.cssSelector(
+                    "#statusButton > span.ui-button-text.ui-c"), Pattern.compile(".*\\b" + status + "\\b.*")));
+            System.out.println("Wait for status.");
 
-        WebElement currentStatus = driver.findElement(By.cssSelector(
-                "#statusButton > span.ui-button-text.ui-c"));
-        System.out.println("Before assert status is: " + currentStatus.getText() + ".");
-        System.out.println("Asserting that contains: " + status + ".");
+            WebElement currentStatus = driver.findElement(By.cssSelector(
+                    "#statusButton > span.ui-button-text.ui-c"));
+            System.out.println("Before assert status is: " + currentStatus.getText() + ".");
+            System.out.println("Asserting that contains: " + status + ".");
 
-        Assert.assertTrue(currentStatus.getText().contains(status));
-        System.out.println("Check Status.");
+            Assert.assertTrue(currentStatus.getText().contains(status));
+            System.out.println("Check Status.");
         }
         return driver;
     }
@@ -315,10 +320,13 @@ public class Methods {
         return driver;
     }
 
-    public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed {
+    public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException {
         System.out.println("switchLine");
         if (browser == "chrome") {
+            WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
+            waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
             WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
+            Thread.sleep(1000);
             lineElement.click();
         } else {
             try {
@@ -524,10 +532,14 @@ public class Methods {
         WebDriverWait waitForIncallStatus = new WebDriverWait(driver, 5);
         waitForIncallStatus.until(ExpectedConditions.textMatches(By.cssSelector(
                 "#statusButton > span.ui-button-text.ui-c"), Pattern.compile(".*\\bIncall\\b.*")));
-
         Screen screen = new Screen();
-        org.sikuli.script.Pattern mltest = new org.sikuli.script.Pattern("C:\\SikuliImages\\mltest.png");
-        screen.wait(mltest, 30);
+        org.sikuli.script.Pattern mltest;
+        if (browser.equals("chrome")) {
+            mltest = new org.sikuli.script.Pattern("C:\\SikuliImages\\mltestChrome.png");
+        } else {
+            mltest = new org.sikuli.script.Pattern("C:\\SikuliImages\\mltest.png");
+        }
+        screen.wait(mltest, 10);
         screen.click(mltest);
 
         org.sikuli.script.Pattern button_OK = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_OK.png");
