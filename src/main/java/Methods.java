@@ -70,6 +70,7 @@ public class Methods {
             String hostName = InetAddress.getLocalHost().getHostName();
             if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
             driver = new ChromeDriver();
+            driver.manage().window().maximize();
             } else{
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
@@ -400,7 +401,7 @@ public class Methods {
             App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
             Thread.sleep(waitTime);
         }
-
+// focus on phone number fieldd first in order to clear it
         Screen screen = new Screen();
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
         screen.wait(closePhoneWindow, 10);
