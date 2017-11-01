@@ -1,6 +1,7 @@
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -56,11 +57,14 @@ public class Methods {
       /*  Settings.ActionLogs=true; // starting with [log]
         Settings.InfoLogs=true; // starting with [info]
         Settings.DebugLogs = true;*/
-        if (browser == "chrome") {
+        /*****************IMPROVEMENT******************/
+        if (browser.equals("chrome")) {
+        /**********************************************/
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
             System.setProperty("webdriver.chrome.verboseLogging", "true");
-
-            driver = new ChromeDriver();
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--start-maximized");
+            driver = new ChromeDriver(chromeOptions);
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
             waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));

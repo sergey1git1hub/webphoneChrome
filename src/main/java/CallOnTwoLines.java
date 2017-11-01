@@ -17,15 +17,22 @@ import java.net.UnknownHostException;
 
 public class CallOnTwoLines {
     private static final Logger log = Logger.getLogger("Methods");
-    static IEData data;
+    /***********CHANGED TO RUN CHROME BROWSER******************/
+    static ChromeData data;
+    /***********************************************************/
     static WebDriver driver;
 
 
     public static void createData() {
         log.debug("STARTJENKINS");
-        data = new IEData();
+        /***********CHANGED TO RUN CHROME BROWSER******************/
+        data = new ChromeData();
+        /***********************************************************/
         data.group = "\\!test_group5_5220";
-        Methods.browser = "ie";
+
+        /*****************IMPROVEMENT******************/
+        Methods.browser = data.browser;
+        /**********************************************/
         Methods.onJenkins = false;
     }
 
