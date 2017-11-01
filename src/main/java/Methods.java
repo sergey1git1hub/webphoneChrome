@@ -74,6 +74,8 @@ public class Methods {
                 org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
                 screen.wait(chromeIcon, 2);
                 screen.click(chromeIcon);
+                Thread.sleep(500);
+                driver.manage().window().maximize();
                /* ChromeOptions options = new ChromeOptions();
                 options.addArguments("--start-fullscreen");*/
                 driver = new ChromeDriver(/*options*/);
