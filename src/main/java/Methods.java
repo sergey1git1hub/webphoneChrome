@@ -380,11 +380,13 @@ public class Methods {
             Thread.sleep(waitTime);
         }
 
-
         Screen screen = new Screen();
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
+        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+            driver.manage().window().maximize();
+        }
     }
 
     public static void cxAnswer() throws FindFailed, InterruptedException {
