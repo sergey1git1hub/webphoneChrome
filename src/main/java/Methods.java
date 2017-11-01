@@ -342,6 +342,7 @@ public class Methods {
             System.out.println("Browser is not chrome or running on Jenkns.");
             if(hostName.equalsIgnoreCase("kv1-it-pc-jtest")){
                 WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
+                lineElement.clear();
                 lineElement.sendKeys(Keys.ENTER);
             }else
             try {
