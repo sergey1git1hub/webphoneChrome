@@ -9,13 +9,13 @@
             <class name="TwoLinesAgentHangup"/>
         </classes>
     </test>-->
-   <test name="TwoLinesClientHangup">
+   <!--<test name="TwoLinesClientHangup">
         <classes>
             <class name="TwoLinesClientHangup"/>
         </classes>
-    </test>
+    </test>-->
 
-    <!-- <test name="PDPreviewFreeCallIE">
+     <test name="PDPreviewFreeCallIE">
         <classes>
             <class name="PDPreviewFreeCall">
                 <methods>
@@ -24,7 +24,7 @@
             </class>
         </classes>
     </test>
-    <test name="PDPreviewFreeAUX">
+    <!--<test name="PDPreviewFreeAUX">
         <classes>
             <class name="PDPreviewFreeAUX">
                 <methods>
