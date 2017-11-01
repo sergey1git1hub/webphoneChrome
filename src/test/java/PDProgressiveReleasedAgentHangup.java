@@ -16,7 +16,7 @@ public class PDProgressiveReleasedAgentHangup {
     static WebDriver driver;
     static boolean debug = true;
     @Test
-    public static void IELogin() throws InterruptedException, IOException {
+    public static void IELogin() throws InterruptedException, IOException, FindFailed {
         data = new ChromeData();
         data.group = "\\!test_group5_5220";
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);

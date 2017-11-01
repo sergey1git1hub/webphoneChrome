@@ -23,7 +23,7 @@ public class PreviewFree {
         Methods.onJenkins = false;
     }
 
-    public static void LoginAD() throws InterruptedException, IOException {
+    public static void LoginAD() throws InterruptedException, IOException, FindFailed {
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Тренинг", 10);

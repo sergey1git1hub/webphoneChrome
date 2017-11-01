@@ -37,7 +37,7 @@ public class CallOnTwoLines {
     }
 
 
-    public static void IELogin() throws InterruptedException, IOException {
+    public static void IELogin() throws InterruptedException, IOException, FindFailed {
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Available", 30);
