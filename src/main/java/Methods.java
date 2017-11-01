@@ -66,9 +66,15 @@ public class Methods {
             System.setProperty("webdriver.chrome.verboseLogging", "false");
             /************************************************/
 
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--start-maximized");
-            driver = new ChromeDriver(chromeOptions);
+
+            String hostName = InetAddress.getLocalHost().getHostName();
+            if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+            driver = new ChromeDriver();
+            } else{
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--start-maximized");
+                driver = new ChromeDriver(chromeOptions);
+            }
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
             waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
@@ -384,9 +390,9 @@ public class Methods {
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
-        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+        /*if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
             driver.manage().window().maximize();
-        }
+        }*/
     }
 
     public static void cxAnswer() throws FindFailed, InterruptedException {
