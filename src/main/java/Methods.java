@@ -69,6 +69,7 @@ public class Methods {
 
             String hostName = InetAddress.getLocalHost().getHostName();
             if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+                driver = new ChromeDriver(/*options*/);
                 //chromeYellow
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
@@ -78,7 +79,7 @@ public class Methods {
                 driver.manage().window().maximize();
                /* ChromeOptions options = new ChromeOptions();
                 options.addArguments("--start-fullscreen");*/
-                driver = new ChromeDriver(/*options*/);
+
             } else{
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
