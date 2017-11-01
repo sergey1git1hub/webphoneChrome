@@ -326,9 +326,10 @@ public class Methods {
         return driver;
     }
 
-    public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException {
+    public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("switchLine");
-        if (browser.equals("chrome")) {
+        String hostName = InetAddress.getLocalHost().getHostName();
+        if (browser.equals("chrome")&&!hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
             System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
@@ -338,7 +339,7 @@ public class Methods {
             lineElement.click();
             System.out.println("Line switched by webdriver.");
         } else {
-            System.out.println("Browser is not chrome.");
+            System.out.println("Browser is not chrome or running on Jenkns.");
             try {
                 if (driver instanceof JavascriptExecutor) {
                     ((JavascriptExecutor) driver)
@@ -416,7 +417,7 @@ public class Methods {
 
     }
 
-    public static WebDriver agentHangup(WebDriver driver, int line) throws FindFailed, InterruptedException {
+    public static WebDriver agentHangup(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
 
         System.out.println("agentHangup");
         switchLine(driver, line);
