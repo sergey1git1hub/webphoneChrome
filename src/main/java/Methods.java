@@ -356,6 +356,7 @@ public class Methods {
             switchLine(driver, line);
             System.out.println("Line switched.");
             Thread.sleep(1000);
+            System.out.println("Sleep after Line switched.");
             Screen screen = new Screen();
             if(!(hostName.equalsIgnoreCase("kv1-it-pc-jtest")&&browser.equals("chrome"))) {
             org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
