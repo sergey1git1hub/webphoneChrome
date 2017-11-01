@@ -3,17 +3,17 @@
 
 <suite name="regression" verbose="10">
 
-    <!--<test name="TwoLinesAgentHangup">
+    <test name="TwoLinesAgentHangup">
         <classes>
             <class name="Methods"/>
             <class name="TwoLinesAgentHangup"/>
         </classes>
-    </test>-->
-   <!--<test name="TwoLinesClientHangup">
+    </test>
+   <test name="TwoLinesClientHangup">
         <classes>
             <class name="TwoLinesClientHangup"/>
         </classes>
-    </test>-->
+    </test>
 
      <test name="PDPreviewFreeCallIE">
         <classes>
@@ -24,7 +24,7 @@
             </class>
         </classes>
     </test>
-    <!--<test name="PDPreviewFreeAUX">
+    <test name="PDPreviewFreeAUX">
         <classes>
             <class name="PDPreviewFreeAUX">
                 <methods>
@@ -33,7 +33,7 @@
             </class>
         </classes>
     </test>
-    <test name="PDProgressiveReleasedAgentHangup">
+    <!--<test name="PDProgressiveReleasedAgentHangup">
         <classes>
             <class name="PDProgressiveReleasedAgentHangup">
                 <methods>
