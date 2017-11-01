@@ -357,9 +357,11 @@ public class Methods {
             System.out.println("Line switched.");
             Thread.sleep(500);
             Screen screen = new Screen();
+            if(!(hostName.equalsIgnoreCase("kv1-it-pc-jtest")&&browser.equals("chrome"))) {
             org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
             screen.wait(phoneNumberField_Sikuli, 10);
             screen.click(phoneNumberField_Sikuli);
+            }
             System.out.println("Sikuli clkicked phone number filed.");
             WebElement phoneNumberField = driver.findElement(By.cssSelector("#PhoneNumber"));
             phoneNumberField.sendKeys(number);
