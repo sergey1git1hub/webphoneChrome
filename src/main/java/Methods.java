@@ -69,7 +69,9 @@ public class Methods {
 
             String hostName = InetAddress.getLocalHost().getHostName();
             if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
-                driver = new ChromeDriver(/*options*/);
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--start-maximized");
+                driver = new ChromeDriver(chromeOptions);
                 //chromeYellow
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
