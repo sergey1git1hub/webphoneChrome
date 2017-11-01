@@ -53,7 +53,7 @@ public class Methods {
         Debug.setDebugLevel(level);
     }
 
-    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, final String webphoneUrl) throws InterruptedException, IOException {
+    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, final String webphoneUrl) throws InterruptedException, IOException, FindFailed {
 
       /*  Settings.ActionLogs=true; // starting with [log]
         Settings.InfoLogs=true; // starting with [info]
@@ -69,8 +69,14 @@ public class Methods {
 
             String hostName = InetAddress.getLocalHost().getHostName();
             if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
+                //chromeYellow
+                Screen screen = new Screen();
+                org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
+                screen.wait(chromeIcon, 2);
+                screen.click(chromeIcon);
+               /* ChromeOptions options = new ChromeOptions();
+                options.addArguments("--start-fullscreen");*/
+                driver = new ChromeDriver(/*options*/);
             } else{
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
