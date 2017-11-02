@@ -46,6 +46,7 @@ public class Methods {
     public static boolean onJenkins;
     static boolean killProcess = true;
     static boolean debug = true;
+    static int chrome_maximize_count = 0;
 
     @BeforeSuite
     public void confSikulilogs() throws IOException {
@@ -73,10 +74,13 @@ public class Methods {
                 chromeOptions.addArguments("--start-maximized");
                 driver = new ChromeDriver(chromeOptions);
                 //chromeYellow
+                if(chrome_maximize_count==0){
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
                 screen.wait(chromeIcon, 2);
                 screen.click(chromeIcon);
+                    chrome_maximize_count++;
+                }
               /*  Thread.sleep(500);
                 driver.manage().window().maximize();*/
                /* ChromeOptions options = new ChromeOptions();
