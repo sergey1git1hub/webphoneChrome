@@ -285,7 +285,7 @@ public class Methods {
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")&&!browser.equals("chrome")) {
             if (status.equalsIgnoreCase("Available")) {
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");

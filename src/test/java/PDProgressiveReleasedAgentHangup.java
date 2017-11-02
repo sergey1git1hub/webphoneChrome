@@ -77,8 +77,8 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
     @Test(dependsOnMethods = "waitForCallOnClientSide2")
-    public static void receiveIncomingCallToAgent(){
-
+    public static void receiveIncomingCallToAgent() throws InterruptedException {
+        //Thread.sleep(5000);
     }
 
     @Test(dependsOnMethods = "receiveIncomingCallToAgent")
