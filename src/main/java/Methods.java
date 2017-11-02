@@ -309,7 +309,7 @@ public class Methods {
                 screen.click(auxStatus);
             }
             checkStatus(driver, status, 2);
-        } else if (browser == "chrome") {
+        } else if (browser.equals("chrome")) {
             WebElement currentStatus = driver.findElement(By.cssSelector(
                     "#statusButton > span.ui-button-text.ui-c"));
             currentStatus.click();
