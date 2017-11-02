@@ -309,6 +309,7 @@ public class Methods {
                 screen.click(auxStatus);
             }
             checkStatus(driver, status, 2);
+            System.out.println("Host is: kv1-it-pc-jtest and browser is not Chrome.");
         } else if (browser.equals("chrome")) {
             WebElement currentStatus = driver.findElement(By.cssSelector(
                     "#statusButton > span.ui-button-text.ui-c"));
@@ -323,6 +324,7 @@ public class Methods {
             }
             desirableStatus.click();
             checkStatus(driver, status, 2);
+            System.out.println("Browser is Chrome.");
         } else {
             JavascriptExecutor executor = (JavascriptExecutor) driver;
             WebElement currentStatus = driver.findElement(By.cssSelector(
@@ -338,6 +340,7 @@ public class Methods {
             }
             executor.executeScript("arguments[0].click();", desirableStatus);
             checkStatus(driver, status, 2);
+            System.out.println("Else.");
         }
         return driver;
     }
