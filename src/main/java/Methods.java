@@ -284,6 +284,20 @@ public class Methods {
 
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
+        WebElement currentStatus = driver.findElement(By.cssSelector("#statusButton > span.ui-button-text.ui-c"));
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("checkSelectedStatus();PrimeFaces.ab({source:'statusButton'});", currentStatus);
+
+        WebElement desirableStatus = driver.findElement(By.xpath("//*[contains(text(), " + status + ") and not(contains(text(),'Доступен'))]"));
+        executor.executeScript("arguments[0].click();", desirableStatus);
+
+        checkStatus(driver, status, 2);
+        return driver;
+    }
+
+
+    public static WebDriver changeStatusOld(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
+        System.out.println("changeStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
         if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")&&!browser.equals("chrome")) {
             if (status.equalsIgnoreCase("Available")) {
