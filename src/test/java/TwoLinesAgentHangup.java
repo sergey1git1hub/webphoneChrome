@@ -26,7 +26,9 @@ public class TwoLinesAgentHangup {
         button_Hold.click();
         Thread.sleep(1000);
         Methods.agentHangup(driver, 1);
+        Thread.sleep(1000);
         Methods.agentHangup(driver, 2);
+        Thread.sleep(1000);
         CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
     }
 
