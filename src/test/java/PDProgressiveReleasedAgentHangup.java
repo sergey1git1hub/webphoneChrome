@@ -83,6 +83,7 @@ public class PDProgressiveReleasedAgentHangup {
 
     @Test(dependsOnMethods = "receiveIncomingCallToAgent")
     public static void agentHangup() throws InterruptedException, FindFailed, UnknownHostException {
+        Thread.sleep(2000);
         Methods.agentHangup(driver, 1);
     }
 

@@ -282,21 +282,37 @@ public class Methods {
         return driver;
     }
 
-    public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
+    public static WebDriver changeStatusNewDontWork(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
-        WebElement currentStatus = driver.findElement(By.cssSelector("#statusButton > span.ui-button-text.ui-c"));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("checkSelectedStatus();PrimeFaces.ab({source:'statusButton'});", currentStatus);
-
-        WebElement desirableStatus = driver.findElement(By.xpath("//*[contains(text(), " + status + ") and not(contains(text(),'Доступен'))]"));
-        executor.executeScript("arguments[0].click();", desirableStatus);
+        if (status.equalsIgnoreCase("Available")) {
+            Screen screen = new Screen();
+            org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
+            screen.wait(currentStatus, 10);
+            Thread.sleep(1000);
+            screen.click(currentStatus);
+            Thread.sleep(1000);
+            org.sikuli.script.Pattern availableStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\availableStatus.png");
+            screen.wait(availableStatus, 10);
+            screen.click(availableStatus);
+        }
+        if (status.equalsIgnoreCase("AUX")) {
+            Screen screen = new Screen();
+            org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
+            screen.wait(currentStatus, 10);
+            //Thread.sleep(2000);
+            screen.click(currentStatus);
+            Thread.sleep(1000);
+            org.sikuli.script.Pattern auxStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\auxStatus.png");
+            screen.wait(auxStatus, 10);
+            screen.click(auxStatus);
+        }
 
         checkStatus(driver, status, 2);
         return driver;
     }
 
 
-    public static WebDriver changeStatusOld(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
+    public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
         if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")&&!browser.equals("chrome")) {
