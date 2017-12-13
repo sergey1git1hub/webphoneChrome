@@ -3,7 +3,6 @@
 
 <suite name="regression" verbose="10">
 
-<!--
     <test name="TwoLinesAgentHangup">
         <classes>
             <class name="Methods"/>
@@ -25,7 +24,7 @@
                  </methods>
              </class>
          </classes>
-     </test>-->
+     </test>
        <test name="PDPreviewFreeAUX">
         <classes>
             <class name="PDPreviewFreeAUX">
