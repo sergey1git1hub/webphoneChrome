@@ -15,7 +15,7 @@
             <class name="TwoLinesClientHangup"/>
         </classes>
     </test>
--->
+
 
      <test name="PDPreviewFreeCallIE">
          <classes>
@@ -25,8 +25,8 @@
                  </methods>
              </class>
          </classes>
-     </test>
-    <!--   <test name="PDPreviewFreeAUX">
+     </test>-->
+       <test name="PDPreviewFreeAUX">
         <classes>
             <class name="PDPreviewFreeAUX">
                 <methods>
@@ -52,5 +52,5 @@
                 </methods>
             </class>
         </classes>
-    </test>-->
+    </test>
 </suite>
