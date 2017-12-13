@@ -69,7 +69,7 @@ public class Methods {
 
 
             String hostName = InetAddress.getLocalHost().getHostName();
-            if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+            if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
                 driver = new ChromeDriver(chromeOptions);
@@ -248,7 +248,7 @@ public class Methods {
 
         System.out.println("checkStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
             /*byte[] b = status.getBytes("Cp1252");
             //byte[] encoded = new String(b, "Cp1252").getBytes("UTF-16");
             status = new String(b, "Cp1251");*/
@@ -263,7 +263,7 @@ public class Methods {
         } else {
         }
         /*System.out.println("String converted.");*/
-        if ((hostName.equalsIgnoreCase("kv1-it-pc-jtest")) && (status.equals("Тренинг"))) {
+        if ((!hostName.equalsIgnoreCase("KV1-EM-PC-14")) && (status.equals("Тренинг"))) {
             Thread.sleep(10000);
         } else {
             WebDriverWait waitForStatus = new WebDriverWait(driver, waitTime);
@@ -315,7 +315,7 @@ public class Methods {
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")&&!browser.equals("chrome")) {
+        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")&&!browser.equals("chrome")) {
             if (status.equalsIgnoreCase("Available")) {
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
@@ -378,7 +378,7 @@ public class Methods {
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("switchLine");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (browser.equals("chrome")&&!hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+        if (browser.equals("chrome")&&hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
             System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
@@ -389,7 +389,7 @@ public class Methods {
             System.out.println("Line switched by webdriver.");
         } else {
             System.out.println("Browser is not chrome or running on Jenkns.");
-            if(hostName.equalsIgnoreCase("kv1-it-pc-jtest")){
+            if(!hostName.equalsIgnoreCase("KV1-EM-PC-14")){
                 WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
                 lineElement.sendKeys(Keys.ENTER);
             }else
@@ -417,7 +417,7 @@ public class Methods {
             Thread.sleep(1000);
             System.out.println("Sleep after Line switched.");
             Screen screen = new Screen();
-            if(!(hostName.equalsIgnoreCase("kv1-it-pc-jtest")&&browser.equals("chrome"))) {
+            if(!(!hostName.equalsIgnoreCase("KV1-EM-PC-14")&&browser.equals("chrome"))) {
             org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
             screen.wait(phoneNumberField_Sikuli, 10);
             screen.click(phoneNumberField_Sikuli);
@@ -442,7 +442,7 @@ public class Methods {
     public static void openCXphone(int waitTime) throws FindFailed, InterruptedException, IOException {
         System.out.println("openCXphone");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
             App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
             Thread.sleep(waitTime);
         } else {
@@ -508,7 +508,7 @@ public class Methods {
     public static WebDriver setWebphoneResultCode(WebDriver driver) throws InterruptedException, UnknownHostException, FindFailed {
         System.out.println("setWebphoneResultCode");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
             Screen screen = new Screen();
             org.sikuli.script.Pattern resultCodeUdachno = new org.sikuli.script.Pattern("C:\\SikuliImages\\resultCodeUdachno.png");
             screen.wait(resultCodeUdachno, 10);
