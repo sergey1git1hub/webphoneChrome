@@ -79,8 +79,8 @@ public class Methods {
                 org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
                 screen.wait(chromeIcon, 2);
                 screen.click(chromeIcon);
-                    chrome_maximize_count++;*/
-                }
+                    chrome_maximize_count++;
+                }*/
               /*  Thread.sleep(500);
                 driver.manage().window().maximize();*/
                /* ChromeOptions options = new ChromeOptions();
