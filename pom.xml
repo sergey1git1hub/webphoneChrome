@@ -117,11 +117,6 @@
             </configuration>
         </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/video.properties</directory>
-            </resource>
-        </resources>
     </build>
 
 
