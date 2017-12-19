@@ -1,7 +1,10 @@
+import com.automation.remarks.testng.VideoListener;
+import com.automation.remarks.video.annotations.Video;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -9,6 +12,7 @@ import java.io.IOException;
 /**
  * Created by SChubuk on 04.10.2017.
  */
+@Listeners(VideoListener.class)
 public class TwoLinesClientHangup {
     static Data data;
     static WebDriver driver;
@@ -16,6 +20,7 @@ public class TwoLinesClientHangup {
     static int delay = 2;
 
     @Test
+    @Video
     public static void twoLinesClientHangup() throws InterruptedException, IOException, FindFailed {
         CallOnTwoLines.callOnTwoLines();
         driver = CallOnTwoLines.driver;
@@ -35,6 +40,7 @@ public class TwoLinesClientHangup {
     }
 
     @AfterClass
+    @Video
     public void teardown() throws IOException {
         boolean isIE = Methods.isIE(driver);
         driver.quit();

@@ -1,6 +1,9 @@
+import com.automation.remarks.testng.VideoListener;
+import com.automation.remarks.video.annotations.Video;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -11,11 +14,13 @@ import java.sql.SQLException;
 /**
  * Created by SChubuk on 04.10.2017.
  */
+@Listeners(VideoListener.class)
 public class PDProgressiveReleasedAgentHangup {
     static ChromeData data;
     static WebDriver driver;
     static boolean debug = true;
     @Test
+    @Video
     public static void IELogin() throws InterruptedException, IOException, FindFailed {
         data = new ChromeData();
         data.group = "\\!test_group5_5220";
@@ -26,32 +31,38 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
     @Test(dependsOnMethods = "IELogin")
+    @Video
     public static void changeStatusToAUX() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.changeStatus(driver, "AUX");
         Methods.checkStatus(driver, "AUX", 3);
     }
 
     @Test()
+    @Video
     public static void loginToPD(){
 
     }
 
     @Test
+    @Video
     public static void runPDCampaign(){
 
     }
 
     @Test(dependsOnMethods = "changeStatusToAUX")
+    @Video
     public static void runSQLQuery() throws SQLException, ClassNotFoundException, InterruptedException, FindFailed, IOException {
         Methods.runSqlQuery("pd_5220copy", "94949");
         Methods.openCXphone(2000);
     }
 
     @Test(dependsOnMethods = "runSQLQuery")
+    @Video
     public static void waitForCallOnClientSide(){
     }
 
     @Test(dependsOnMethods = "waitForCallOnClientSide")
+    @Video
     public static void noIncomingCallToClient() throws InterruptedException {
         if(debug == true)
         Thread.sleep(5000);
@@ -59,12 +70,14 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
     @Test(dependsOnMethods = "noIncomingCallToClient")
+    @Video
     public static void changeStatusToAvailable() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.changeStatus(driver, "Available");
         Methods.checkStatus(driver, "Available", 3);
     }
 
     @Test(dependsOnMethods = "changeStatusToAvailable")
+    @Video
     public static void waitForCallOnClientSide2() throws FindFailed, InterruptedException {
         try{
         Methods.cxAnswer();
@@ -77,23 +90,27 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
     @Test(dependsOnMethods = "waitForCallOnClientSide2")
+    @Video
     public static void receiveIncomingCallToAgent() throws InterruptedException {
         //Thread.sleep(5000);
     }
 
     @Test(dependsOnMethods = "receiveIncomingCallToAgent")
+    @Video
     public static void agentHangup() throws InterruptedException, FindFailed, UnknownHostException {
         Thread.sleep(2000);
         Methods.agentHangup(driver, 1);
     }
 
     @Test(dependsOnMethods = "agentHangup")
+    @Video
     public static void setResultCodeAndCheckAvailableStatus() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.setWebphoneResultCode(driver);
         Methods.checkStatus(driver, "Available", 3);
     }
 
     @AfterClass
+    @Video
     public void teardown() throws IOException {
         boolean isIE = Methods.isIE(driver);
         driver.quit();

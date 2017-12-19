@@ -1,6 +1,9 @@
+import com.automation.remarks.testng.VideoListener;
+import com.automation.remarks.video.annotations.Video;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -9,11 +12,13 @@ import java.sql.SQLException;
 /**
  * Created by SChubuk on 04.10.2017.
  */
+@Listeners(VideoListener.class)
 public class PDPreviewFreeCall {
     static Data data;
     static WebDriver driver;
 
     @Test
+    @Video
     public static void pDPreviewFreeCall() throws InterruptedException, IOException, FindFailed, SQLException, ClassNotFoundException {
         PreviewFree.createData();
         PreviewFree.LoginAD();
@@ -24,6 +29,7 @@ public class PDPreviewFreeCall {
     }
 
     @AfterClass
+    @Video
     public void teardown() throws IOException {
         boolean isIE = Methods.isIE(PreviewFree.driver);
         PreviewFree.driver.quit();

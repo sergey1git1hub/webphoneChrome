@@ -1,3 +1,5 @@
+import com.automation.remarks.testng.VideoListener;
+import com.automation.remarks.video.annotations.Video;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,12 +13,13 @@ import static data.Data.agentChrome;
 /**
  * Created by SChubuk on 04.10.2017.
  */
-
+@Listeners(VideoListener.class)
 public class TwoLinesAgentHangup {
     static WebDriver driver;
     static Data data;
 
     @Test
+    @Video
     public static void twoLinesAgentHangup() throws InterruptedException, IOException, FindFailed {
         CallOnTwoLines.callOnTwoLines();
         driver = CallOnTwoLines.driver;
@@ -33,6 +36,7 @@ public class TwoLinesAgentHangup {
     }
 
     @AfterClass
+    @Video
     public void teardown() throws IOException {
         boolean isIE = Methods.isIE(driver);
 
@@ -43,6 +47,7 @@ public class TwoLinesAgentHangup {
     }
 
     @AfterSuite(alwaysRun = true)
+    @Video
     public void closeCXphone() throws IOException {
         Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
     }
