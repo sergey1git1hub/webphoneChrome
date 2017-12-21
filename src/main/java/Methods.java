@@ -75,11 +75,11 @@ public class Methods {
                 driver = new ChromeDriver(chromeOptions);
                 //chromeYellow
                 if(chrome_maximize_count==0){
-                Screen screen = new Screen();
+              /*  Screen screen = new Screen();
                 org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
                 screen.wait(chromeIcon, 2);
                 screen.click(chromeIcon);
-                    chrome_maximize_count++;
+                    chrome_maximize_count++;*/
                 }
               /*  Thread.sleep(500);
                 driver.manage().window().maximize();*/
