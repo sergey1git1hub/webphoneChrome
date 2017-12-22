@@ -16,7 +16,7 @@
     </test>
 
 
-    <!-- <test name="PDPreviewFreeCallIE">
+     <test name="PDPreviewFreeCallIE">
          <classes>
              <class name="PDPreviewFreeCall">
                  <methods>
@@ -51,5 +51,5 @@
                 </methods>
             </class>
         </classes>
-    </test>-->
+    </test>
 </suite>
