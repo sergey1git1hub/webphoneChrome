@@ -36,7 +36,7 @@ public class TwoLinesAgentHangup {
 
     }
 
-    @AfterClass
+    @AfterTest
     @Video
     public void teardown() throws IOException {
         Methods.saveLogs("twoLinesAgentHangup");

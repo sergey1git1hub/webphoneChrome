@@ -3,6 +3,7 @@ import com.automation.remarks.video.annotations.Video;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -29,7 +30,7 @@ public class PDPreviewFreeCall {
 
     }
 
-    @AfterClass
+    @AfterTest
     @Video
     public void teardown() throws IOException {
         Methods.saveLogs("pDPreviewFreeCall");

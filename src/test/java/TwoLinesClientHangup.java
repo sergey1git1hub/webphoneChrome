@@ -2,10 +2,7 @@ import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 
@@ -40,7 +37,7 @@ public class TwoLinesClientHangup {
 
     }
 
-    @AfterClass
+    @AfterTest
     @Video
     public void teardown() throws IOException {
         Methods.saveLogs("twoLinesClientHangup");
