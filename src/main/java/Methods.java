@@ -3,6 +3,14 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,19 +20,22 @@ import org.sikuli.script.App;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.regex.Pattern;
 
@@ -67,12 +78,17 @@ public class Methods {
             System.setProperty("webdriver.chrome.verboseLogging", "false");
             /************************************************/
 
+            DesiredCapabilities caps = DesiredCapabilities.chrome();
+            LoggingPreferences logPrefs = new LoggingPreferences();
+            logPrefs.enable(LogType.BROWSER, Level.ALL);
+            caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
             String hostName = InetAddress.getLocalHost().getHostName();
             if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
-                driver = new ChromeDriver(chromeOptions);
+                caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                driver = new ChromeDriver(caps);
                 //chromeYellow
                 if(chrome_maximize_count==0){
               /*  Screen screen = new Screen();
@@ -89,7 +105,8 @@ public class Methods {
             } else{
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
-                driver = new ChromeDriver(chromeOptions);
+                caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                driver = new ChromeDriver(caps);
             }
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
@@ -710,6 +727,23 @@ public class Methods {
         System.out.println("clickIEelement");
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element);
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public static void saveLogs() throws IOException {
+        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        Date date = new Date();
+        File driverLog = new File("video/chromeLog" + dateFormat.format(date) + ".log");
+        FileWriter out = new FileWriter(driverLog);
+        for (LogEntry logEntry : logEntries.getAll()) {
+            out.write(logEntry.toString() + "\n");
+        }
+        out.close();
+     /*   for (LogEntry entry : logEntries) {
+            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+            //do something useful with the data
+        }*/
     }
 
 }
