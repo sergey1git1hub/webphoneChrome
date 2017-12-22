@@ -22,6 +22,7 @@ public class TwoLinesAgentHangup {
     @Video
     public static void twoLinesAgentHangup() throws InterruptedException, IOException, FindFailed {
         CallOnTwoLines.callOnTwoLines();
+
         driver = CallOnTwoLines.driver;
         data = CallOnTwoLines.data;
         Thread.sleep(1000);
@@ -33,13 +34,15 @@ public class TwoLinesAgentHangup {
         Methods.agentHangup(driver, 2);
         Thread.sleep(1000);
         CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+        System.out.println(driver.toString());
 
     }
 
-    @AfterTest
+    @AfterClass(alwaysRun=true)
     @Video
     public void teardown() throws IOException {
-        Methods.saveLogs("twoLinesAgentHangup");
+        System.out.println(driver.toString());
+        Methods.saveLogs(driver, "twoLinesAgentHangup");
         boolean isIE = Methods.isIE(driver);
 
         if(isIE){

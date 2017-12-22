@@ -37,10 +37,10 @@ public class TwoLinesClientHangup {
 
     }
 
-    @AfterTest
+    @AfterClass
     @Video
     public void teardown() throws IOException {
-        Methods.saveLogs("twoLinesClientHangup");
+        Methods.saveLogs(driver, "twoLinesClientHangup");
         boolean isIE = Methods.isIE(driver);
         driver.quit();
 

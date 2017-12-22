@@ -726,7 +726,8 @@ public class Methods {
         executor.executeScript("arguments[0].click();", element);
     }
 
-    public static void saveLogs(String methodName) throws IOException {
+    public static void saveLogs(WebDriver driver, String methodName) throws IOException {
+        System.out.println(driver.toString());
         LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
         Date date = new Date();
