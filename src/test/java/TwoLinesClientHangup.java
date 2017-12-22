@@ -1,10 +1,18 @@
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.*;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by SChubuk on 04.10.2017.
@@ -40,13 +48,36 @@ public class TwoLinesClientHangup {
     @AfterClass
     @Video
     public void teardown() throws IOException {
-        Methods.saveLogs(driver, "twoLinesClientHangup");
+        saveLogs(driver, "twoLinesClientHangup");
         boolean isIE = Methods.isIE(driver);
         driver.quit();
 
         if(isIE){
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
         }
+    }
+
+    public static void saveLogs(WebDriver driver, String methodName) throws IOException {
+        System.out.println(driver.toString());
+        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
+        Date date = new Date();
+/*
+        File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
+*/
+        File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
+        driverLog.getParentFile().mkdirs();
+        driverLog.createNewFile();
+
+        FileWriter writer = new FileWriter(driverLog);
+        for (LogEntry logEntry : logEntries.getAll()) {
+            writer.write(logEntry.toString() + "\\n");
+        }
+        writer.close();
+     /*   for (LogEntry entry : logEntries) {
+            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+            //do something useful with the data
+        }*/
     }
     }
 
