@@ -726,17 +726,20 @@ public class Methods {
         executor.executeScript("arguments[0].click();", element);
     }
 
-    @AfterTest(alwaysRun = true)
-    public static void saveLogs() throws IOException {
+    public static void saveLogs(String methodName) throws IOException {
         LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
         Date date = new Date();
-        File driverLog = new File("video/chromeLog" + dateFormat.format(date) + ".log");
-        FileWriter out = new FileWriter(driverLog);
+/*
+        File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
+*/
+        File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
+        driverLog.createNewFile();
+        FileWriter writer = new FileWriter(driverLog);
         for (LogEntry logEntry : logEntries.getAll()) {
-            out.write(logEntry.toString() + "\n");
+            writer.write(logEntry.toString() + "\\n");
         }
-        out.close();
+        writer.close();
      /*   for (LogEntry entry : logEntries) {
             System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
             //do something useful with the data

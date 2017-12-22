@@ -33,11 +33,13 @@ public class PDPreviewFreeAUX {
         PreviewFree.changeStatusToAvailable();
         //no incoming call
         PreviewFree.processCall();
+
     }
 
     @AfterClass
     @Video
     public void teardown() throws IOException {
+        Methods.saveLogs("pDPreviewFreeAUX");
         boolean isIE = Methods.isIE(PreviewFree.driver);
         PreviewFree.driver.quit();
 

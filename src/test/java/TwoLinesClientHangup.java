@@ -37,11 +37,13 @@ public class TwoLinesClientHangup {
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         }
 
+
     }
 
     @AfterClass
     @Video
     public void teardown() throws IOException {
+        Methods.saveLogs("twoLinesClientHangup");
         boolean isIE = Methods.isIE(driver);
         driver.quit();
 

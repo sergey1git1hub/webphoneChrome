@@ -26,11 +26,13 @@ public class PDPreviewFreeCall {
         Methods.switchToAdTab(PreviewFree.driver);
         Methods.runSqlQuery("pd_5009_3", "94949");
         PreviewFree.processCall();
+
     }
 
     @AfterClass
     @Video
     public void teardown() throws IOException {
+        Methods.saveLogs("pDPreviewFreeCall");
         boolean isIE = Methods.isIE(PreviewFree.driver);
         PreviewFree.driver.quit();
 

@@ -15,6 +15,7 @@ import java.sql.SQLException;
  * Created by SChubuk on 04.10.2017.
  */
 @Listeners(VideoListener.class)
+
 public class PDProgressiveReleasedAgentHangup {
     static ChromeData data;
     static WebDriver driver;
@@ -28,6 +29,7 @@ public class PDProgressiveReleasedAgentHangup {
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Available", 10);
+
     }
 
     @Test(dependsOnMethods = "IELogin")
@@ -107,11 +109,13 @@ public class PDProgressiveReleasedAgentHangup {
     public static void setResultCodeAndCheckAvailableStatus() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.setWebphoneResultCode(driver);
         Methods.checkStatus(driver, "Available", 3);
+
     }
 
     @AfterClass
     @Video
     public void teardown() throws IOException {
+        Methods.saveLogs("PDProgressiveReleasedAgentHangup");
         boolean isIE = Methods.isIE(driver);
         driver.quit();
 

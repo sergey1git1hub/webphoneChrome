@@ -33,11 +33,13 @@ public class TwoLinesAgentHangup {
         Methods.agentHangup(driver, 2);
         Thread.sleep(1000);
         CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+
     }
 
     @AfterClass
     @Video
     public void teardown() throws IOException {
+        Methods.saveLogs("twoLinesAgentHangup");
         boolean isIE = Methods.isIE(driver);
 
         if(isIE){
