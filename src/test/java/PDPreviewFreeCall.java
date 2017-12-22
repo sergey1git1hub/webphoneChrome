@@ -33,7 +33,9 @@ public class PDPreviewFreeCall {
     @AfterClass
     @Video
     public void teardown() throws IOException {
+/*
         Methods.saveLogs(driver, "pDPreviewFreeCall");
+*/
         boolean isIE = Methods.isIE(PreviewFree.driver);
         PreviewFree.driver.quit();
 

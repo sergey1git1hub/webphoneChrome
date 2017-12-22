@@ -115,7 +115,9 @@ public class PDProgressiveReleasedAgentHangup {
     @AfterClass
     @Video
     public void teardown() throws IOException {
+/*
         Methods.saveLogs(driver, "PDProgressiveReleasedAgentHangup");
+*/
         boolean isIE = Methods.isIE(driver);
         driver.quit();
 
