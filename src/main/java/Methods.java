@@ -734,7 +734,9 @@ public class Methods {
         File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
 */
         File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
+        driverLog.getParentFile().mkdirs();
         driverLog.createNewFile();
+
         FileWriter writer = new FileWriter(driverLog);
         for (LogEntry logEntry : logEntries.getAll()) {
             writer.write(logEntry.toString() + "\\n");
