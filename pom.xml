@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>3.4.0</version>
+            <version>RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
