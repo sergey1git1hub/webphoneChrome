@@ -20,10 +20,7 @@ import org.sikuli.script.App;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -729,7 +726,7 @@ public class Methods {
         executor.executeScript("arguments[0].click();", element);
     }
 
-    @AfterSuite(alwaysRun = true)
+    @AfterTest(alwaysRun = true)
     public static void saveLogs() throws IOException {
         LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
