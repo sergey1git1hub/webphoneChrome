@@ -118,7 +118,7 @@ public class Methods {
             }
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
 
-            /*********SETUP IEDRIVER LOGGING****************/
+            /*********SETUP IEDRIVER LOGGING*****************/
             System.setProperty("webdriver.ie.driver.loglevel", "INFO");
             /************************************************/
             System.setProperty("webdriver.ie.driver", "C:/iedriver32/IEDriverServer.exe");
