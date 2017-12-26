@@ -736,7 +736,7 @@ public class Methods {
 /*
         File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
 */
-        File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
+        File driverLog = new File("video\\" + dateFormat.format(date) + "\\" + methodName + dateFormat.format(date) + ".log");
         driverLog.getParentFile().mkdirs();
         driverLog.createNewFile();
 
