@@ -732,10 +732,10 @@ public class Methods {
         System.out.println(driver.toString());
         LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
-        Date date = new Date();
+        Date date = new Date(); //
 /*
         File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
-*/
+**/
         File driverLog = new File("video\\" + dateFormat.format(date) + "\\" + methodName + dateFormat.format(date) + ".log");
         driverLog.getParentFile().mkdirs();
         driverLog.createNewFile();
