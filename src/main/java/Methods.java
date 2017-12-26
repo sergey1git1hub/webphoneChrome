@@ -72,20 +72,20 @@ public class Methods {
             /**********************************************/
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
             /*********SETUP IEDRIVER LOGGING****************/
-            System.setProperty("webdriver.chrome.verboseLogging", "false");
+            System.setProperty("webdriver.chrome.verboseLogging", "true");
             /************************************************/
 
             DesiredCapabilities caps = DesiredCapabilities.chrome();
             LoggingPreferences logPrefs = new LoggingPreferences();
             logPrefs.enable(LogType.BROWSER, Level.ALL);
-            caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+            //caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs); //deprecated
 
             String hostName = InetAddress.getLocalHost().getHostName();
             if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
-                caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                driver = new ChromeDriver(caps);
+                //caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);  //deprecated
+                driver = new ChromeDriver(chromeOptions);
                 //chromeYellow
                 if(chrome_maximize_count==0){
               /*  Screen screen = new Screen();
@@ -102,8 +102,8 @@ public class Methods {
             } else{
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
-                caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                driver = new ChromeDriver(caps);
+                //caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);  //deprecated
+                driver = new ChromeDriver(chromeOptions);
             }
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
