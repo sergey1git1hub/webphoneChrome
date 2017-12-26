@@ -70,7 +70,7 @@
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.64" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-ie-driver:3.5.3" level="project" />
-    <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-chrome-driver:3.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-chrome-driver:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.7.5" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-support:3.5.3" level="project" />
     <orderEntry type="library" name="Maven: com.sikulix:sikulixapi:1.1.0" level="project" />

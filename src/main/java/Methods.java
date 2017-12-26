@@ -78,12 +78,13 @@ public class Methods {
             DesiredCapabilities caps = DesiredCapabilities.chrome();
             LoggingPreferences logPrefs = new LoggingPreferences();
             logPrefs.enable(LogType.BROWSER, Level.ALL);
-            //caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs); //deprecated
+            caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs); //deprecated
 
             String hostName = InetAddress.getLocalHost().getHostName();
             if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
+                chromeOptions.merge(caps);
                 //caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);  //deprecated
                 driver = new ChromeDriver(chromeOptions);
                 //chromeYellow
@@ -102,6 +103,7 @@ public class Methods {
             } else{
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
+                chromeOptions.merge(caps);
                 //caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);  //deprecated
                 driver = new ChromeDriver(chromeOptions);
             }
