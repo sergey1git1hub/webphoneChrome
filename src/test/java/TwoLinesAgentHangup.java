@@ -7,6 +7,8 @@ import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.sikuli.script.FindFailed;
+import org.testng.ITestContext;
+import org.testng.ITestNGMethod;
 import org.testng.annotations.*;
 
 import java.io.File;
@@ -26,38 +28,62 @@ public class TwoLinesAgentHangup {
     static WebDriver driver;
     static Data data;
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void twoLinesAgentHangup() throws InterruptedException, IOException, FindFailed {
-        CallOnTwoLines.callOnTwoLines();
+    public static void twoLinesAgentHangup() throws Exception {
+        try {
+            CallOnTwoLines.callOnTwoLines();
 
-        driver = CallOnTwoLines.driver;
-        data = CallOnTwoLines.data;
-        Thread.sleep(1000);
-        WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
-        button_Hold.click();
-        Thread.sleep(1000);
-        Methods.agentHangup(driver, 1);
-        Thread.sleep(1000);
-        Methods.agentHangup(driver, 2);
-        Thread.sleep(1000);
-        CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-        System.out.println(driver.toString());
+            driver = CallOnTwoLines.driver;
+            data = CallOnTwoLines.data;
+            Thread.sleep(1000);
+            WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
+            button_Hold.click();
+            Thread.sleep(1000);
+            Methods.agentHangup(driver, 1);
+            Thread.sleep(1000);
+            Methods.agentHangup(driver, 2);
+            Thread.sleep(1000);
+            CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+            // System.out.println(driver.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            saveLogs(driver, "twoLinesAgentHangup");
+            boolean isIE = Methods.isIE(driver);
+            driver.quit();
 
+            if (isIE) {
+
+                Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+            } else {
+                // Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+            }
+            throw e;
+        }
     }
 
-    @AfterClass(alwaysRun=true)
+    @AfterClass(alwaysRun = true)
     @Video
-    public void teardown() throws IOException {
-        System.out.println(driver.toString());
+    public static void teardown() throws IOException {
+        // System.out.println(driver.toString());
         saveLogs(driver, "twoLinesAgentHangup");
         boolean isIE = Methods.isIE(driver);
+        driver.quit();
 
-        if(isIE){
-            driver.quit();
+        if (isIE) {
+
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-        } else{ driver.quit();}
+        } else {
+            // Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+        }
     }
+
+   /* @BeforeSuite(alwaysRun = true)
+    public void beforeSuite(ITestContext context) {
+        for (ITestNGMethod method : context.getAllTestMethods()) {
+            method.setRetryAnalyzer(new RetryAnalyzer());
+        }
+    }*/
 
     @AfterSuite(alwaysRun = true)
     @Video
@@ -66,26 +92,30 @@ public class TwoLinesAgentHangup {
     }
 
     public static void saveLogs(WebDriver driver, String methodName) throws IOException {
-        System.out.println(driver.toString());
-        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
-        Date date = new Date();
+        try {
+            System.out.println(driver.toString());
+            LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
+            Date date = new Date();
 /*
         File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
 */
-        File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
-        driverLog.getParentFile().mkdirs();
-        driverLog.createNewFile();
+            File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
+            driverLog.getParentFile().mkdirs();
+            driverLog.createNewFile();
 
-        FileWriter writer = new FileWriter(driverLog);
-        for (LogEntry logEntry : logEntries.getAll()) {
-            writer.write(logEntry.toString() + "\\n");
-        }
-        writer.close();
+            FileWriter writer = new FileWriter(driverLog);
+            for (LogEntry logEntry : logEntries.getAll()) {
+                writer.write(logEntry.toString() + "\\n");
+            }
+            writer.close();
      /*   for (LogEntry entry : logEntries) {
             System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
             //do something useful with the data
         }*/ //
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
