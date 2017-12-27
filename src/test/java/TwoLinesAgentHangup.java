@@ -14,6 +14,7 @@ import org.testng.annotations.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +33,10 @@ public class TwoLinesAgentHangup {
     @Video
     public static void twoLinesAgentHangup() throws Exception {
         try {
+            String hostName = InetAddress.getLocalHost().getHostName();
+            if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+            }
             CallOnTwoLines.callOnTwoLines();
 
             driver = CallOnTwoLines.driver;
