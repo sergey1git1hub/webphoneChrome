@@ -33,7 +33,6 @@ public class TwoLinesAgentHangup {
     @Video
     public static void twoLinesAgentHangup() throws Exception {
         try {
-
             Methods.setup(driver);
             CallOnTwoLines.callOnTwoLines();
             driver = CallOnTwoLines.driver;

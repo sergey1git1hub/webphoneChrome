@@ -18,29 +18,21 @@ public class PDPreviewFreeCall {
     static Data data;
     static WebDriver driver;
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void pDPreviewFreeCall() throws InterruptedException, IOException, FindFailed, SQLException, ClassNotFoundException {
-        PreviewFree.createData();
-        PreviewFree.LoginAD();
-        PreviewFree.changeStatusToAvailable();
-        Methods.switchToAdTab(PreviewFree.driver);
-        Methods.runSqlQuery("pd_5009_3", "94949");
-        PreviewFree.processCall();
-
-    }
-
-    @AfterClass
-    @Video
-    public void teardown() throws IOException {
-/*
-        Methods.saveLogs(driver, "pDPreviewFreeCall");
-*/
-        boolean isIE = Methods.isIE(PreviewFree.driver);
-        PreviewFree.driver.quit();
-
-        if(isIE){
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+    public static void pDPreviewFreeCall() throws Exception {
+        try {
+            Methods.setup(driver);
+            PreviewFree.createData();
+            PreviewFree.LoginAD();
+            PreviewFree.changeStatusToAvailable();
+            Methods.switchToAdTab(PreviewFree.driver);
+            Methods.runSqlQuery("pd_5009_3", "94949");
+            PreviewFree.processCall();
+            Methods.teardown(driver);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 }

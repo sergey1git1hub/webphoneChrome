@@ -16,34 +16,27 @@ public class PDPreviewFreeAUX {
     static WebDriver driver;
     static boolean debug = true;
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void pDPreviewFreeAUX() throws InterruptedException, IOException, FindFailed, SQLException, ClassNotFoundException {
-        PreviewFree.createData();
-        PreviewFree.LoginAD();
-        Methods.switchToAdTab(PreviewFree.driver);
-        PreviewFree.changeStatusToAUX();
-        Methods.runSqlQuery("pd_5009_3", "94949");
-        if(debug == true)
-        Thread.sleep(5000);
-         else Thread.sleep(20000);
-        PreviewFree.changeStatusToAvailable();
-        //no incoming call
-        PreviewFree.processCall();
+    public static void pDPreviewFreeAUX() throws Exception {
+        try {
+            Methods.setup(driver);
+            PreviewFree.createData();
+            PreviewFree.LoginAD();
+            Methods.switchToAdTab(PreviewFree.driver);
+            PreviewFree.changeStatusToAUX();
+            Methods.runSqlQuery("pd_5009_3", "94949");
+            if (debug == true)
+                Thread.sleep(5000);
+            else Thread.sleep(20000);
+            PreviewFree.changeStatusToAvailable();
+            //no incoming call
+            PreviewFree.processCall();
+            Methods.teardown(driver);
 
-    }
-
-    @AfterClass
-    @Video
-    public void teardown() throws IOException {
-/*
-        Methods.saveLogs(driver, "pDPreviewFreeAUX");
-*/
-        boolean isIE = Methods.isIE(PreviewFree.driver);
-        PreviewFree.driver.quit();
-
-        if(isIE){
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 }
