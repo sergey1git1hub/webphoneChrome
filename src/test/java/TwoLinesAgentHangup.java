@@ -36,6 +36,7 @@ public class TwoLinesAgentHangup {
             String hostName = InetAddress.getLocalHost().getHostName();
             if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
                 Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+                Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
             }
             CallOnTwoLines.callOnTwoLines();
 
@@ -54,15 +55,6 @@ public class TwoLinesAgentHangup {
         } catch (Exception e) {
             e.printStackTrace();
             saveLogs(driver, "twoLinesAgentHangup");
-            boolean isIE = Methods.isIE(driver);
-            driver.quit();
-
-            if (isIE) {
-
-                Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            } else {
-                // Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-            }
             throw e;
         }
     }
@@ -74,7 +66,6 @@ public class TwoLinesAgentHangup {
         saveLogs(driver, "twoLinesAgentHangup");
         boolean isIE = Methods.isIE(driver);
         driver.quit();
-
         if (isIE) {
 
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");

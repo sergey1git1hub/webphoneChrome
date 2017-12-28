@@ -667,7 +667,7 @@ public class Methods {
             agentPD.navigate().refresh();
         }*/
         Thread.sleep(3000);
-        agentPD.navigate().refresh();
+       // agentPD.navigate().refresh();
         Assert.assertEquals(agentPD.getTitle(), "gbpowerdialer");
 
         Thread.sleep(1000);
