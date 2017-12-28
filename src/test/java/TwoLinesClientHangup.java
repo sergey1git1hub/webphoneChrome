@@ -24,9 +24,11 @@ public class TwoLinesClientHangup {
     static boolean fast = false;
     static int delay = 2;
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void twoLinesClientHangup() throws InterruptedException, IOException, FindFailed {
+    public static void twoLinesClientHangup() throws Exception {
+        try {
+        Methods.setup(driver);
         CallOnTwoLines.callOnTwoLines();
         driver = CallOnTwoLines.driver;
         data = CallOnTwoLines.data;
@@ -41,43 +43,11 @@ public class TwoLinesClientHangup {
             Methods.clientHangup(driver, 2);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         }
-
-
-    }
-
-    @AfterClass
-    @Video
-    public void teardown() throws IOException {
-        saveLogs(driver, "twoLinesClientHangup");
-        boolean isIE = Methods.isIE(driver);
-        driver.quit();
-
-        if(isIE){
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+        Methods.teardown(driver);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
-    }
-
-    public static void saveLogs(WebDriver driver, String methodName) throws IOException {
-        System.out.println(driver.toString());
-        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
-        Date date = new Date();
-/*
-        File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
-*/
-        File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
-        driverLog.getParentFile().mkdirs();
-        driverLog.createNewFile();
-
-        FileWriter writer = new FileWriter(driverLog);
-        for (LogEntry logEntry : logEntries.getAll()) {
-            writer.write(logEntry.toString() + "\\n");
-        }
-        writer.close();
-     /*   for (LogEntry entry : logEntries) {
-            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
-            //do something useful with the data
-        }*/
     }
     }
 

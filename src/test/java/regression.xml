@@ -3,53 +3,54 @@
 
 <suite name="regression" verbose="10">
 
-    <test name="TwoLinesAgentHangup">
+   <!-- <test name="TwoLinesAgentHangup">
         <classes>
             <class name="Methods"/>
             <class name="TwoLinesAgentHangup"/>
         </classes>
-    </test>
- <!--<test name="TwoLinesClientHangup">
+    </test>-->
+
+    <test name="TwoLinesClientHangup">
         <classes>
             <class name="TwoLinesClientHangup"/>
         </classes>
     </test>
 
 
-     <test name="PDPreviewFreeCallIE">
-         <classes>
-             <class name="PDPreviewFreeCall">
-                 <methods>
-                     <include name="pDPreviewFreeCall"/>
-                 </methods>
-             </class>
-         </classes>
-     </test>
-       <test name="PDPreviewFreeAUX">
+    <!-- <test name="PDPreviewFreeCallIE">
         <classes>
-            <class name="PDPreviewFreeAUX">
+            <class name="PDPreviewFreeCall">
                 <methods>
-                    <include name="pDPreviewFreeAUX"/>
+                    <include name="pDPreviewFreeCall"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="PDProgressiveReleasedAgentHangup">
-        <classes>
-            <class name="PDProgressiveReleasedAgentHangup">
-                <methods>
-                    <include name="IELogin"/>
-                    <include name="changeStatusToAUX"/>
-                    <include name="runSQLQuery"/>
-                    <include name="waitForCallOnClientSide"/>
-                    <include name="noIncomingCallToClient"/>
-                    <include name="changeStatusToAvailable"/>
-                    <include name="waitForCallOnClientSide2"/>
-                    <include name="receiveIncomingCallToAgent"/>
-                    <include name="agentHangup"/>
-                    <include name="setResultCodeAndCheckAvailableStatus"/>
-                </methods>
-            </class>
-        </classes>
-    </test>-->
+      <test name="PDPreviewFreeAUX">
+       <classes>
+           <class name="PDPreviewFreeAUX">
+               <methods>
+                   <include name="pDPreviewFreeAUX"/>
+               </methods>
+           </class>
+       </classes>
+   </test>
+   <test name="PDProgressiveReleasedAgentHangup">
+       <classes>
+           <class name="PDProgressiveReleasedAgentHangup">
+               <methods>
+                   <include name="IELogin"/>
+                   <include name="changeStatusToAUX"/>
+                   <include name="runSQLQuery"/>
+                   <include name="waitForCallOnClientSide"/>
+                   <include name="noIncomingCallToClient"/>
+                   <include name="changeStatusToAvailable"/>
+                   <include name="waitForCallOnClientSide2"/>
+                   <include name="receiveIncomingCallToAgent"/>
+                   <include name="agentHangup"/>
+                   <include name="setResultCodeAndCheckAvailableStatus"/>
+               </methods>
+           </class>
+       </classes>
+   </test>-->
 </suite>
