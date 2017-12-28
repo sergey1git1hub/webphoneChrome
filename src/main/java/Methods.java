@@ -88,7 +88,7 @@ public class Methods {
                 //caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);  //deprecated
                 driver = new ChromeDriver(chromeOptions);
                 //chromeYellow
-                if(chrome_maximize_count==0){
+                if (chrome_maximize_count == 0) {
               /*  Screen screen = new Screen();
                 org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
                 screen.wait(chromeIcon, 2);
@@ -100,7 +100,7 @@ public class Methods {
                /* ChromeOptions options = new ChromeOptions();
                 options.addArguments("--start-fullscreen");*/
 
-            } else{
+            } else {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
                 chromeOptions.merge(caps);
@@ -331,7 +331,7 @@ public class Methods {
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")&&!browser.equals("chrome")) {
+        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14") && !browser.equals("chrome")) {
             if (status.equalsIgnoreCase("Available")) {
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
@@ -394,7 +394,7 @@ public class Methods {
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("switchLine");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (browser.equals("chrome")&&hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+        if (browser.equals("chrome") && hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
             System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
@@ -405,21 +405,21 @@ public class Methods {
             System.out.println("Line switched by webdriver.");
         } else {
             System.out.println("Browser is not chrome or running on Jenkns.");
-            if(!hostName.equalsIgnoreCase("KV1-EM-PC-14")){
+            if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
                 WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
                 lineElement.sendKeys(Keys.ENTER);
-            }else
-            try {
-                if (driver instanceof JavascriptExecutor) {
-                    ((JavascriptExecutor) driver)
-                            .executeScript("wp_common.wp_ChangeLine(" + line + "); log(event);");
-                    System.out.println("Line switched by javascript.");
+            } else
+                try {
+                    if (driver instanceof JavascriptExecutor) {
+                        ((JavascriptExecutor) driver)
+                                .executeScript("wp_common.wp_ChangeLine(" + line + "); log(event);");
+                        System.out.println("Line switched by javascript.");
+                    }
+                } catch (Exception e) {
+                    if (debug == true)
+                        e.printStackTrace();
+                    else System.out.println("JavaScript execution error!");
                 }
-            } catch (Exception e) {
-                if (debug == true)
-                    e.printStackTrace();
-                else System.out.println("JavaScript execution error!");
-            }
         }
         return driver;
     }
@@ -433,10 +433,10 @@ public class Methods {
             Thread.sleep(1000);
             System.out.println("Sleep after Line switched.");
             Screen screen = new Screen();
-            if(!(!hostName.equalsIgnoreCase("KV1-EM-PC-14")&&browser.equals("chrome"))) {
-            org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
-            screen.wait(phoneNumberField_Sikuli, 10);
-            screen.click(phoneNumberField_Sikuli);
+            if (!(!hostName.equalsIgnoreCase("KV1-EM-PC-14") && browser.equals("chrome"))) {
+                org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
+                screen.wait(phoneNumberField_Sikuli, 10);
+                screen.click(phoneNumberField_Sikuli);
             }
             System.out.println("Sikuli clkicked phone number filed.");
             WebElement phoneNumberField = driver.findElement(By.cssSelector("#PhoneNumber"));
@@ -456,23 +456,12 @@ public class Methods {
     }
 
     public static void openCXphone(int waitTime) throws FindFailed, InterruptedException, IOException {
-        System.out.println("openCXphone");
-        String hostName = InetAddress.getLocalHost().getHostName();
-        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
-            App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
-            Thread.sleep(waitTime);
-        } else {
-            App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
-            Thread.sleep(waitTime);
-        }
-// focus on phone number fieldd first in order to clear it
         Screen screen = new Screen();
+        App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
-        screen.wait(closePhoneWindow, 10);
+        screen.wait(closePhoneWindow, waitTime);
         screen.click(closePhoneWindow);
-        /*if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
-            driver.manage().window().maximize();
-        }*/
+
     }
 
     public static void cxAnswer() throws FindFailed, InterruptedException {
@@ -667,7 +656,7 @@ public class Methods {
             agentPD.navigate().refresh();
         }*/
         Thread.sleep(3000);
-       // agentPD.navigate().refresh();
+        // agentPD.navigate().refresh();
         Assert.assertEquals(agentPD.getTitle(), "gbpowerdialer");
 
         Thread.sleep(1000);
@@ -728,27 +717,49 @@ public class Methods {
         executor.executeScript("arguments[0].click();", element);
     }
 
-    public static void saveLogs(WebDriver driver, String methodName) throws IOException {
-        System.out.println(driver.toString());
-        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
-        Date date = new Date(); //
-/*
-        File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
-**/
-        File driverLog = new File("video\\" + dateFormat.format(date) + "\\" + methodName + dateFormat.format(date) + ".log");
-        driverLog.getParentFile().mkdirs();
-        driverLog.createNewFile();
-
-        FileWriter writer = new FileWriter(driverLog);
-        for (LogEntry logEntry : logEntries.getAll()) {
-            writer.write(logEntry.toString() + "\\n");
+    public static void saveLogs(WebDriver driverForLogs, String methodName) throws IOException {
+        try {
+            System.out.println(driverForLogs.toString());
+            LogEntries logEntries = driverForLogs.manage().logs().get(LogType.BROWSER);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
+            Date date = new Date();
+            File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
+            driverLog.getParentFile().mkdirs();
+            driverLog.createNewFile();
+            FileWriter writer = new FileWriter(driverLog);
+            for (LogEntry logEntry : logEntries.getAll()) {
+                writer.write(logEntry.toString() + "\\n");
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        writer.close();
-     /*   for (LogEntry entry : logEntries) {
-            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
-            //do something useful with the data
-        }*/
+    }
+
+    public static void teardown(WebDriver driver) throws IOException {
+        saveLogs(driver, "twoLinesAgentHangup");
+        driver.quit();
+        boolean isIE = Methods.isIE(driver);
+        String hostName = InetAddress.getLocalHost().getHostName();
+        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+            if (isIE) {
+                Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+            } else {
+                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+            }
+        }
+        Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+
+    }
+
+    public static void setup(WebDriver driver) throws InterruptedException, FindFailed, IOException {
+        Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+        String hostName = InetAddress.getLocalHost().getHostName();
+        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+            Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+        }
+        openCXphone(60);
     }
 
 }

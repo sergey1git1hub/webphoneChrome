@@ -11,7 +11,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
-            <version>3.8.1</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
 
@@ -19,51 +19,51 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.5.3</version>
+            <version>LATEST</version>
         </dependency>
 
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.11</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.11</version>
+            <version>LATEST</version>
         </dependency>
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-ie-driver</artifactId>
-            <version>3.8.1</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
-            <version>3.5.3</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-ie-driver</artifactId>
-            <version>3.5.3</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>3.8.1</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>3.5.3</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>com.sikulix</groupId>
             <artifactId>sikulixapi</artifactId>
-            <version>1.1.0</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -90,19 +90,19 @@
         <dependency>
             <groupId>com.automation-remarks</groupId>
             <artifactId>video-recorder-testng</artifactId>
-            <version>1.6</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.automation-remarks</groupId>
             <artifactId>video-recorder-testng</artifactId>
-            <version>1.6</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.automation-remarks</groupId>
             <artifactId>video-recorder-testng</artifactId>
-            <version>1.4.1</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
 
@@ -112,7 +112,7 @@
             <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.20</version>
+            <version>LATEST</version>
             <configuration>
                 <suiteXmlFiles>
                     <suiteXmlFile>src\test\java\regression.xml</suiteXmlFile>

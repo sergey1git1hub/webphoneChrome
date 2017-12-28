@@ -33,13 +33,9 @@ public class TwoLinesAgentHangup {
     @Video
     public static void twoLinesAgentHangup() throws Exception {
         try {
-            String hostName = InetAddress.getLocalHost().getHostName();
-            if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
-                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-                Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
-            }
-            CallOnTwoLines.callOnTwoLines();
 
+            Methods.setup(driver);
+            CallOnTwoLines.callOnTwoLines();
             driver = CallOnTwoLines.driver;
             data = CallOnTwoLines.data;
             Thread.sleep(1000);
@@ -51,67 +47,13 @@ public class TwoLinesAgentHangup {
             Methods.agentHangup(driver, 2);
             Thread.sleep(1000);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            // System.out.println(driver.toString());
+            Methods.teardown(driver);
+
         } catch (Exception e) {
             e.printStackTrace();
-            saveLogs(driver, "twoLinesAgentHangup");
             throw e;
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    @Video
-    public static void teardown() throws IOException {
-        // System.out.println(driver.toString());
-        saveLogs(driver, "twoLinesAgentHangup");
-        boolean isIE = Methods.isIE(driver);
-        driver.quit();
-        if (isIE) {
-
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-        } else {
-            // Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-        }
-    }
-
-   /* @BeforeSuite(alwaysRun = true)
-    public void beforeSuite(ITestContext context) {
-        for (ITestNGMethod method : context.getAllTestMethods()) {
-            method.setRetryAnalyzer(new RetryAnalyzer());
-        }
-    }*/
-
-    @AfterSuite(alwaysRun = true)
-    @Video
-    public void closeCXphone() throws IOException {
-        Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
-    }
-
-    public static void saveLogs(WebDriver driver, String methodName) throws IOException {
-        try {
-            System.out.println(driver.toString());
-            LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
-            Date date = new Date();
-/*
-        File driverLog = new File("video/" + methodName + dateFormat.format(date) + ".log");
-*/
-            File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
-            driverLog.getParentFile().mkdirs();
-            driverLog.createNewFile();
-
-            FileWriter writer = new FileWriter(driverLog);
-            for (LogEntry logEntry : logEntries.getAll()) {
-                writer.write(logEntry.toString() + "\\n");
-            }
-            writer.close();
-     /*   for (LogEntry entry : logEntries) {
-            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
-            //do something useful with the data
-        }*/ //
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
 
