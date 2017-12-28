@@ -757,7 +757,7 @@ public class Methods {
         String hostName = InetAddress.getLocalHost().getHostName();
         if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
             Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-            Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
         }
         openCXphone(60);
     }
