@@ -749,17 +749,22 @@ public class Methods {
             }
         }
         Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+        System.out.println("3CXPhone killed from teardown method.");
 
     }
 
     public static void setup(WebDriver driver) throws InterruptedException, FindFailed, IOException {
         Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+        Thread.sleep(2000); //might fix phone not opened problem
+        System.out.println("3CXPhone killed from setup method.");
         String hostName = InetAddress.getLocalHost().getHostName();
         if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
             Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
         }
         openCXphone(60);
+        System.out.println("openCXphone method called from setup method.");
+
     }
 
 }
