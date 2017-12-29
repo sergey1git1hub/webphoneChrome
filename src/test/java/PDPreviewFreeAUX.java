@@ -20,7 +20,7 @@ public class PDPreviewFreeAUX {
     @Video
     public static void pDPreviewFreeAUX() throws Exception {
         try {
-            Methods.setup(driver);
+            Methods.setup(PreviewFree.driver);
             PreviewFree.createData();
             PreviewFree.LoginAD();
             Methods.switchToAdTab(PreviewFree.driver);
@@ -32,7 +32,7 @@ public class PDPreviewFreeAUX {
             PreviewFree.changeStatusToAvailable();
             //no incoming call
             PreviewFree.processCall();
-            Methods.teardown(driver);
+            Methods.teardown(PreviewFree.driver);
 
         } catch (Exception e) {
             e.printStackTrace();

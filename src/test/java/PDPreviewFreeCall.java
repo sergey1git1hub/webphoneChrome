@@ -22,14 +22,14 @@ public class PDPreviewFreeCall {
     @Video
     public static void pDPreviewFreeCall() throws Exception {
         try {
-            Methods.setup(driver);
+            Methods.setup(PreviewFree.driver);
             PreviewFree.createData();
             PreviewFree.LoginAD();
             PreviewFree.changeStatusToAvailable();
             Methods.switchToAdTab(PreviewFree.driver);
             Methods.runSqlQuery("pd_5009_3", "94949");
             PreviewFree.processCall();
-            Methods.teardown(driver);
+            Methods.teardown(PreviewFree.driver);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
