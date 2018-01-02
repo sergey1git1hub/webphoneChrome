@@ -133,6 +133,7 @@ public class Methods {
                     true);
 
             /**********PLAY WITH CAPABILITIES*********************/
+            ieCapabilities.setCapability("initialBrowserUrl", webphoneUrl);
             ieCapabilities.setCapability("nativeEvents", false);
             ieCapabilities.setCapability("unexpectedAlertBehaviour", "accept");
             ieCapabilities.setCapability("ignoreProtectedModeSettings", true);

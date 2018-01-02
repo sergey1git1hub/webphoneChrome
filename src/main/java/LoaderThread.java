@@ -14,7 +14,7 @@ public class LoaderThread extends Thread {
     }
 
     public void run() {
-        driver.get(webphoneUrl);
+        /*driver.get(webphoneUrl);*/
     }
 
 }
