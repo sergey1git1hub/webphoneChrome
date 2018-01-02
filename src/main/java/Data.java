@@ -16,6 +16,7 @@ public class Data {
     String dbTable;
     String dbPhoneNumber;
     static String localhostName = "KV1-EM-PC-14";
+    static int retryLimit = 1;
 
     public Data() {
         number1 = "94949";

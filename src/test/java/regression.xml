@@ -10,7 +10,7 @@
         </classes>
     </test>
 
-    <test name="TwoLinesClientHangup">
+  <!--  <test name="TwoLinesClientHangup">
         <classes>
             <class name="TwoLinesClientHangup"/>
         </classes>
@@ -40,5 +40,5 @@
            <class name="PDProgressiveReleasedAgentHangup">
            </class>
        </classes>
-   </test>
+   </test>-->
 </suite>
