@@ -194,6 +194,7 @@ public class Methods {
 // Wait for them both to finish
             thread1.join();
             thread2.join();
+            if(isLocal){
                 WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
                 waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
                 Assert.assertEquals(driver.getTitle(), "gbwebphone");
@@ -201,6 +202,7 @@ public class Methods {
                 language.click();
                 WebElement language_en = driver.findElement(By.xpath("//li[text() = 'English']"));
                 language_en.click();
+            }
         }
         return driver;
     }
