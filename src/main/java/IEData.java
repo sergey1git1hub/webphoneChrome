@@ -1,5 +1,3 @@
-import org.openqa.selenium.WebDriver;
-
 /**
  * Created by SChubuk on 04.10.2017.
  */
@@ -8,7 +6,12 @@ import org.openqa.selenium.WebDriver;
 data.username = "";
 data.browser = "chrome";*/
 public class IEData extends Data {
-    String browser = "IE";
-    String webphoneUrl = "http://172.21.24.109/gbwebphone/";
-    String method = "usual";
+
+
+    public IEData() {
+        super();
+        browser = "IE";
+        webphoneUrl = "http://172.21.24.109/gbwebphone/";
+        method = "usual";
+    }
 }

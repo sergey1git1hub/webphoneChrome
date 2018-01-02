@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
  */
 public class Data {
     WebDriver driver;
+
     String browser;
     String webphoneUrl;
     String method;
@@ -15,4 +16,12 @@ public class Data {
     String dbTable;
     String dbPhoneNumber;
     static String localhostName = "KV1-EM-PC-14";
+
+    public Data() {
+        number1 = "94949";
+        number2 = "94948";
+        username = "81016";
+    }
+
+
 }

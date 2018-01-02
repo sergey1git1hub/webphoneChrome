@@ -69,13 +69,7 @@ public class Methods {
         Settings.DebugLogs = true;*/
         /*****************IMPROVEMENT******************/
 
-        String host_Name = InetAddress.getLocalHost().getHostName();
-        if (!host_Name.equalsIgnoreCase(Data.localhostName)) {
-            browser = System.getProperty("browserName");
-        } else {
-            browser = "chrome";
-        }
-        if (browser.equals("chrome")) {
+        if (browser.equalsIgnoreCase("chrome")) {
             /**********************************************/
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
             /*********SETUP IEDRIVER LOGGING****************/

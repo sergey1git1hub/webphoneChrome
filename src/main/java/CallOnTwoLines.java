@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
@@ -18,15 +19,33 @@ import java.net.UnknownHostException;
 public class CallOnTwoLines {
     private static final Logger log = Logger.getLogger("Methods");
     /***********CHANGED TO RUN CHROME BROWSER******************/
-    static ChromeData data;
+    static Data data;
     /***********************************************************/
     static WebDriver driver;
 
 
-    public static void createData() {
+    public static void createData() throws UnknownHostException {
         log.debug("STARTJENKINS");
         /***********CHANGED TO RUN CHROME BROWSER******************/
-        data = new ChromeData();
+        String host_Name = InetAddress.getLocalHost().getHostName();
+
+        if (!host_Name.equalsIgnoreCase(Data.localhostName)) {
+
+            String browser = System.getProperty("browserName");
+            if (browser.equalsIgnoreCase("chrome")) {
+                data = new ChromeData();
+            } else {
+                data = new IEData();
+            }
+        } else {
+            data = new IEData();
+        }
+        try{
+        System.out.println(data.browser);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         /***********************************************************/
         data.group = "\\!test_group5_5220";
 
@@ -34,6 +53,7 @@ public class CallOnTwoLines {
         Methods.browser = data.browser;
         /**********************************************/
         Methods.onJenkins = false;
+
     }
 
 
