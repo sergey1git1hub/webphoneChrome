@@ -128,6 +128,7 @@ public class Methods {
             System.setProperty("webdriver.ie.driver", "C:/iedriver32/IEDriverServer.exe");
 
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
+            if(isLocal)
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
                     true);
 
