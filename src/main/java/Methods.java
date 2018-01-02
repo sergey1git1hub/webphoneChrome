@@ -68,6 +68,13 @@ public class Methods {
         Settings.InfoLogs=true; // starting with [info]
         Settings.DebugLogs = true;*/
         /*****************IMPROVEMENT******************/
+
+        String host_Name = InetAddress.getLocalHost().getHostName();
+        if (!host_Name.equalsIgnoreCase(Data.localhostName)) {
+            browser = System.getProperty("browserName");
+        } else {
+            browser = "chrome";
+        }
         if (browser.equals("chrome")) {
             /**********************************************/
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
@@ -81,7 +88,7 @@ public class Methods {
             caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs); //deprecated
 
             String hostName = InetAddress.getLocalHost().getHostName();
-            if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+            if (!hostName.equalsIgnoreCase(Data.localhostName)) {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
                 chromeOptions.merge(caps);
@@ -264,7 +271,7 @@ public class Methods {
 
         System.out.println("checkStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+        if (!hostName.equalsIgnoreCase(Data.localhostName)) {
             /*byte[] b = status.getBytes("Cp1252");
             //byte[] encoded = new String(b, "Cp1252").getBytes("UTF-16");
             status = new String(b, "Cp1251");*/
@@ -279,7 +286,7 @@ public class Methods {
         } else {
         }
         /*System.out.println("String converted.");*/
-        if ((!hostName.equalsIgnoreCase("KV1-EM-PC-14")) && (status.equals("Тренинг"))) {
+        if ((!hostName.equalsIgnoreCase(Data.localhostName)) && (status.equals("Тренинг"))) {
             Thread.sleep(10000);
         } else {
             WebDriverWait waitForStatus = new WebDriverWait(driver, waitTime);
@@ -331,7 +338,7 @@ public class Methods {
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14") && !browser.equals("chrome")) {
+        if (!hostName.equalsIgnoreCase(Data.localhostName) && !browser.equals("chrome")) {
             if (status.equalsIgnoreCase("Available")) {
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
@@ -394,7 +401,7 @@ public class Methods {
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("switchLine");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (browser.equals("chrome") && hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+        if (browser.equals("chrome") && hostName.equalsIgnoreCase(Data.localhostName)) {
             System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
@@ -405,7 +412,7 @@ public class Methods {
             System.out.println("Line switched by webdriver.");
         } else {
             System.out.println("Browser is not chrome or running on Jenkns.");
-            if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+            if (!hostName.equalsIgnoreCase(Data.localhostName)) {
                 WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
                 lineElement.sendKeys(Keys.ENTER);
             } else
@@ -433,7 +440,7 @@ public class Methods {
             Thread.sleep(1000);
             System.out.println("Sleep after Line switched.");
             Screen screen = new Screen();
-            if (!(!hostName.equalsIgnoreCase("KV1-EM-PC-14") && browser.equals("chrome"))) {
+            if (!(!hostName.equalsIgnoreCase(Data.localhostName) && browser.equals("chrome"))) {
                 org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
                 screen.wait(phoneNumberField_Sikuli, 10);
                 screen.click(phoneNumberField_Sikuli);
@@ -513,7 +520,7 @@ public class Methods {
     public static WebDriver setWebphoneResultCode(WebDriver driver) throws InterruptedException, UnknownHostException, FindFailed {
         System.out.println("setWebphoneResultCode");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+        if (!hostName.equalsIgnoreCase(Data.localhostName)) {
             Screen screen = new Screen();
             org.sikuli.script.Pattern resultCodeUdachno = new org.sikuli.script.Pattern("C:\\SikuliImages\\resultCodeUdachno.png");
             screen.wait(resultCodeUdachno, 10);
@@ -741,7 +748,7 @@ public class Methods {
         driver.quit();
         boolean isIE = Methods.isIE(driver);
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+        if (!hostName.equalsIgnoreCase(Data.localhostName)) {
             if (isIE) {
                 Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
             } else {
@@ -758,7 +765,7 @@ public class Methods {
         Thread.sleep(2000); //might fix phone not opened problem
         System.out.println("3CXPhone killed from setup method.");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!hostName.equalsIgnoreCase("KV1-EM-PC-14")) {
+        if (!hostName.equalsIgnoreCase(Data.localhostName)) {
             Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
         }

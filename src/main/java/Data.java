@@ -14,4 +14,5 @@ public class Data {
     String number2 = "94948";
     String dbTable;
     String dbPhoneNumber;
+    static String localhostName = "KV1-EM-PC-14";
 }
