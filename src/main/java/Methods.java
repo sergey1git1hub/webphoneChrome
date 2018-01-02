@@ -133,7 +133,9 @@ public class Methods {
                     true);
 
             /**********PLAY WITH CAPABILITIES*********************/
+            if(isLocal){
             ieCapabilities.setCapability("nativeEvents", false);
+            }
             ieCapabilities.setCapability("unexpectedAlertBehaviour", "accept");
             ieCapabilities.setCapability("ignoreProtectedModeSettings", true);
             ieCapabilities.setCapability("disable-popup-blocking", true);
