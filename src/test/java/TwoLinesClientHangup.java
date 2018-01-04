@@ -1,18 +1,14 @@
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
+import data.Data;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.logging.LogEntry;
-import org.openqa.selenium.logging.LogType;
-import org.sikuli.script.FindFailed;
 import org.testng.annotations.*;
+import testMethods.CallOnTwoLines;
+import testMethods.Methods;
+import utils.RetryAnalyzer;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import static utils.TestSetup.setup;
+import static utils.TestTeardown.teardown;
 
 /**
  * Created by SChubuk on 04.10.2017.
@@ -28,7 +24,7 @@ public class TwoLinesClientHangup {
     @Video
     public static void twoLinesClientHangup() throws Exception {
         try {
-        Methods.setup(driver);
+        setup(driver);
         CallOnTwoLines.callOnTwoLines();
         driver = CallOnTwoLines.driver;
         data = CallOnTwoLines.data;
@@ -43,7 +39,7 @@ public class TwoLinesClientHangup {
             Methods.clientHangup(driver, 2);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         }
-        Methods.teardown(driver);
+        teardown(driver, "twoLinesClientHangup");
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

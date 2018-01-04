@@ -1,3 +1,6 @@
+package utils;
+
+import data.Data;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 

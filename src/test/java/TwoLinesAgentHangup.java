@@ -1,25 +1,17 @@
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
+import data.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.logging.LogEntry;
-import org.openqa.selenium.logging.LogType;
-import org.sikuli.script.FindFailed;
-import org.testng.ITestContext;
-import org.testng.ITestNGMethod;
 import org.testng.annotations.*;
+import testMethods.CallOnTwoLines;
+import testMethods.Methods;
+import utils.RetryAnalyzer;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import static utils.TestSetup.setup;
+import static utils.TestTeardown.teardown;
 
-import static data.Data.agentChrome;
 
 /**
  * Created by SChubuk on 04.10.2017.
@@ -33,7 +25,7 @@ public class TwoLinesAgentHangup {
     @Video
     public static void twoLinesAgentHangup() throws Exception {
         try {
-            Methods.setup(driver);
+            setup(driver);
             CallOnTwoLines.callOnTwoLines();
             driver = CallOnTwoLines.driver;
             data = CallOnTwoLines.data;
@@ -46,7 +38,7 @@ public class TwoLinesAgentHangup {
             Methods.agentHangup(driver, 2);
             Thread.sleep(1000);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            Methods.teardown(driver);
+            teardown(driver, "twoLinesAgentHangup");
 
         } catch (Exception e) {
             e.printStackTrace();

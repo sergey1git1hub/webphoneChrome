@@ -1,8 +1,10 @@
+package data;
+
 /**
  * Created by SChubuk on 04.10.2017.
  */
 
-/*Data data = new Data();
+/*data.Data data = new data.Data();
 data.username = "";
 data.browser = "chrome";*/
 public class IEData extends Data {

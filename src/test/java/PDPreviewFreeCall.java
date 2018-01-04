@@ -1,14 +1,15 @@
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
+import data.Data;
 import org.openqa.selenium.WebDriver;
-import org.sikuli.script.FindFailed;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import testMethods.Methods;
+import testMethods.PreviewFree;
+import utils.RetryAnalyzer;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import static utils.TestSetup.setup;
+import static utils.TestTeardown.teardown;
 
 /**
  * Created by SChubuk on 04.10.2017.
@@ -22,14 +23,14 @@ public class PDPreviewFreeCall {
     @Video
     public static void pDPreviewFreeCall() throws Exception {
         try {
-            Methods.setup(PreviewFree.driver);
-            PreviewFree.createData();
+            setup(PreviewFree.driver);
+            PreviewFree.createTestData();
             PreviewFree.LoginAD();
             PreviewFree.changeStatusToAvailable();
             Methods.switchToAdTab(PreviewFree.driver);
             Methods.runSqlQuery("pd_5009_3", "94949");
             PreviewFree.processCall();
-            Methods.teardown(PreviewFree.driver);
+            teardown(PreviewFree.driver, "pDPreviewFreeCall");
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

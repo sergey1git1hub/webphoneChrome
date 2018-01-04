@@ -1,11 +1,14 @@
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
+import data.Data;
 import org.openqa.selenium.WebDriver;
-import org.sikuli.script.FindFailed;
 import org.testng.annotations.*;
+import testMethods.Methods;
+import testMethods.PreviewFree;
+import utils.RetryAnalyzer;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import static utils.TestSetup.setup;
+import static utils.TestTeardown.teardown;
 
 /**
  * Created by SChubuk on 04.10.2017.
@@ -20,8 +23,8 @@ public class PDPreviewFreeAUX {
     @Video
     public static void pDPreviewFreeAUX() throws Exception {
         try {
-            Methods.setup(PreviewFree.driver);
-            PreviewFree.createData();
+            setup(PreviewFree.driver);
+            PreviewFree.createTestData();
             PreviewFree.LoginAD();
             Methods.switchToAdTab(PreviewFree.driver);
             PreviewFree.changeStatusToAUX();
@@ -32,8 +35,7 @@ public class PDPreviewFreeAUX {
             PreviewFree.changeStatusToAvailable();
             //no incoming call
             PreviewFree.processCall();
-            Methods.teardown(PreviewFree.driver);
-
+            teardown(PreviewFree.driver, "pDPreviewFreeAUX");
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

@@ -1,26 +1,22 @@
-import org.apache.log4j.Logger;
+package testMethods;
+
+import data.Data;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.logging.LoggingPreferences;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.logging.LogEntry;
-import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.logging.LoggingPreferences;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.sikuli.basics.Debug;
 import org.sikuli.script.App;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+import utils.LoaderThread;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -29,108 +25,48 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.regex.Pattern;
 
-import static data.Data.PDUrl;
-import static data.Data.agentChrome;
-import static data.Data.agentPD;
-import static helpMethods.HelpMethods.handleLogoutWindow;
-import static methods.Methods.driver;
-import static methods.Methods.fast;
-import static methods.Methods.password;
+import static data.Flags.isIE;
+import static data.Flags.isLocal;
+
+import static utils.Logs.createFolder;
+import static utils.Logs.setChromeLogs;
+import static utils.Video.moveVideo;
+
 
 /**
  * Created by SChubuk on 04.10.2017.
  */
 
 public class Methods {
-    private static final Logger log = Logger.getLogger("Methods");
     public static String browser;
     public static boolean onJenkins;
     static boolean killProcess = true;
     static boolean debug = true;
-    static int chrome_maximize_count = 0;
-    static boolean isLocal;
 
-    @BeforeSuite
-    public void confSikulilogs() throws IOException {
-        int level = 3;
-        Debug.setDebugLevel(level);
-        String hostName = InetAddress.getLocalHost().getHostName();
-        isLocal = hostName.equalsIgnoreCase(Data.localhostName);
-    }
+    static boolean fast;
+
 
     public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, final String webphoneUrl) throws InterruptedException, IOException, FindFailed {
 
-      /*  Settings.ActionLogs=true; // starting with [log]
-        Settings.InfoLogs=true; // starting with [info]
-        Settings.DebugLogs = true;*/
-        /*****************IMPROVEMENT******************/
-
         if (browser.equalsIgnoreCase("chrome")) {
-            /**********************************************/
+
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
-            /*********SETUP IEDRIVER LOGGING****************/
-            System.setProperty("webdriver.chrome.verboseLogging", "true");
-            /************************************************/
-
-            DesiredCapabilities caps = DesiredCapabilities.chrome();
-            LoggingPreferences logPrefs = new LoggingPreferences();
-            logPrefs.enable(LogType.BROWSER, Level.ALL);
-            caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs); //deprecated
-
-
-            if (!isLocal) {
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--start-maximized");
-                chromeOptions.merge(caps);
-                //caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);  //deprecated
-                driver = new ChromeDriver(chromeOptions);
-                //chromeYellow
-                if (chrome_maximize_count == 0) {
-              /*  Screen screen = new Screen();
-                org.sikuli.script.Pattern chromeIcon = new org.sikuli.script.Pattern("C:\\SikuliImages\\chromeYellow.png");
-                screen.wait(chromeIcon, 2);
-                screen.click(chromeIcon);
-                    chrome_maximize_count++;*/
-                }
-              /*  Thread.sleep(500);
-                driver.manage().window().maximize();*/
-               /* ChromeOptions options = new ChromeOptions();
-                options.addArguments("--start-fullscreen");*/
-
-            } else {
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--start-maximized");
-                chromeOptions.merge(caps);
-                //caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);  //deprecated
-                driver = new ChromeDriver(chromeOptions);
-            }
+            ChromeOptions chromeOptions = setChromeLogs();
+            driver = new ChromeDriver(chromeOptions);
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
             waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
             Assert.assertEquals(driver.getTitle(), "gbwebphone");
         } else {
-            if (killProcess == true) {
-                Runtime.getRuntime().exec("taskkill /F /IM IEDriverServer.exe");
-                killProcess = false;
-            }
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
 
-            /*********SETUP IEDRIVER LOGGING*****************/
-            System.setProperty("webdriver.ie.driver.loglevel", "INFO");
-            /************************************************/
             System.setProperty("webdriver.ie.driver", "C:/iedriver32/IEDriverServer.exe");
+            System.setProperty("webdriver.ie.driver.loglevel", "INFO");
 
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
-            if(isLocal)
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
-                    true);
+                        true);
 
             /**********PLAY WITH CAPABILITIES*********************/
             ieCapabilities.setCapability("initialBrowserUrl", webphoneUrl);
@@ -141,11 +77,9 @@ public class Methods {
             ieCapabilities.setCapability("enablePersistentHover", true);
             ieCapabilities.setCapability("ignoreZoomSetting", true);
             /***************************************************/
+
             driver = new InternetExplorerDriver(ieCapabilities);
             driver.manage().window().maximize();
-
-           /* final WebDriver finalDriver = driver;
-            final String finalwebphoneUrl = webphoneUrl;*/
             Thread thread1 = new LoaderThread(driver, webphoneUrl);
             Thread thread2 = new Thread() {
                 public void run() {
@@ -195,7 +129,7 @@ public class Methods {
 // Wait for them both to finish
             thread1.join();
             thread2.join();
-            if(isLocal){
+
                 WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
                 waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
                 Assert.assertEquals(driver.getTitle(), "gbwebphone");
@@ -203,10 +137,11 @@ public class Methods {
                 language.click();
                 WebElement language_en = driver.findElement(By.xpath("//li[text() = 'English']"));
                 language_en.click();
-            }
+
         }
         return driver;
     }
+
 
     public static WebDriver login(WebDriver driver, String method, String username, String group) throws InterruptedException {
         System.out.println("login");
@@ -222,7 +157,7 @@ public class Methods {
             if (fast == false)
                 Thread.sleep(1000);
             WebElement ssoPassword = driver.findElement(By.cssSelector("#password"));
-            ssoPassword.sendKeys(password);
+            ssoPassword.sendKeys(Data.password);
             if (fast == false)
                 Thread.sleep(1000);
             WebElement ssoRememberMe = driver.findElement(By.cssSelector("#remember-me"));
@@ -270,22 +205,6 @@ public class Methods {
     public static WebDriver checkStatus(WebDriver driver, String status, int waitTime) throws UnknownHostException, UnsupportedEncodingException, InterruptedException {
 
         System.out.println("checkStatus");
-
-        if (!isLocal) {
-            /*byte[] b = status.getBytes("Cp1252");
-            //byte[] encoded = new String(b, "Cp1252").getBytes("UTF-16");
-            status = new String(b, "Cp1251");*/
-
-            /*byte[] outbytes = status.getBytes("Cp1252");
-            status = new String(outbytes, "Cp1251");*/
-
-
-            /*byte bytes[] = status.getBytes("UTF-8");
-            status = new String(bytes, "UTF-8");*/
-
-        } else {
-        }
-        /*System.out.println("String converted.");*/
         if ((!isLocal) && (status.equals("Тренинг"))) {
             Thread.sleep(10000);
         } else {
@@ -508,10 +427,7 @@ public class Methods {
             screen.wait(line_3CXLine1, 10);
             screen.click(line_3CXLine1);
         }
-        /*if(line ==2){
-            screen.wait(line_3CXLine2, 10);
-            screen.click(line_3CXLine2);
-        }*/
+
         screen.click(button_3CXHangupCall);
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
@@ -584,10 +500,6 @@ public class Methods {
         updateRecord(getConnection(), dbTable, dbPhoneNumber);
     }
 
-   /* @Test
-    public static void test() throws SQLException, ClassNotFoundException {
-        runSqlQuery("pd_5009_3", "94949");
-    }*/
 
     public static WebDriver agentAcceptCall(WebDriver driver, int waitTime) throws InterruptedException {
         System.out.println("agentAcceptCall");
@@ -655,15 +567,10 @@ public class Methods {
         System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
         WebDriver agentPD = new ChromeDriver();
         agentPD.manage().window().maximize();
-        agentPD.get(PDUrl);
+        agentPD.get(Data.PDUrl);
 
         System.out.println(agentPD.getTitle());
- /*       if(agentPD.getTitle() == "Доступ запрещён!"){
-            System.out.println("Inside if");
-            agentPD.navigate().refresh();
-        }*/
         Thread.sleep(3000);
-        // agentPD.navigate().refresh();
         Assert.assertEquals(agentPD.getTitle(), "gbpowerdialer");
 
         Thread.sleep(1000);
@@ -680,8 +587,6 @@ public class Methods {
         System.out.println("runPDCampaign");
         Thread.sleep(2000);
 
-/*        WebDriverWait waitForId = new WebDriverWait(agentPD, 2);
-        waitForId.until(ExpectedConditions.elementToBeClickable(By.xpath("/*//*[text() = '257']")));*/
         WebElement columns = agentPD.findElement(By.xpath("//*[@id=\"campaignGrid\"]/div/div[1]"));
         columns.click();
         Thread.sleep(1000);
@@ -707,16 +612,6 @@ public class Methods {
         agentPD.quit();
     }
 
-    public static boolean isIE(WebDriver driver) {
-        System.out.println("isIE");
-        Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
-   /*     Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();*/
-        String browserName = cap.getBrowserName().toLowerCase();
-        System.out.println(browserName);
-        if (browserName.equals("internet explorer"))
-            return true;
-        else return false;
-    }
 
     public static void clickIEelement(WebDriver driver, WebElement element) {
         System.out.println("clickIEelement");
@@ -724,54 +619,29 @@ public class Methods {
         executor.executeScript("arguments[0].click();", element);
     }
 
-    public static void saveLogs(WebDriver driverForLogs, String methodName) throws IOException {
+
+    public static WebDriver handleLogoutWindow(WebDriver driver) {
+        System.out.println("handleLogoutWindow");
         try {
-            System.out.println(driverForLogs.toString());
-            LogEntries logEntries = driverForLogs.manage().logs().get(LogType.BROWSER);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
-            Date date = new Date();
-            File driverLog = new File("video\\" + methodName + dateFormat.format(date) + ".log");
-            driverLog.getParentFile().mkdirs();
-            driverLog.createNewFile();
-            FileWriter writer = new FileWriter(driverLog);
-            for (LogEntry logEntry : logEntries.getAll()) {
-                writer.write(logEntry.toString() + "\\n");
+            WebDriverWait waitForLogoutWindow = new WebDriverWait(driver, 3);
+            waitForLogoutWindow.until(ExpectedConditions.elementToBeClickable(
+                    By.cssSelector("#userLogoutForm\\3a btn_userlogout_yes > span.ui-button-text.ui-c")));
+            WebElement button_Yes = driver.findElement(By.cssSelector("#userLogoutForm\\3a btn_userlogout_yes > span.ui-button-text.ui-c"));
+            Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
+            String browserName = cap.getBrowserName().toLowerCase();
+            System.out.println(browserName);
+            if (browserName.equals("internet explorer")) {
+                JavascriptExecutor executor = (JavascriptExecutor) driver;
+                WebElement currentStatus = driver.findElement(By.cssSelector(
+                        "#statusButton > span.ui-button-text.ui-c"));
+                executor.executeScript("arguments[0].click();", button_Yes);
+            } else {
+                button_Yes.click();
             }
-            writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void teardown(WebDriver driver) throws IOException {
-        saveLogs(driver, "twoLinesAgentHangup");
-        driver.quit();
-        boolean isIE = Methods.isIE(driver);
-        String hostName = InetAddress.getLocalHost().getHostName();
-        if (!isLocal) {
-            if (isIE) {
-                Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            } else {
-                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-            }
-        }
-        Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
-        System.out.println("3CXPhone killed from teardown method.");
-
-    }
-
-    public static void setup(WebDriver driver) throws InterruptedException, FindFailed, IOException {
-        Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
-        Thread.sleep(2000); //might fix phone not opened problem
-        System.out.println("3CXPhone killed from setup method.");
-        String hostName = InetAddress.getLocalHost().getHostName();
-        if (!isLocal) {
-            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-        }
-        openCXphone(60);
-        System.out.println("openCXphone method called from setup method.");
-
+        return driver;
     }
 
 }

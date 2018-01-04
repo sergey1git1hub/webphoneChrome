@@ -1,0 +1,47 @@
+package utils;
+
+import org.apache.commons.io.FileUtils;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+
+import java.io.File;
+import java.io.IOException;
+
+import static utils.Logs.createFolder;
+import static utils.Video.moveVideo;
+
+/**
+ * Created by SChubuk on 04.01.2018.
+ */
+public class BeforeAfter {
+
+
+    public static void killDrivers() throws IOException {
+        Runtime.getRuntime().exec("taskkill /F /IM iedriverserver.exe");
+        Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+    }
+
+    public static void deleteDirectories() throws IOException {
+        File sourceDirectory = new File("video");
+        FileUtils.deleteDirectory(sourceDirectory);
+        sourceDirectory = new File("videoAndLogs");
+        FileUtils.deleteDirectory(sourceDirectory);
+    }
+
+    @BeforeSuite
+    public static void beforeSuite() throws IOException, InterruptedException {
+        killDrivers();
+        System.setProperty("browserName", "ie");
+        deleteDirectories();
+        createFolder();
+    }
+
+    @AfterSuite
+    public static void afterSuite() throws IOException, InterruptedException {
+        moveVideo();
+    }
+
+
+
+}

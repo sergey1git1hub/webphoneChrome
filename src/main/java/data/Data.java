@@ -1,65 +1,49 @@
 package data;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
- * Created by SChubuk on 22.08.2017.
+ * Created by SChubuk on 04.10.2017.
  */
 public class Data {
-    public static String webphoneUrl = "http://172.21.7.239/gbwebphone/";
-   // public static String webphoneUrl = "http://172.21.24.109/gbwebphone/";
-    public static String PDUrl = "http://172.21.24.109:8087/gbpowerdialer/#/campaignList";
-    public static String webchatUrl = "http://172.21.7.239:8080";
-    public static String webchatServerUrl = "http://172.21.7.239:8080";
-    public static String CRMUrl = "http://172.21.24.109:8085/agentdesk/cardDataForm?companyAlias=MLytvynovTest&phoneNumber=380930000000";
-    public static String webchatClientUrl = "http://172.21.7.239:8080/api/external/workgroupProvider/direct/100";
+    WebDriver driver;
 
-    public static WebDriver agentChrome;
-    public static WebDriver agentPD;
-    public static WebDriver driver;
-    public static WebDriver agentDriver;
-    public static WebDriver agentCRM;
-    public static WebDriver agentIE;
-    public static WebDriver adminDriver;
-    public static WebDriver clientDriver;
+    public String browser;
+    public String webphoneUrl;
+    public  String method;
+    public String username = "81016";
+    public  String group;
+    public String number1 = "94949";
+    public String number2 = "94948";
+    public String dbTable;
+    public String dbPhoneNumber;
+    public static String localhostName = "KV1-EM-PC-14";
+    public static int retryLimit = 0;
+    public static String password = "1";
+    public static String PDUrl = "http://172.21.24.109:8087/gbpowerdialer/#/login";
 
-
-
-    /*
-    AdminPage
-    CheckSatusAfterLogin
-    CheckStatusAfterLoginIE1_4_3
-    CheckStatusAfterLoginWithLogs
-    HelpMethods
-    InteractWithCRMCard
-    LoginToPD
-
-
-    PDPreviewFreeAUX
-
-
-    */
-
-    /*
-    * divide into packages
-    * webchat
-    * webphone
-    * webchat&webphone
-    * webphone&agentdesktop
-    * powerdialer
-    * webphone&powerdialer
-    * webphone&agentdesktop&powerdialer
-    *agentdesktop
-    *
-    *
-    * */
-
-    @Test
-    public void test(){
-        String str1 = "sometext";
-        System.out.println(str1);
-        str1 = "othertext";
-        System.out.println(str1);
+    public Data() {
+        number1 = "94949";
+        number2 = "94948";
+        username = "81016";
+    }
+    public static Data createData() throws UnknownHostException {
+        Data data;
+        String host_Name = InetAddress.getLocalHost().getHostName();
+        String browser = System.getProperty("browserName");
+        if (browser.equalsIgnoreCase("chrome")) {
+            data = new ChromeData();
+        } else {
+            data = new IEData();
+        }
+        try{
+            System.out.println(data.browser);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return data;
     }
 }
