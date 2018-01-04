@@ -11,20 +11,14 @@ import java.net.UnknownHostException;
  * Created by SChubuk on 04.01.2018.
  */
 public class Flags {
-    public static boolean isLocal;
 
-    static {
-
-        try {
+    public static boolean isLocal() throws UnknownHostException {
             String hostName = InetAddress.getLocalHost().getHostName();
-            isLocal = hostName.equalsIgnoreCase(Data.localhostName);
-
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+            boolean isLocal = hostName.equalsIgnoreCase(Data.localhostName);
+            return isLocal;
 
     }
+
 
     public static boolean isIE(WebDriver driver) {
         System.out.println("isIE");

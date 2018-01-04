@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import static data.Flags.isLocal;
+
 /**
  * Created by SChubuk on 04.10.2017.
  */
@@ -25,10 +27,12 @@ public class Data {
     public static String password = "1";
     public static String PDUrl = "http://172.21.24.109:8087/gbpowerdialer/#/login";
 
-    public Data() {
+    public Data() throws UnknownHostException {
         number1 = "94949";
         number2 = "94948";
         username = "81016";
+        if(!isLocal())
+            retryLimit =2;
     }
     public static Data createData() throws UnknownHostException {
         Data data;

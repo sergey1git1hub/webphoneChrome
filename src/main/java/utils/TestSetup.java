@@ -22,7 +22,7 @@ public class TestSetup {
         String hostName = InetAddress.getLocalHost().getHostName();
 
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            if (!isLocal) {
+            if (!isLocal()) {
                 Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
             }
         openCXphone(60);

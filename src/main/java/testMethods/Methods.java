@@ -205,7 +205,7 @@ public class Methods {
     public static WebDriver checkStatus(WebDriver driver, String status, int waitTime) throws UnknownHostException, UnsupportedEncodingException, InterruptedException {
 
         System.out.println("checkStatus");
-        if ((!isLocal) && (status.equals("Тренинг"))) {
+        if ((!isLocal()) && (status.equals("Тренинг"))) {
             Thread.sleep(10000);
         } else {
             WebDriverWait waitForStatus = new WebDriverWait(driver, waitTime);
@@ -257,7 +257,7 @@ public class Methods {
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         System.out.println("changeStatus");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!isLocal && !browser.equals("chrome")) {
+        if (!isLocal() && !browser.equals("chrome")) {
             if (status.equalsIgnoreCase("Available")) {
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
@@ -320,7 +320,7 @@ public class Methods {
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("switchLine");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (browser.equals("chrome") && isLocal) {
+        if (browser.equals("chrome") && isLocal()) {
             System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
@@ -331,7 +331,7 @@ public class Methods {
             System.out.println("Line switched by webdriver.");
         } else {
             System.out.println("Browser is not chrome or running on Jenkns.");
-            if (!isLocal) {
+            if (!isLocal()) {
                 WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
                 lineElement.sendKeys(Keys.ENTER);
             } else
@@ -359,7 +359,7 @@ public class Methods {
             Thread.sleep(1000);
             System.out.println("Sleep after Line switched.");
             Screen screen = new Screen();
-            if (!(!isLocal && browser.equals("chrome"))) {
+            if (!(!isLocal() && browser.equals("chrome"))) {
                 org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
                 screen.wait(phoneNumberField_Sikuli, 10);
                 screen.click(phoneNumberField_Sikuli);
@@ -436,7 +436,7 @@ public class Methods {
     public static WebDriver setWebphoneResultCode(WebDriver driver) throws InterruptedException, UnknownHostException, FindFailed {
         System.out.println("setWebphoneResultCode");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!isLocal) {
+        if (!isLocal()) {
             Screen screen = new Screen();
             org.sikuli.script.Pattern resultCodeUdachno = new org.sikuli.script.Pattern("C:\\SikuliImages\\resultCodeUdachno.png");
             screen.wait(resultCodeUdachno, 10);

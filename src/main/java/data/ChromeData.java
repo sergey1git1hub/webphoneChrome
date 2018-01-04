@@ -1,11 +1,13 @@
 package data;
 
+import java.net.UnknownHostException;
+
 /**
  * Created by SChubuk on 04.10.2017.
  */
 public class ChromeData extends Data {
     /*****************IMPROVEMENT******************/
-    public ChromeData() {
+    public ChromeData() throws UnknownHostException {
         super();
         browser = "chrome";
         /**********************************************/

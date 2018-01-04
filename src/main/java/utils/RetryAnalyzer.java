@@ -4,6 +4,8 @@ import data.Data;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
+import static data.Flags.isLocal;
+
 public class RetryAnalyzer implements IRetryAnalyzer {
 
     int counter = 0;
@@ -19,7 +21,6 @@ public class RetryAnalyzer implements IRetryAnalyzer {
 	 * and false it not.
 	 *
 	 */
-
 
     public boolean retry(ITestResult result) {
 

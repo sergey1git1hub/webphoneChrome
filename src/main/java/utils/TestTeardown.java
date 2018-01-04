@@ -23,7 +23,7 @@ public class TestTeardown {
             if (isIE) {
                 Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
             } else {
-                if (!isLocal) {
+                if (!isLocal()) {
                 Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
             }
         }
