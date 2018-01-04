@@ -36,7 +36,9 @@ public class BeforeAfter {
     @BeforeSuite
     public static void beforeSuite() throws IOException, InterruptedException {
         killDrivers();
+        if(isLocal()){
         System.setProperty("browserName", "ie");
+        }
         deleteDirectories();
         createFolder();
     }
