@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeSuite;
 import java.io.File;
 import java.io.IOException;
 
+import static data.Flags.isLocal;
 import static utils.Logs.createFolder;
 import static utils.Video.moveVideo;
 
@@ -23,10 +24,13 @@ public class BeforeAfter {
     }
 
     public static void deleteDirectories() throws IOException {
+
         File sourceDirectory = new File("video");
         FileUtils.deleteDirectory(sourceDirectory);
+        if(isLocal()){
         sourceDirectory = new File("videoAndLogs");
         FileUtils.deleteDirectory(sourceDirectory);
+        }
     }
 
     @BeforeSuite
