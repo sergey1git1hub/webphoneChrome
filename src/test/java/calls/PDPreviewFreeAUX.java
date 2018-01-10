@@ -1,10 +1,12 @@
+package calls;
+
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import data.Data;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
-import testMethods.Methods;
-import testMethods.PreviewFree;
+import callsMethods.Methods;
+import callsMethods.PreviewFree;
 import utils.RetryAnalyzer;
 
 import static utils.TestSetup.setup;
@@ -13,7 +15,7 @@ import static utils.TestTeardown.teardown;
 /**
  * Created by SChubuk on 04.10.2017.
  */
-@Listeners(VideoListener.class)
+//@Listeners(VideoListener.class)
 public class PDPreviewFreeAUX {
     static Data data;
     static WebDriver driver;

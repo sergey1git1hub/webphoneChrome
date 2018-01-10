@@ -1,12 +1,13 @@
+package calls;
+
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
-import data.ChromeData;
 import data.Data;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import testMethods.Methods;
+import callsMethods.Methods;
 import utils.RetryAnalyzer;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ import static utils.TestTeardown.teardown;
 /**
  * Created by SChubuk on 04.10.2017.
  */
-@Listeners(VideoListener.class)
+//@Listeners(VideoListener.class)
 
 public class PDProgressiveReleasedAgentHangup {
     static Data data;

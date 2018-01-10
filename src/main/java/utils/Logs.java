@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 
-import static data.Flags.isIE;
+import static utils.Flags.isIE;
 
 /**
  * Created by SChubuk on 03.01.2018.

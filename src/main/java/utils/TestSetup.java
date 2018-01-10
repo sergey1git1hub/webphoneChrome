@@ -1,15 +1,13 @@
 package utils;
 
-import data.Flags;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 
 import java.io.IOException;
 import java.net.InetAddress;
 
-import static data.Flags.isLocal;
-import static testMethods.Methods.openCXphone;
-import static utils.Logs.createFolder;
+import static utils.Flags.isLocal;
+import static callsMethods.Methods.openCXphone;
 
 /**
  * Created by SChubuk on 03.01.2018.

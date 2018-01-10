@@ -2,13 +2,12 @@ package utils;
 
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
 
-import static data.Flags.isLocal;
+import static utils.Flags.isLocal;
 import static utils.Logs.createFolder;
 import static utils.Video.moveVideo;
 

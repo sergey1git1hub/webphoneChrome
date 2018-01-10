@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="regression" verbose="10">
+
+    <test name="calls.TwoLinesAgentHangup">
+        <classes>
+            <class name="calls.TwoLinesAgentHangup"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+
+    <test name="calls.TwoLinesClientHangup">
+        <classes>
+            <class name="calls.TwoLinesClientHangup"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+
+
+    <test name="calls.PDPreviewFreeCall">
+        <classes>
+
+            <class name="calls.PDPreviewFreeCall"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+    <test name="calls.PDPreviewFreeAUX">
+        <classes>
+            <class name="calls.PDPreviewFreeAUX"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+    <test name="calls.PDProgressiveReleasedAgentHangup">
+        <classes>
+            <class name="calls.PDProgressiveReleasedAgentHangup"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+</suite>

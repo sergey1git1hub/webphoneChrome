@@ -3,8 +3,7 @@ package utils;
 import org.openqa.selenium.WebDriver;
 import java.io.IOException;
 import java.net.InetAddress;
-import static data.Flags.isLocal;
-import data.Flags;
+import static utils.Flags.isLocal;
 
 import static utils.Logs.saveLogs;
 

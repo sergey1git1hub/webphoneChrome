@@ -1,3 +1,5 @@
+package calls;
+
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import data.Data;
@@ -5,8 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
-import testMethods.CallOnTwoLines;
-import testMethods.Methods;
+import callsMethods.CallOnTwoLines;
+import callsMethods.Methods;
 import utils.RetryAnalyzer;
 
 import static utils.TestSetup.setup;
@@ -16,7 +18,7 @@ import static utils.TestTeardown.teardown;
 /**
  * Created by SChubuk on 04.10.2017.
  */
-@Listeners(VideoListener.class)
+//@Listeners(VideoListener.class)
 public class TwoLinesAgentHangup {
     static WebDriver driver;
     static Data data;

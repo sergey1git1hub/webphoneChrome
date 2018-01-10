@@ -1,4 +1,4 @@
-package testMethods;
+package callsMethods;
 
 import data.Data;
 
@@ -14,8 +14,6 @@ import org.sikuli.script.App;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
 import utils.LoaderThread;
 
 import java.io.*;
@@ -27,12 +25,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Pattern;
 
-import static data.Flags.isIE;
-import static data.Flags.isLocal;
+import static utils.Flags.isIE;
+import static utils.Flags.isLocal;
 
-import static utils.Logs.createFolder;
 import static utils.Logs.setChromeLogs;
-import static utils.Video.moveVideo;
 
 
 /**
@@ -320,7 +316,7 @@ public class Methods {
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("switchLine");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (browser.equals("chrome") && isLocal()) {
+        if (driver.equals("chrome") && isLocal()) {
             System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
@@ -410,9 +406,9 @@ public class Methods {
         Thread.sleep(500);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_Hangup = driver.findElement(By.cssSelector("#btn_hangup"));
-        if (browser == "chrome")
+        //if (browser == "chrome")
             button_Hangup.click();
-        else executor.executeScript("arguments[0].click();", button_Hangup);
+        //else executor.executeScript("arguments[0].click();", button_Hangup);
         return driver;
     }
 
@@ -502,24 +498,18 @@ public class Methods {
 
 
     public static WebDriver agentAcceptCall(WebDriver driver, int waitTime) throws InterruptedException {
-        System.out.println("agentAcceptCall");
+
         WebDriverWait waitForButtonAccept = new WebDriverWait(driver, waitTime);
-        System.out.println("WebDriverWait waitForButtonAccept = new WebDriverWait(driver, waitTime);");
-        waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_preview_accept")));
-        System.out.println("waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(By.cssSelector(\"#btn_preview_accept\")));");
-        WebElement button_Accept = driver.findElement(By.cssSelector("#btn_preview_accept"));
-        System.out.println("WebElement button_Accept = driver.findElement(By.cssSelector(\"#btn_preview_accept\"));");
+
+        waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_accept']")));
+        WebElement button_Accept = driver.findElement(By.cssSelector("[id = 'btn_accept']"));
         //if not wait, CRM card not opened
         Thread.sleep(500);
         if (isIE(driver) == true) {
-            System.out.println("if(isIE(driver) == true){" + isIE(driver));
             clickIEelement(driver, button_Accept);
-            System.out.println("clickIEelement(button_Accept);");
         } else {
-            System.out.println("} else{");
             button_Accept.click();
-            System.out.println("button_Accept.click();");
-        }
+       }
         return driver;
     }
 
@@ -643,5 +633,19 @@ public class Methods {
         }
         return driver;
     }
+
+    public static void focusCXphone(int waitTime) throws FindFailed, InterruptedException, IOException {
+        System.out.println("openCXphone");
+        String hostName = InetAddress.getLocalHost().getHostName();
+        Thread.sleep(1000);
+        if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
+            App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
+            Thread.sleep(waitTime);
+        } else {
+            App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
+            Thread.sleep(waitTime);
+        }
+    }
+
 
 }

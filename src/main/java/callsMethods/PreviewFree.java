@@ -1,6 +1,5 @@
-package testMethods;
+package callsMethods;
 
-import data.ChromeData;
 import data.Data;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
@@ -50,19 +49,19 @@ public class PreviewFree {
             System.out.println("try{");
             Methods.openCXphone(5000);
         Methods.agentAcceptCall(driver, 30);
-        System.out.println("testMethods.Methods.agentAcceptCall(driver, 30);");
+        System.out.println("callsMethods.Methods.agentAcceptCall(driver, 30);");
         } catch(Exception e){
             e.printStackTrace();
             System.out.println("} catch(Exception e){");
             WebDriver driverTemp = Methods.loginToPD();
-            System.out.println("WebDriver driverTemp = testMethods.Methods.loginToPD();");
+            System.out.println("WebDriver driverTemp = callsMethods.Methods.loginToPD();");
             Methods.runPDCampaign(driverTemp, 252);
-            System.out.println("testMethods.Methods.runPDCampaign(driverTemp, 252);");
+            System.out.println("callsMethods.Methods.runPDCampaign(driverTemp, 252);");
             Methods.agentAcceptCall(driver, 30);
-            System.out.println("testMethods.Methods.agentAcceptCall(driver, 30);");
+            System.out.println("callsMethods.Methods.agentAcceptCall(driver, 30);");
         }
         Methods.cxAnswer();
-        System.out.println("testMethods.Methods.cxAnswer();");
+        System.out.println("callsMethods.Methods.cxAnswer();");
         Methods.saveCRMCard(driver);
         Methods.checkStatus(driver, "Relax", 3);
         Methods.checkStatus(driver, "Available", 6);

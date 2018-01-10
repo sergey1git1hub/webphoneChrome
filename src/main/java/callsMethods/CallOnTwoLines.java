@@ -1,4 +1,4 @@
-package testMethods;
+package callsMethods;
 import data.Data;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +14,7 @@ import static data.Data.createData;
  */
 
 public class CallOnTwoLines {
-    private static final Logger log = Logger.getLogger("testMethods.Methods");
+    private static final Logger log = Logger.getLogger("callsMethods.Methods");
     /***********CHANGED TO RUN CHROME BROWSER******************/
     public static Data data;
     /***********************************************************/
@@ -59,6 +59,13 @@ public class CallOnTwoLines {
         callOnFirstLine();
         callOnSecondLine();
     }
+    public static void call() throws InterruptedException, IOException, FindFailed {
+        createTestData();
+        Login();
+        callOnFirstLine();
+    }
+
+
 
     public static void setResultCodeAndCheckAvailableStatus() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.setWebphoneResultCode(driver);

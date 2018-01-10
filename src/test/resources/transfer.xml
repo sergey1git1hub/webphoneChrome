@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="regression" verbose="10">
+
+    <test name="transfer_supervisor_and_queue.TransferRefactored">
+        <classes>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+            <class name="transfer_supervisor_and_queue.Transfer">
+                <methods>
+                    <include name="blindTransferToNumber"/>
+                    <include name="attendedTransferToNumber"/>
+                    <include name="blindTransferToAgent"/>
+                    <include name="attendedTransferToAgent"/>
+                    <include name="blindTransferToQueue"/>
+                    <include name="attendedTransferToQueue"/>
+                    <include name="blindTransferToPoint"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

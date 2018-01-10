@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import static data.Flags.isLocal;
+import static utils.Flags.isLocal;
 
 /**
  * Created by SChubuk on 04.10.2017.
