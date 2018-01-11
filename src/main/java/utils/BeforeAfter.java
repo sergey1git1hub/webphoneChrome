@@ -1,6 +1,7 @@
 package utils;
 
 import org.apache.commons.io.FileUtils;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -26,17 +27,25 @@ public class BeforeAfter {
 
         File sourceDirectory = new File("video");
         FileUtils.deleteDirectory(sourceDirectory);
-        if(isLocal()){
-        sourceDirectory = new File("videoAndLogs");
-        FileUtils.deleteDirectory(sourceDirectory);
+        if (isLocal()) {
+            sourceDirectory = new File("videoAndLogs");
+            FileUtils.deleteDirectory(sourceDirectory);
         }
     }
 
     @BeforeSuite
-    public static void beforeSuite() throws IOException, InterruptedException {
+    public static void beforeSuite(ITestContext ctx) throws IOException, InterruptedException {
         killDrivers();
-        if(isLocal()){
-        System.setProperty("browserName", "ie");
+        if (isLocal()) {
+            System.setProperty("browserName", "ie");
+            if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("transfer")) {
+                System.setProperty("folderName", "transfer");
+            } else if(ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("supervisor")){
+                System.setProperty("folderName", "supervisor");
+            } else {
+                System.setProperty("folderName", System.getProperty("browserName"));
+            }
+
         }
         deleteDirectories();
         createFolder();
@@ -46,7 +55,6 @@ public class BeforeAfter {
     public static void afterSuite() throws IOException, InterruptedException {
         moveVideo();
     }
-
 
 
 }

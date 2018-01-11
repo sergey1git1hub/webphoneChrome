@@ -23,7 +23,7 @@ import static utils.TestSetup.setup;
 /**
  * Created by SChubuk on 04.10.2017.
  */
-//@Listeners(VideoListener.class)
+@Listeners(VideoListener.class)
 public class Transfer {
     static WebDriver transferInitiator;
     static WebDriver transferReceiver;

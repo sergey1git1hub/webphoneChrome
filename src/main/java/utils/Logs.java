@@ -31,8 +31,8 @@ public class Logs {
     public static void createFolder(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
         Date date = new Date();
-        String browser = System.getProperty("browserName");
-        path = "videoAndLogs\\" + browser + "VideoAndLogs" + dateFormat.format(date).replaceAll("\\s", "");
+        String folderName = System.getProperty("folderName");
+        path = "videoAndLogs\\" + folderName + "VideoAndLogs" + dateFormat.format(date).replaceAll("\\s", "");
         new File(path).mkdirs();
     }
 

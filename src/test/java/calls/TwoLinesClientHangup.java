@@ -15,7 +15,7 @@ import static utils.TestTeardown.teardown;
 /**
  * Created by SChubuk on 04.10.2017.
  */
-//@Listeners(VideoListener.class)
+@Listeners(VideoListener.class)
 public class TwoLinesClientHangup {
     static Data data;
     static WebDriver driver;
