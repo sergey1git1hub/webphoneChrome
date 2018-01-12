@@ -19,7 +19,7 @@ public class STMethods {
     static boolean fast = false;
 
     public static WebDriver loginInitiator(WebDriver driver, String username) throws InterruptedException, FindFailed, IOException {
-        Methods.openCXphone(100);
+       /* Methods.openCXphone(100);*/
         driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/");
         Methods.login(driver, "usual", username, "\\!test_group5_5220");
         Methods.checkStatus(driver, "Available", 30);
