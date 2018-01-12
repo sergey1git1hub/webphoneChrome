@@ -44,8 +44,10 @@ public class Methods {
     static boolean fast;
 
 
-    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, final String webphoneUrl) throws InterruptedException, IOException, FindFailed {
-
+    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser,  String webphoneUrl) throws InterruptedException, IOException, FindFailed {
+        if(System.getProperty("webphoneUrl")!=null){
+        webphoneUrl = System.getProperty("webphoneUrl");
+        }
         if (browser.equalsIgnoreCase("chrome")) {
 
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
