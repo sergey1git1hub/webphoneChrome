@@ -45,7 +45,7 @@ public class Transfer {
         try {
             setup(dummiDriver);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
-            System.out.println(transferInitiator);
+            System.out.println("Transfer Initiator  is : " + transferInitiator);
             Thread.sleep(10000);
             STMethods.call(transferInitiator, callToNumber);
             STMethods.makeTransfer(transferInitiator, "blind", transferToNumber);
