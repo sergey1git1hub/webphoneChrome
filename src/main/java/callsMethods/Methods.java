@@ -51,7 +51,11 @@ public class Methods {
         if (browser.equalsIgnoreCase("chrome")) {
 
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
+            System.setProperty("CHROME_LOG_FILE", "video");
             ChromeOptions chromeOptions = setChromeLogs();
+            if(Boolean.getBoolean("autoOpenDevtoolsForTabs")){
+                chromeOptions.addArguments("--auto-open-devtools-for-tabs");
+            }
             driver = new ChromeDriver(chromeOptions);
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
