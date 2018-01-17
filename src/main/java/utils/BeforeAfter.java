@@ -37,7 +37,8 @@ public class BeforeAfter {
     public static void beforeSuite(ITestContext ctx) throws IOException, InterruptedException {
         killDrivers();
         if (isLocal()) {
-            System.setProperty("browserName", "ie");
+            System.setProperty("browserName", "chrome");
+
             if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("transfer")) {
                 System.setProperty("folderName", "transfer");
             } else if(ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("supervisor")){

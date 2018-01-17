@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="regression" verbose="10">
+    <listeners>
+        <listener class-name="utils.SuiteListener"/>
+    </listeners>
+    <test name="Test Suite Listener">
+        <classes>
+            <class name="calls.TestClass">
+                <methods>
+                    <include name="test1"/>
+                    <include name="test2"/>
+                    <include name="test3"/>
+                    <include name="test4"/>
+                    <include name="test5"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

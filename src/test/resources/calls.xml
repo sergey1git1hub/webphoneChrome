@@ -2,8 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="regression" verbose="10">
-
-    <test name="calls.TwoLinesAgentHangup">
+    <listeners>
+        <listener class-name="utils.SuiteListener" />
+    </listeners>
+    <!--<test name="calls.TwoLinesAgentHangup">
         <classes>
             <class name="calls.TwoLinesAgentHangup"/>
             <class name="callsMethods.Methods"/>
@@ -17,7 +19,7 @@
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test>-->
 
 
     <test name="calls.PDPreviewFreeCall">
@@ -35,11 +37,11 @@
             <class name="utils.BeforeAfter"/>
         </classes>
     </test>
-    <test name="calls.PDProgressiveReleasedAgentHangup">
+  <!--  <test name="calls.PDProgressiveReleasedAgentHangup">
         <classes>
             <class name="calls.PDProgressiveReleasedAgentHangup"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test>-->
 </suite>
