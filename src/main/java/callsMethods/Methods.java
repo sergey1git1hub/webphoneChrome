@@ -51,11 +51,12 @@ public class Methods {
         if (browser.equalsIgnoreCase("chrome")) {
 
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
-            System.setProperty("CHROME_LOG_FILE", "video");
             ChromeOptions chromeOptions = setChromeLogs();
+            chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
             if(Boolean.getBoolean("autoOpenDevtoolsForTabs")){
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
+            chromeOptions.addArguments("--preserve-log");
             driver = new ChromeDriver(chromeOptions);
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);

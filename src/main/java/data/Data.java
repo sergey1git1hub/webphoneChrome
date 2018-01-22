@@ -16,7 +16,7 @@ public class Data {
     public String browser;
     public String webphoneUrl;
     public  String method;
-    public String username = "81016";
+    public String username;
     public  String group;
     public String number1 = "94949";
     public String number2 = "94948";
@@ -30,9 +30,15 @@ public class Data {
     public Data() throws UnknownHostException {
         number1 = "94949";
         number2 = "94948";
-        username = "81016";
-        if(!isLocal())
+
+        if(isLocal()){
+        username = "81044";
+        } else {
+            username = "81046";
             retryLimit =2;
+        }
+
+
     }
     public static Data createData() throws UnknownHostException {
         Data data;
