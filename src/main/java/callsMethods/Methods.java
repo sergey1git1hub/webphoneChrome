@@ -533,6 +533,7 @@ public class Methods {
         waitForIncallStatus.until(ExpectedConditions.textMatches(By.cssSelector(
                 "#statusButton > span.ui-button-text.ui-c"), Pattern.compile(".*\\bIncall\\b.*")));
         Screen screen = new Screen();
+
         org.sikuli.script.Pattern mltest;
         if (browser.equals("chrome")) {
             mltest = new org.sikuli.script.Pattern("C:\\SikuliImages\\mltestChrome.png");
