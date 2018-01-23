@@ -54,7 +54,7 @@ public class Methods {
             ChromeOptions chromeOptions = setChromeLogs();
             if(isLocal()){
             } else{
-            chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
+   //         chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
             }
             if(Boolean.getBoolean("autoOpenDevtoolsForTabs")){
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
