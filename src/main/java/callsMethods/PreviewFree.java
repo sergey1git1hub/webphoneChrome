@@ -44,17 +44,16 @@ public class PreviewFree {
     }
 
 
-    public static void processCall() throws InterruptedException, FindFailed, UnsupportedEncodingException, UnknownHostException {
-        try{
-            System.out.println("try{");
-            Methods.openCXphone(5000);
+    public static void processCall() throws InterruptedException, FindFailed, IOException {
+        /*try{*/
+       // Methods.openCXphone(5000);
         Methods.agentAcceptCall(driver, 30);
-        } catch(Exception e){
+       /* } catch(Exception e){
             e.printStackTrace();
             WebDriver driverTemp = Methods.loginToPD();
             Methods.runPDCampaign(driverTemp, 252);
             Methods.agentAcceptCall(driver, 30);
-        }
+        }*/
         Methods.cxAnswer();
         Methods.saveCRMCard(driver);
         Methods.checkStatus(driver, "Relax", 3);

@@ -510,8 +510,8 @@ public class Methods {
 
         WebDriverWait waitForButtonAccept = new WebDriverWait(driver, waitTime);
 
-        waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_accept']")));
-        WebElement button_Accept = driver.findElement(By.cssSelector("[id = 'btn_accept']"));
+        waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_preview_accept']")));
+        WebElement button_Accept = driver.findElement(By.cssSelector("[id = 'btn_preview_accept']"));
         //if not wait, CRM card not opened
         Thread.sleep(500);
         if (isIE(driver) == true) {
