@@ -5,7 +5,7 @@
     <listeners>
         <listener class-name="utils.SuiteListener" />
     </listeners>
-  <!--  <test name="calls.TwoLinesAgentHangup">
+    <test name="calls.TwoLinesAgentHangup">
         <classes>
             <class name="calls.TwoLinesAgentHangup"/>
             <class name="callsMethods.Methods"/>
@@ -19,7 +19,7 @@
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>-->
+    </test>
 
 
     <test name="calls.PDPreviewFreeCall">

@@ -10,13 +10,16 @@ import data.Data;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import utils.Flags;
 import utils.RetryAnalyzer;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
+import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
 
 
@@ -27,16 +30,35 @@ import static utils.TestSetup.setup;
 public class Transfer {
     static WebDriver transferInitiator;
     static WebDriver transferReceiver;
-    static String callToNumber = "94949";
-    static String transferToNumber = "94948";
-    static String transferToAgent = "81058";
-    static String transferFromAgent = "81016";
+    static String callToNumber;
+    static String transferToNumber;
+    static String transferToAgent;
+    static String transferFromAgent;
     static WebDriver dummiDriver;
 
     static String transferToQueue = "33333";
 
     static boolean fast = false;
     static int delay = 2;
+
+    static{
+        try {
+            if(isLocal()){
+                callToNumber = "94949";
+                transferToNumber = "94948";
+                transferToAgent = "81046";
+                transferFromAgent = "81047";
+            } else{
+                callToNumber = "94949";
+                transferToNumber = "94948";
+                transferToAgent = "81048";
+                transferFromAgent = "81049";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     @Test(retryAnalyzer = RetryAnalyzer.class)

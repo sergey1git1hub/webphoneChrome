@@ -15,9 +15,9 @@ public class Data {
 
     public String browser;
     public String webphoneUrl;
-    public  String method;
+    public String method;
     public String username;
-    public  String group;
+    public String group;
     public String number1;
     public String number2;
     public String dbTable;
@@ -28,18 +28,21 @@ public class Data {
     public static String PDUrl = "http://172.21.24.109:8087/gbpowerdialer/#/login";
 
     public Data() throws UnknownHostException {
-        number1 = "94949";
-        number2 = "94948";
 
-        if(isLocal()){
-        username = "81046";
+        if (isLocal()) {
+            username = "81046";
+            number1 = "94949";
+            number2 = "94948";
         } else {
             username = "81048";
-            retryLimit =2;
+            number1 = "94944";
+            number2 = "94947";
+            retryLimit = 2;
         }
 
 
     }
+
     public static Data createData() throws UnknownHostException {
         Data data;
         String host_Name = InetAddress.getLocalHost().getHostName();
@@ -49,9 +52,9 @@ public class Data {
         } else {
             data = new IEData();
         }
-        try{
+        try {
             System.out.println(data.browser);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return data;

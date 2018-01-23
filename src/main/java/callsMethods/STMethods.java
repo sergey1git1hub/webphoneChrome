@@ -3,6 +3,8 @@ package callsMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.FindFailed;
 
 import java.awt.*;
@@ -10,6 +12,9 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
+
+import static callsMethods.Methods.clickIEelement;
+import static utils.Flags.isIE;
 
 /**
  * Created by SChubuk on 15.11.2017.
@@ -58,8 +63,16 @@ public class STMethods {
     }
 
     public static void acceptTransfer(WebDriver driver) throws InterruptedException {
-        Thread.sleep(1000);
-        Methods.agentAcceptCall(driver, 10);
+        Thread.sleep(2000);
+        By byIdAccept = By.cssSelector("[id = 'btn_preview_accept'], [id = 'btn_accept']");
+        WebElement button_Accept = driver.findElement(byIdAccept);
+        Thread.sleep(500);
+      /*  if (isIE(driver) == true) {
+            clickIEelement(driver, button_Accept);
+        } else {*/
+            button_Accept.click();
+        /*}*/
+
     }
 
 

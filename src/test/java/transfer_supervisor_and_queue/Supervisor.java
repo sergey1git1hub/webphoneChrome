@@ -21,9 +21,11 @@ import utils.Flags;
 import utils.RetryAnalyzer;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 import static callsMethods.STMethods.loginInitiator;
 import static callsMethods.STMethods.loginReceiver;
+import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
 
 
@@ -38,10 +40,27 @@ public class Supervisor {
     static WebDriver supervisor;
     static boolean fast = false;
     static int delay = 2;
-    static String supervisor_number = "81058";
-    static String agent_number = "81059";
+    static String supervisor_number;
+    static String agent_number;
     static WebDriver dummiDriver;
 
+
+    static {
+
+        try {
+            if (isLocal()) {
+                supervisor_number = "81046";
+                agent_number = "81047";
+
+            } else {
+                supervisor_number = "81048";
+                agent_number = "81049";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
@@ -65,10 +84,13 @@ public class Supervisor {
             WebElement userName = supervisor.findElement(By.xpath("//*[text()='" + agent_number + "']"));
             userName.click();
             By button_listen_selector = By.cssSelector("[id = 'tabView:supervisorListen']");
+            WebDriverWait waitForButtonListen = new WebDriverWait(supervisor, 5);
+            waitForButtonListen.until(ExpectedConditions.elementToBeClickable(button_listen_selector));
+
             WebElement button_listen = supervisor.findElement(button_listen_selector);
             button_listen.click();
-            JavascriptExecutor js = (JavascriptExecutor) supervisor;
-            js.executeScript("runSupervisorAction('silent');PrimeFaces.ab({source:'tabView:supervisorListen',update:'growl'});");
+   /*         JavascriptExecutor js = (JavascriptExecutor) supervisor;
+            js.executeScript("runSupervisorAction('silent');PrimeFaces.ab({source:'tabView:supervisorListen',update:'growl'});");*/
 
 
             //END LISTENING IN IE
@@ -96,7 +118,7 @@ public class Supervisor {
             setup(dummiDriver);
 
             //OPEN IE
-            supervisor =  loginReceiver(supervisor, supervisor_number);
+            supervisor = loginReceiver(supervisor, supervisor_number);
             //talk to user
             //OPEN CHROME
             CallOnTwoLines.call();
@@ -137,7 +159,7 @@ public class Supervisor {
         try {
             setup(dummiDriver);
             //OPEN IE
-            supervisor =  loginReceiver(supervisor, "81058");
+            supervisor = loginReceiver(supervisor, "81058");
 
 
             //OPEN CHROME

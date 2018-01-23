@@ -509,9 +509,9 @@ public class Methods {
     public static WebDriver agentAcceptCall(WebDriver driver, int waitTime) throws InterruptedException {
 
         WebDriverWait waitForButtonAccept = new WebDriverWait(driver, waitTime);
-
-        waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_preview_accept']")));
-        WebElement button_Accept = driver.findElement(By.cssSelector("[id = 'btn_preview_accept']"));
+        By byIdAccept = By.cssSelector("[id = 'btn_preview_accept'], [id = 'btn_accept']");
+        waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(byIdAccept));
+        WebElement button_Accept = driver.findElement(byIdAccept);
         //if not wait, CRM card not opened
         Thread.sleep(500);
         if (isIE(driver) == true) {

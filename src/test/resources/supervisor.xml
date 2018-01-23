@@ -9,14 +9,14 @@
             <class name="utils.BeforeAfter"/>
             <class name="transfer_supervisor_and_queue.Supervisor">
                 <methods>
-                   <!-- <include name="call"/>-->
+                    <include name="call"/>
                     <include name="listen"/>
-                    <!--<include name="talkToUser"/>
+                    <include name="talkToUser"/>
                    <include name="bargeIn"/>
                     <include name="logUserOut"/>
                     <include name="sendNotification"/>
                    <include name="assist"/>
-                    <include name="changeStatus"/>-->
+                    <include name="changeStatus"/>
                </methods>
             </class>
         </classes>

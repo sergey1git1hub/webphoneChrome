@@ -41,14 +41,14 @@ public class CallOnTwoLines {
 
     public static WebDriver callOnFirstLine() throws FindFailed, InterruptedException, IOException {
         Methods.openCXphone(5000);
-        Methods.call(driver, 1, "94949");
+        Methods.call(driver, 1, data.number1);
         Methods.cxAnswer();
         return driver;
     }
 
 
     public static WebDriver callOnSecondLine() throws FindFailed, InterruptedException, UnknownHostException {
-        Methods.call(driver, 2, "94948");
+        Methods.call(driver, 2, data.number2);
         Methods.cxAnswer();
         return driver;
     }
