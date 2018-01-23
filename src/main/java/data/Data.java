@@ -18,8 +18,8 @@ public class Data {
     public  String method;
     public String username;
     public  String group;
-    public String number1 = "94949";
-    public String number2 = "94948";
+    public String number1;
+    public String number2;
     public String dbTable;
     public String dbPhoneNumber;
     public static String localhostName = "KV1-EM-PC-14";
@@ -32,9 +32,9 @@ public class Data {
         number2 = "94948";
 
         if(isLocal()){
-        username = "81044";
+        username = "81046";
         } else {
-            username = "81046";
+            username = "81048";
             retryLimit =2;
         }
 

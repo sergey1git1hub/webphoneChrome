@@ -10,6 +10,7 @@ import callsMethods.Methods;
 import callsMethods.PreviewFree;
 import utils.RetryAnalyzer;
 
+import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
 
@@ -30,7 +31,11 @@ public class PDPreviewFreeCall {
             PreviewFree.LoginAD();
             PreviewFree.changeStatusToAvailable();
             Methods.switchToAdTab(PreviewFree.driver);
-            Methods.runSqlQuery("pd_5009_3", "94949");
+            if (isLocal()) {
+                Methods.runSqlQuery("pd_automation_preview_free_local", "94949");
+            } else {
+                Methods.runSqlQuery("pd_automation_preview_free_jenkins", "94949");
+            }
             PreviewFree.processCall();
             teardown(PreviewFree.driver, "pDPreviewFreeCall");
         } catch (Exception e) {

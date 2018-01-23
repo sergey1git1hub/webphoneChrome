@@ -140,7 +140,7 @@
             <version>2.20.1</version>
             <configuration>
                 <systemPropertyVariables>
-                    <closeBrowser>false</closeBrowser>
+                    <closeBrowser>true</closeBrowser>
                     <autoOpenDevtoolsForTabs>false</autoOpenDevtoolsForTabs>
                     <CHROME_LOG_FILE>video</CHROME_LOG_FILE>
                 </systemPropertyVariables>

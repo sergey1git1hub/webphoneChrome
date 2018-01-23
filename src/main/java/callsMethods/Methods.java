@@ -52,7 +52,7 @@ public class Methods {
 
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
             ChromeOptions chromeOptions = setChromeLogs();
-            chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
+           // chromeOptions.addArguments("user-data-dir=C:/Users/schubuk/AppData/Local/Google/Chrome/User Data");
             if(Boolean.getBoolean("autoOpenDevtoolsForTabs")){
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
@@ -173,17 +173,19 @@ public class Methods {
             Thread.sleep(1000);
             driver = handleLogoutWindow(driver);
         } else {
+            By byNameU = By.cssSelector("[name=username_input]");
             WebDriverWait waitForUsername = new WebDriverWait(driver, 5);
-            waitForUsername.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[name=username_input]")));
-            WebElement name = driver.findElement(By.cssSelector("[name=username_input]"));
-            WebElement password = driver.findElement(By.cssSelector("[name=password_input]"));
+            waitForUsername.until(ExpectedConditions.presenceOfElementLocated(byNameU));
+            WebElement userName = driver.findElement(byNameU);
+            userName.sendKeys(username);
+
+            By byNameP = By.cssSelector("[name=password_input]");
+            WebElement password = driver.findElement(byNameP);
+            password.sendKeys("1");
+
 
             WebElement button_Connect = driver.findElement(By.cssSelector("[name='btn_connect']"));
-            name.sendKeys(username);
-            if (fast == false)
-                password.sendKeys("1");
             button_Connect.click();
-            //if(fast ==false);
 
             driver = handleLogoutWindow(driver);
         }
@@ -197,8 +199,8 @@ public class Methods {
         WebElement element = driver.findElement(By.cssSelector("[data-label=" + group + "]"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         Thread.sleep(500);
-        WebElement chatGroup = driver.findElement(By.cssSelector("[data-label=" + group + "]"));
-        chatGroup.click();
+        WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label=" + group + "]"));
+        groupInDropdown.click();
         WebElement btnContinue = driver.findElement(By.cssSelector("#btn_continue > span.ui-button-text.ui-c"));
         btnContinue.click();
 

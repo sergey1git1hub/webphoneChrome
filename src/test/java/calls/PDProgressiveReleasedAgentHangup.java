@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 
 import static data.Data.createData;
+import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
 
@@ -45,7 +46,12 @@ public class PDProgressiveReleasedAgentHangup {
 
 
     public static void runSQLQuery() throws SQLException, ClassNotFoundException, InterruptedException, FindFailed, IOException {
-        Methods.runSqlQuery("pd_5220copy", "94949");
+        if (isLocal()) {
+            Methods.runSqlQuery("pd_automation_progressive_released_local", "94949");
+        } else {
+            Methods.runSqlQuery("pd_automation_progressive_released_jenkins", "94949");
+        }
+
         Methods.openCXphone(2000);
     }
 
