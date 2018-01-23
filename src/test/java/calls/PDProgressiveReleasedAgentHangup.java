@@ -49,7 +49,7 @@ public class PDProgressiveReleasedAgentHangup {
         if (isLocal()) {
             Methods.runSqlQuery("pd_automation_progressive_released_local", "94949");
         } else {
-            Methods.runSqlQuery("pd_automation_progressive_released_jenkins", "94949");
+            Methods.runSqlQuery("pd_automation_progressive_released_jenkins", "94944");
         }
 
         Methods.openCXphone(2000);

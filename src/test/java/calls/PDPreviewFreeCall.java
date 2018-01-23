@@ -34,7 +34,7 @@ public class PDPreviewFreeCall {
             if (isLocal()) {
                 Methods.runSqlQuery("pd_automation_preview_free_local", "94949");
             } else {
-                Methods.runSqlQuery("pd_automation_preview_free_jenkins", "94949");
+                Methods.runSqlQuery("pd_automation_preview_free_jenkins", "94944");
             }
             PreviewFree.processCall();
             teardown(PreviewFree.driver, "pDPreviewFreeCall");
