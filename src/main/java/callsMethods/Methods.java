@@ -52,7 +52,10 @@ public class Methods {
 
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
             ChromeOptions chromeOptions = setChromeLogs();
-           // chromeOptions.addArguments("user-data-dir=C:/Users/schubuk/AppData/Local/Google/Chrome/User Data");
+            if(isLocal()){
+            } else{
+            chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
+            }
             if(Boolean.getBoolean("autoOpenDevtoolsForTabs")){
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
