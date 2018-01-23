@@ -180,10 +180,12 @@ public class Methods {
             WebDriverWait waitForUsername = new WebDriverWait(driver, 5);
             waitForUsername.until(ExpectedConditions.presenceOfElementLocated(byNameU));
             WebElement userName = driver.findElement(byNameU);
+            userName.clear();
             userName.sendKeys(username);
 
             By byNameP = By.cssSelector("[name=password_input]");
             WebElement password = driver.findElement(byNameP);
+            password.clear();
             password.sendKeys("1");
 
 
