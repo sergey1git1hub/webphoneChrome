@@ -31,16 +31,7 @@ public class PreviewFree {
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Тренинг", 60);
-        try{
-            WebElement username = driver.findElement(By.cssSelector("[name = 'j_username']"));
-            username.sendKeys("81016");
-            WebElement password = driver.findElement(By.cssSelector("[name = 'j_password']"));
-            password.sendKeys("1");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
-
 
     public static void changeStatusToAvailable() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.changeStatus(driver, "Available");
