@@ -484,10 +484,15 @@ public class Methods {
         WebElement adTab = driver.findElement(By.xpath("//a[@href = '#tabView:tab123']"));
         adTab.click();
         try{
+
+            driver.switchTo().frame("TAB_123");
             WebElement username = driver.findElement(By.cssSelector("[name = 'j_username']"));
             username.sendKeys("81016");
             WebElement password = driver.findElement(By.cssSelector("[name = 'j_password']"));
             password.sendKeys("1");
+            WebElement login = driver.findElement(By.cssSelector("[name = 'login']"));
+            password.click();
+            driver.switchTo().defaultContent();
         } catch (Exception e){
             e.printStackTrace();
         }
