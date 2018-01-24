@@ -491,7 +491,7 @@ public class Methods {
             WebElement password = driver.findElement(By.cssSelector("[name = 'j_password']"));
             password.sendKeys("1");
             WebElement login = driver.findElement(By.cssSelector("[name = 'login']"));
-            password.click();
+            login.click();
             driver.switchTo().defaultContent();
         } catch (Exception e){
             e.printStackTrace();
