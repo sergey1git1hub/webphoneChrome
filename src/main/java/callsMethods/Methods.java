@@ -559,6 +559,9 @@ public class Methods {
         org.sikuli.script.Pattern button_OK = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_OK.png");
         screen.wait(button_OK, 10);
         screen.click(button_OK);
+
+        WebElement visitDate = driver.findElement(By.cssSelector("[id = 'column1469']"));
+        visitDate.sendKeys("2018-03-20");
         org.sikuli.script.Pattern button_nextForm = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_nextForm.png");
         screen.wait(button_nextForm, 10);
         screen.click(button_nextForm);
