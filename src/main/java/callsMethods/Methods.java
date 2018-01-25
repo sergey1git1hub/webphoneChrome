@@ -560,8 +560,10 @@ public class Methods {
         screen.wait(button_OK, 10);
         screen.click(button_OK);
 
+        driver.switchTo().frame("TAB_123");
         WebElement visitDate = driver.findElement(By.cssSelector("[id = 'column1469']"));
         visitDate.sendKeys("2018-03-20");
+        driver.switchTo().defaultContent();
 
         org.sikuli.script.Pattern button_nextForm = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_nextForm.png");
         screen.wait(button_nextForm, 10);
