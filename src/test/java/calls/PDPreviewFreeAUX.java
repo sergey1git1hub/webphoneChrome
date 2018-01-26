@@ -32,7 +32,7 @@ public class PDPreviewFreeAUX {
             Methods.switchToAdTab(PreviewFree.driver);
             PreviewFree.changeStatusToAUX();
             if (isLocal()) {
-                Methods.runSqlQuery("pd_automation_preview_free_local", "94949");
+                Methods.runSqlQuery("pd_automation_preview_free_local", "94948");
             } else {
                 Methods.runSqlQuery("pd_automation_preview_free_jenkins", "94944");
             }

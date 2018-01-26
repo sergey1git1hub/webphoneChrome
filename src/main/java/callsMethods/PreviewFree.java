@@ -48,7 +48,7 @@ public class PreviewFree {
     public static void processCall() throws InterruptedException, FindFailed, IOException {
         /*try{*/
        // Methods.openCXphone(5000);
-        Methods.agentAcceptCall(driver, 1000);
+        Methods.agentAcceptCall(driver, 40000, true);
        /* } catch(Exception e){
             e.printStackTrace();
             WebDriver driverTemp = Methods.loginToPD();

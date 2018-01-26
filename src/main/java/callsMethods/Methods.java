@@ -524,10 +524,17 @@ public class Methods {
     }
 
 
-    public static WebDriver agentAcceptCall(WebDriver driver, int waitTime) throws InterruptedException {
+    public static WebDriver agentAcceptCall(WebDriver driver, int waitTime, boolean isPreview) throws InterruptedException {
 
         WebDriverWait waitForButtonAccept = new WebDriverWait(driver, waitTime);
-        By byIdAccept = By.cssSelector("[id = 'btn_preview_accept'], [id = 'btn_accept']");
+        String idValue;
+        if(isPreview){
+            idValue = "btn_preview_accept";
+        } else {
+            idValue = "btn_accept";
+        }
+        driver.switchTo().defaultContent();
+        By byIdAccept = By.cssSelector("[id = '" + idValue + "']");
         waitForButtonAccept.until(ExpectedConditions.elementToBeClickable(byIdAccept));
         WebElement button_Accept = driver.findElement(byIdAccept);
         //if not wait, CRM card not opened
@@ -561,8 +568,14 @@ public class Methods {
         screen.click(button_OK);
 
         driver.switchTo().frame("TAB_123");
-        WebElement visitDate = driver.findElement(By.cssSelector("[id = 'column1469']"));
+        try{
+        WebElement visitDate = driver.findElement(By.cssSelector("[name = 'cardValues[0].value']"));
         visitDate.sendKeys("2018-03-20");
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        //visitDate.click();
+
         driver.switchTo().defaultContent();
 
         org.sikuli.script.Pattern button_nextForm = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_nextForm.png");
