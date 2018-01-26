@@ -44,19 +44,19 @@ public class Methods {
     static boolean fast;
 
 
-    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser,  String webphoneUrl) throws InterruptedException, IOException, FindFailed {
-        if(System.getProperty("webphoneUrl")!=null){
-        webphoneUrl = System.getProperty("webphoneUrl");
+    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, String webphoneUrl) throws InterruptedException, IOException, FindFailed {
+        if (System.getProperty("webphoneUrl") != null) {
+            webphoneUrl = System.getProperty("webphoneUrl");
         }
         if (browser.equalsIgnoreCase("chrome")) {
 
             System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
             ChromeOptions chromeOptions = setChromeLogs();
-            if(isLocal()){
-            } else{
-   //         chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
+            if (isLocal()) {
+            } else {
+                //         chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
             }
-            if(Boolean.getBoolean("autoOpenDevtoolsForTabs")){
+            if (Boolean.getBoolean("autoOpenDevtoolsForTabs")) {
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
             chromeOptions.addArguments("--preserve-log");
@@ -72,7 +72,7 @@ public class Methods {
 
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
-                        true);
+                    true);
 
             /**********PLAY WITH CAPABILITIES*********************/
             ieCapabilities.setCapability("initialBrowserUrl", webphoneUrl);
@@ -136,13 +136,13 @@ public class Methods {
             thread1.join();
             thread2.join();
 
-                WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
-                waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
-                Assert.assertEquals(driver.getTitle(), "gbwebphone");
-                WebElement language = driver.findElement(By.cssSelector("#lang_input_label"));
-                language.click();
-                WebElement language_en = driver.findElement(By.xpath("//li[text() = 'English']"));
-                language_en.click();
+            WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
+            waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
+            Assert.assertEquals(driver.getTitle(), "gbwebphone");
+            WebElement language = driver.findElement(By.cssSelector("#lang_input_label"));
+            language.click();
+            WebElement language_en = driver.findElement(By.xpath("//li[text() = 'English']"));
+            language_en.click();
 
         }
         return driver;
@@ -421,7 +421,7 @@ public class Methods {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_Hangup = driver.findElement(By.cssSelector("#btn_hangup"));
         //if (browser == "chrome")
-            button_Hangup.click();
+        button_Hangup.click();
         //else executor.executeScript("arguments[0].click();", button_Hangup);
         return driver;
     }
@@ -483,7 +483,7 @@ public class Methods {
         System.out.println("switchToAdTab");
         WebElement adTab = driver.findElement(By.xpath("//a[@href = '#tabView:tab123']"));
         adTab.click();
-        try{
+        try {
 
             driver.switchTo().frame("TAB_123");
             WebElement username = driver.findElement(By.cssSelector("[name = 'j_username']"));
@@ -493,7 +493,7 @@ public class Methods {
             WebElement login = driver.findElement(By.cssSelector("[name = 'login']"));
             login.click();
             driver.switchTo().defaultContent();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return driver;
@@ -528,7 +528,7 @@ public class Methods {
 
         WebDriverWait waitForButtonAccept = new WebDriverWait(driver, waitTime);
         String idValue;
-        if(isPreview){
+        if (isPreview) {
             idValue = "btn_preview_accept";
         } else {
             idValue = "btn_accept";
@@ -543,7 +543,7 @@ public class Methods {
             clickIEelement(driver, button_Accept);
         } else {
             button_Accept.click();
-       }
+        }
         return driver;
     }
 
@@ -568,10 +568,12 @@ public class Methods {
         screen.click(button_OK);
 
         driver.switchTo().frame("TAB_123");
-        try{
-        WebElement visitDate = driver.findElement(By.cssSelector("[name = 'cardValues[0].value']"));
-        visitDate.sendKeys("2018-03-20");
-        } catch(Exception e){
+        try {
+            WebElement visitDate = driver.findElement(By.cssSelector("[name = 'cardValues[0].value']"));
+            if (visitDate.getText().equalsIgnoreCase("")) {
+                visitDate.sendKeys("2018-03-20");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //visitDate.click();

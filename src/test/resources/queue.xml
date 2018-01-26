@@ -29,7 +29,8 @@
 
     <test name="transfer_supervisor_and_queue.TransferRefactored">
         <classes>
-            <class name="Methods"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
             <class name="transfer_supervisor_and_queue.Transfer">
                 <methods>
                     <include name="blindTransferToNumber"/>
