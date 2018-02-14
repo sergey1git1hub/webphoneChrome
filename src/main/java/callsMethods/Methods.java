@@ -205,10 +205,12 @@ public class Methods {
         WebElement groupList = driver.findElement(By.cssSelector("#group_input_label"));
         groupList.click();
 
-        WebElement element = driver.findElement(By.cssSelector("[data-label=" + group + "]"));
+        By groupSelector = By.cssSelector("[data-label='" + group + "']");
+        System.out.println(groupSelector);
+        WebElement element = driver.findElement(groupSelector);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         Thread.sleep(500);
-        WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label=" + group + "]"));
+        WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label='" + group + "']"));
         groupInDropdown.click();
         Thread.sleep(2000);
         System.out.println("Delay before button Continue.");

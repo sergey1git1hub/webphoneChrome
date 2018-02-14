@@ -32,7 +32,11 @@ public class PDProgressiveReleasedAgentHangup {
 
     public static void IELogin() throws InterruptedException, IOException, FindFailed {
         data = createData();
-        data.group = "\\Automation Progressive Released Jenkins";
+        if (isLocal()) {
+            data.group = "Automation Progressive Released Local";
+        } else {
+            data.group = "Automation Progressive Released Jenkins";
+        }
         Methods.browser = data.browser;
         driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);

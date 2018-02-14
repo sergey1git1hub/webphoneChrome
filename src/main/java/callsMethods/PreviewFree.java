@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 
 import static data.Data.createData;
+import static utils.Flags.isLocal;
 
 /**
  * Created by SChubuk on 04.10.2017.
@@ -22,7 +23,12 @@ public class PreviewFree {
 
     public static void createTestData() throws UnknownHostException {
         data = createData();
-        data.group = "Automation Preview Free Jenkins";
+        if(isLocal()){
+            data.group = "Automation Preview Free Local";
+        } else {
+            data.group = "Automation Preview Free Jenkins";
+        }
+
         Methods.browser = data.browser;
         Methods.onJenkins = false;
     }
