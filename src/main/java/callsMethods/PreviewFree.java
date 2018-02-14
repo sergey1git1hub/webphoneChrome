@@ -22,7 +22,7 @@ public class PreviewFree {
 
     public static void createTestData() throws UnknownHostException {
         data = createData();
-        data.group = "pasha_G_5_copy_preview";
+        data.group = "Automation Preview Free Jenkins";
         Methods.browser = data.browser;
         Methods.onJenkins = false;
     }

@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 
 public class IEData extends Data {
 
-
     public IEData() throws UnknownHostException {
         super();
         browser = "IE";

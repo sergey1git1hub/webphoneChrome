@@ -211,6 +211,7 @@ public class Methods {
         WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label=" + group + "]"));
         groupInDropdown.click();
         Thread.sleep(2000);
+        System.out.println("Delay before button Continue.");
         WebElement btnContinue = driver.findElement(By.cssSelector("#btn_continue > span.ui-button-text.ui-c"));
         btnContinue.click();
 
