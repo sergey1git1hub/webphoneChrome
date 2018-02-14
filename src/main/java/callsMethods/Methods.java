@@ -194,6 +194,10 @@ public class Methods {
 
             driver = handleLogoutWindow(driver);
         }
+
+      /*  String openDevTools = Keys.chord(Keys.ALT, Keys.CONTROL, "i");
+        driver.findElement(By.cssSelector("#btn_continue > span.ui-button-text.ui-c")).sendKeys(openDevTools);*/
+
         WebDriverWait waitForButtonContinue = new WebDriverWait(driver, 10);
         waitForButtonContinue.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#btn_continue > span.ui-button-text.ui-c")));
         WebDriverWait waitForGroupList = new WebDriverWait(driver, 10);
@@ -206,6 +210,7 @@ public class Methods {
         Thread.sleep(500);
         WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label=" + group + "]"));
         groupInDropdown.click();
+        Thread.sleep(2000);
         WebElement btnContinue = driver.findElement(By.cssSelector("#btn_continue > span.ui-button-text.ui-c"));
         btnContinue.click();
 
