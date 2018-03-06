@@ -31,9 +31,9 @@ public class TwoLinesAgentHangup {
             CallOnTwoLines.callOnTwoLines();
             driver = CallOnTwoLines.driver;
             data = CallOnTwoLines.data;
-            Thread.sleep(1000);
+            /*Thread.sleep(1000);
             WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
-            button_Hold.click();
+            button_Hold.click();*/
             Thread.sleep(1000);
             Methods.agentHangup(driver, 1);
             Thread.sleep(1000);
