@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 
 import static data.Data.createData;
+import static utils.Flags.isLocal;
 
 /**
  * Created by SChubuk on 05.10.2017.
@@ -22,7 +23,11 @@ public class CallOnTwoLines {
 
     public static void createTestData() throws UnknownHostException {
         data = createData();
-        data.group = "\\!test_group5_5220";
+        if(isLocal()){
+            data.group = "Automation Outbound Calls Local";
+        } else {
+            data.group = "Automation Outbound Calls Jenkins";
+        }
 
         /*****************IMPROVEMENT******************/
         Methods.browser = data.browser;
