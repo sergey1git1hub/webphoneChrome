@@ -7,10 +7,6 @@
     <groupId>global</groupId>
     <artifactId>webphone</artifactId>
     <version>1.0-SNAPSHOT</version>
-  <!--  <properties>
-        <closeBrowser>true</closeBrowser>
-        <autoOpenDevtoolsForTabs>false</autoOpenDevtoolsForTabs>
-    </properties>-->
 
     <dependencies>
         <dependency>
@@ -143,6 +139,7 @@
                     <closeBrowser>true</closeBrowser>
                     <autoOpenDevtoolsForTabs>false</autoOpenDevtoolsForTabs>
                     <CHROME_LOG_FILE>video</CHROME_LOG_FILE>
+                    <!--<browserName>ie</browserName>--> <!--do not work-->
                 </systemPropertyVariables>
 
                 <suiteXmlFiles>

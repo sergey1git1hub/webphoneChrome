@@ -388,11 +388,13 @@ public class Methods {
             phoneNumberField.click();
             phoneNumberField.clear();
             phoneNumberField.sendKeys(number);
+            Thread.sleep(200);
             System.out.println("Selenium send phone number key.");
             WebElement button_Call = driver.findElement(By.cssSelector("#btn_call"));
-            JavascriptExecutor executor = (JavascriptExecutor) driver;
+            button_Call.click();
+           /* JavascriptExecutor executor = (JavascriptExecutor) driver;
             executor.executeScript("arguments[0].click();", button_Call);
-            System.out.println("Button call clicked with javascript.");
+            System.out.println("Button call clicked with javascript.");*/
         } else {
 
         }
