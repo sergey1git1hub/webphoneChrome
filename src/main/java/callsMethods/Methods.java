@@ -707,5 +707,12 @@ public class Methods {
         }
     }
 
+    public static void logOut(WebDriver driver){
+        WebElement button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
+        button_LogOut.click();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
+    }
+
 
 }

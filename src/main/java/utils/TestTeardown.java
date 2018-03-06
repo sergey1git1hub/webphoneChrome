@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import static callsMethods.Methods.logOut;
 import static utils.Flags.isLocal;
 
 import static utils.Logs.saveLogs;
@@ -16,6 +17,7 @@ import static utils.Logs.saveLogs;
 public class TestTeardown {
     public static void teardown(WebDriver driver, String testName) throws IOException, InterruptedException {
         saveLogs(driver, testName);
+        logOut(driver);
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
             driver.quit();
