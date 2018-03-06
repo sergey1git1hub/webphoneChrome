@@ -368,6 +368,7 @@ public class Methods {
         return driver;
     }
 
+
     public static WebDriver call(WebDriver driver, int line, String number) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("call");
         String hostName = InetAddress.getLocalHost().getHostName();
@@ -511,7 +512,7 @@ public class Methods {
         System.out.println("getConnection");
         String userName = "GBWebPhoneTest";
         String password = "yt~k$tCW8%Gj";
-        String url = "jdbc:sqlserver://172.21.7.225\\\\corporate;DatabaseName=GBWebPhoneTest;portNumber=1438";
+        String url = "jdbc:sqlserver://172.21.65.14\\\\corporate;DatabaseName=GBWebPhoneTest;portNumber=1438";
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection conn = DriverManager.getConnection(url, userName, password);
         return conn;
