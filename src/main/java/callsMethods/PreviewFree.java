@@ -23,7 +23,7 @@ public class PreviewFree {
 
     public static void createTestData() throws UnknownHostException {
         data = createData();
-        if(isLocal()){
+        if (isLocal()) {
             data.group = "Automation Preview Free Local";
         } else {
             data.group = "Automation Preview Free Jenkins";
@@ -52,15 +52,19 @@ public class PreviewFree {
 
 
     public static void processCall() throws InterruptedException, FindFailed, IOException {
-        /*try{*/
-       // Methods.openCXphone(5000);
-        Methods.agentAcceptCall(driver, 40000, true);
-       /* } catch(Exception e){
+        try {
+            // Methods.openCXphone(5000);
+            Methods.agentAcceptCall(driver, 40000, true);
+        } catch (Exception e) {
             e.printStackTrace();
             WebDriver driverTemp = Methods.loginToPD();
-            Methods.runPDCampaign(driverTemp, 252);
-            Methods.agentAcceptCall(driver, 30);
-        }*/
+            if (isLocal()) {
+                Methods.runPDCampaign(driverTemp, 252);
+            } else {
+                Methods.runPDCampaign(driverTemp, 280);
+            }
+            Methods.agentAcceptCall(driver, 30, true);
+        }
         Methods.cxAnswer();
         Methods.saveCRMCard(driver);
         Methods.checkStatus(driver, "Relax", 3);

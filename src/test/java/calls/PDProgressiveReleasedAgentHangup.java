@@ -72,13 +72,17 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
 
-    public static void waitForCallOnClientSide2() throws FindFailed, InterruptedException {
+    public static void waitForCallOnClientSide2() throws FindFailed, InterruptedException, UnknownHostException {
         try {
             Methods.cxAnswer();
         } catch (Exception e) {
             e.printStackTrace();
             WebDriver driverTemp = Methods.loginToPD();
-            Methods.runPDCampaign(driverTemp, 257);
+            if (isLocal()) {
+                Methods.runPDCampaign(driverTemp, 257);
+            } else {
+                Methods.runPDCampaign(driverTemp, 281);
+            }
             Methods.cxAnswer();
         }
     }
