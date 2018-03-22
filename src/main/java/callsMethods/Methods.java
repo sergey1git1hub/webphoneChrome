@@ -431,9 +431,9 @@ public class Methods {
         Thread.sleep(500);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_Hangup = driver.findElement(By.cssSelector("#btn_hangup"));
-        //if (browser == "chrome")
+        if (browser == "chrome")
         button_Hangup.click();
-        //else executor.executeScript("arguments[0].click();", button_Hangup);
+        else executor.executeScript("arguments[0].click();", button_Hangup);
         return driver;
     }
 
