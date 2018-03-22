@@ -348,11 +348,11 @@ public class Methods {
             lineElement.click();
             System.out.println("Line switched by webdriver.");
         } else {
-            System.out.println("Browser is not chrome or running on Jenkns.");
+            /*System.out.println("Browser is not chrome or running on Jenkns.");
             if (!isLocal()) {
                 WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
                 lineElement.sendKeys(Keys.ENTER);
-            } else
+            } else*/
                 try {
                     if (driver instanceof JavascriptExecutor) {
                         ((JavascriptExecutor) driver)
