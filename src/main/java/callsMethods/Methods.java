@@ -353,17 +353,17 @@ public class Methods {
                 WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
                 lineElement.sendKeys(Keys.ENTER);
             } else*/
-                try {
-                    if (driver instanceof JavascriptExecutor) {
-                        ((JavascriptExecutor) driver)
-                                .executeScript("wp_common.wp_ChangeLine(" + line + "); log(event);");
-                        System.out.println("Line switched by javascript.");
-                    }
-                } catch (Exception e) {
-                    if (debug == true)
-                        e.printStackTrace();
-                    else System.out.println("JavaScript execution error!");
+            try {
+                if (driver instanceof JavascriptExecutor) {
+                    ((JavascriptExecutor) driver)
+                            .executeScript("wp_common.wp_ChangeLine(" + line + "); log(event);");
+                    System.out.println("Line switched by javascript.");
                 }
+            } catch (Exception e) {
+                if (debug == true)
+                    e.printStackTrace();
+                else System.out.println("JavaScript execution error!");
+            }
         }
         return driver;
     }
@@ -432,7 +432,7 @@ public class Methods {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_Hangup = driver.findElement(By.cssSelector("#btn_hangup"));
         if (browser.equalsIgnoreCase("chrome"))
-        button_Hangup.click();
+            button_Hangup.click();
         else executor.executeScript("arguments[0].click();", button_Hangup);
         return driver;
     }
@@ -707,7 +707,7 @@ public class Methods {
         }
     }
 
-    public static void logOut(WebDriver driver){
+    public static void logOut(WebDriver driver) {
         WebElement button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
         button_LogOut.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
