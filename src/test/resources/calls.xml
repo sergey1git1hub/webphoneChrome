@@ -11,7 +11,7 @@
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test> 
 
     <test name="calls.TwoLinesClientHangup">
         <classes>
