@@ -28,6 +28,22 @@
             <class name="utils.BeforeAfter"/>
         </classes>
     </test>
+
+    <test name="calls.IncorrectLogoutCloseBrowser">
+        <classes>
+            <class name="calls.IncorrectLogoutCloseBrowser"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+    <test name="calls.IncorrectLogoutKillProcess">
+        <classes>
+            <class name="calls.IncorrectLogoutKillProcess"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+
 <!--
     <test name="calls.PDPreviewFreeCall">
         <classes>

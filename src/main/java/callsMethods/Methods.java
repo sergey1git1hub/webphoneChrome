@@ -19,10 +19,7 @@ import utils.LoaderThread;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.regex.Pattern;
 
 import static utils.Flags.isIE;
@@ -740,6 +737,54 @@ public class Methods {
         button_LogOut.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
+    }
+
+
+    public static boolean isLogoutRecordPresent(String dateBeforeLogout, String username) throws SQLException, ClassNotFoundException {
+
+        Connection connection = getConnection();
+        Statement statement = null;
+        String query = "select *, username from wbp_user_log  inner join wbp_user on " +
+        "wbp_user_log.user_id = wbp_user.id where log_date>'" + dateBeforeLogout + "'" +
+        "and log_type = 'logout' and username = '" + username + "';";
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int columnsNumber = resultSetMetaData.getColumnCount();
+
+            while (resultSet.next()) {
+                System.out.println("New Row: ");
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    System.out.print(resultSetMetaData.getColumnName(i) + ": " + columnValue + "|");
+                }
+                System.out.println("");
+
+                String dbUserName = resultSet.getString("username");
+                String logType = resultSet.getString("log_type");
+
+                System.out.println(dbUserName);
+                System.out.println(logType);
+
+                boolean usernameMatches = username.equals(dbUserName);
+                boolean logTypeMatches = logType.equals("logout");
+
+                if (usernameMatches&&logTypeMatches) {
+                    return true;
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+        }
+
+        return false;
     }
 
 

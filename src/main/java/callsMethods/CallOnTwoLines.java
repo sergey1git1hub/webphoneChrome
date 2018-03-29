@@ -70,6 +70,11 @@ public class CallOnTwoLines {
         callOnFirstLine();
     }
 
+    public static void login() throws InterruptedException, FindFailed, IOException {
+        createTestData();
+        Login();
+    }
+
 
 
     public static void setResultCodeAndCheckAvailableStatus() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {

@@ -55,7 +55,7 @@ public class Logs {
     }
 
     public static ChromeOptions setChromeLogs(){
-        System.setProperty("webdriver.chrome.verboseLogging", "true");
+        System.setProperty("webdriver.chrome.verboseLogging", "false");
         DesiredCapabilities caps = DesiredCapabilities.chrome();
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.BROWSER, Level.ALL);
