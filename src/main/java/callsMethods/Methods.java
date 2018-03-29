@@ -335,6 +335,34 @@ public class Methods {
         return driver;
     }
 
+    public static void hold(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
+
+        WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
+        button_Hold.click();
+        checkStatus(driver, "Onhold", 6);
+
+
+    }
+
+    public static void unhold(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
+        WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
+        button_Hold.click();
+        checkStatus(driver, "Incall", 6);
+
+    }
+
+    public static void mute(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
+        WebElement button_Mute = driver.findElement(By.cssSelector("#btn_mute"));
+        button_Mute.click();
+        checkStatus(driver, "Muted", 6);
+    }
+
+    public static void unmute(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
+        WebElement button_Mute = driver.findElement(By.cssSelector("#btn_mute"));
+        button_Mute.click();
+        checkStatus(driver, "Incall", 6);
+    }
+
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         System.out.println("switchLine");
         String hostName = InetAddress.getLocalHost().getHostName();
@@ -414,7 +442,7 @@ public class Methods {
     public static void cxAnswer() throws FindFailed, InterruptedException {
         Screen screen = new Screen();
         org.sikuli.script.Pattern button_3CXAcceptCall = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_3CXAcceptCall.png");
-        screen.wait(button_3CXAcceptCall, 10);
+        screen.wait(button_3CXAcceptCall, 15);
         screen.click(button_3CXAcceptCall);
         if (fast = false)
             Thread.sleep(1000);
