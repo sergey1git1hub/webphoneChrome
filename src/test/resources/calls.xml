@@ -21,13 +21,13 @@
         </classes>
     </test>-->
 
-    <test name="calls.HoldMute">
+<!--    <test name="calls.HoldMute">
         <classes>
             <class name="calls.HoldMute"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test>-->
 
     <test name="calls.IncorrectLogoutCloseBrowser">
         <classes>
@@ -36,13 +36,14 @@
             <class name="utils.BeforeAfter"/>
         </classes>
     </test>
-    <test name="calls.IncorrectLogoutKillProcess">
+    
+  <!--  <test name="calls.IncorrectLogoutKillProcess">
         <classes>
             <class name="calls.IncorrectLogoutKillProcess"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test>-->
 
 <!--
     <test name="calls.PDPreviewFreeCall">
