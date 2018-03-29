@@ -32,8 +32,9 @@ public class IncorrectLogoutKillProcess  extends IncorrectLogout{
         incorrectLogoutKillProcess.incorrectLogout();
     }
 
-    public void logoutHook() throws IOException {
+    public void logoutHook() throws IOException, InterruptedException {
         Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+        Thread.sleep(60000);
     }
 
 }
