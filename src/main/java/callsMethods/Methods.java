@@ -74,7 +74,7 @@ public class Methods {
             /**********PLAY WITH CAPABILITIES*********************/
             ieCapabilities.setCapability("initialBrowserUrl", webphoneUrl);
             ieCapabilities.setCapability("nativeEvents", false);
-            ieCapabilities.setCapability("unexpectedAlertBehaviour", "accept");
+            //ieCapabilities.setCapability("unexpectedAlertBehaviour", "accept");
             ieCapabilities.setCapability("ignoreProtectedModeSettings", true);
             ieCapabilities.setCapability("disable-popup-blocking", true);
             ieCapabilities.setCapability("enablePersistentHover", true);
