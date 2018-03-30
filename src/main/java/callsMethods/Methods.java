@@ -772,7 +772,7 @@ public class Methods {
     public static WebDriver handleLogoutWindow(WebDriver driver) {
         System.out.println("handleLogoutWindow");
         try {
-            WebDriverWait waitForLogoutWindow = new WebDriverWait(driver, 3);
+            WebDriverWait waitForLogoutWindow = new WebDriverWait(driver, 6);
             waitForLogoutWindow.until(ExpectedConditions.elementToBeClickable(
                     By.cssSelector("#userLogoutForm\\3a btn_userlogout_yes > span.ui-button-text.ui-c")));
             WebElement button_Yes = driver.findElement(By.cssSelector("#userLogoutForm\\3a btn_userlogout_yes > span.ui-button-text.ui-c"));
