@@ -1,13 +1,16 @@
 package legacy;
 
+import callsMethods.Methods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.sikuli.script.FindFailed;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.net.UnknownHostException;
 
 import static org.testng.Assert.assertEquals;
 
@@ -16,6 +19,21 @@ import static org.testng.Assert.assertEquals;
  */
 public class Legacy {
 public static String webchatServerUrl;
+
+    public static void answerCallOnClientSide() throws FindFailed, InterruptedException, UnknownHostException {
+      /*  try {*/
+        Methods.cxAnswer();
+     /*   } catch (Exception e) {
+            e.printStackTrace();
+            WebDriver driverTemp = Methods.loginToPD();
+            if (isLocal()) {
+                Methods.runPDCampaign(driverTemp, 257);
+            } else {
+                Methods.runPDCampaign(driverTemp, 281);
+            }
+            Methods.cxAnswer();
+        }*/
+    }
 
     public static WebDriver login(WebDriver driver) throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");

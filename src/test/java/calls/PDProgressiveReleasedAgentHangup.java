@@ -72,19 +72,8 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
 
-    public static void waitForCallOnClientSide2() throws FindFailed, InterruptedException, UnknownHostException {
-        try {
+    public static void answerCallOnClientSide() throws FindFailed, InterruptedException, UnknownHostException {
             Methods.cxAnswer();
-        } catch (Exception e) {
-            e.printStackTrace();
-            WebDriver driverTemp = Methods.loginToPD();
-            if (isLocal()) {
-                Methods.runPDCampaign(driverTemp, 257);
-            } else {
-                Methods.runPDCampaign(driverTemp, 281);
-            }
-            Methods.cxAnswer();
-        }
     }
 
     public static void agentHangup() throws InterruptedException, FindFailed, UnknownHostException {
@@ -109,7 +98,7 @@ public class PDProgressiveReleasedAgentHangup {
             runSQLQuery();
             noIncomingCallToClient();
             changeStatusToAvailable();
-            waitForCallOnClientSide2();
+            answerCallOnClientSide();
             agentHangup();
             setResultCodeAndCheckAvailableStatus();
             teardown(driver, "pDProgressiveReleasedAgentHangup");

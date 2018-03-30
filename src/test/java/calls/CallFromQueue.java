@@ -30,7 +30,7 @@ public class CallFromQueue {
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public void incorrectLogout() throws Exception {
+    public void callFromQueue() throws Exception {
         setup(driver);
         CallOnTwoLines.login("Automation Call From Queue");
         driver = CallOnTwoLines.driver;
