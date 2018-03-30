@@ -45,6 +45,14 @@
         </classes>
     </test>
 
+       <test name="calls.CallFromQueue">
+        <classes>
+            <class name="calls.CallFromQueue"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+
     <test name="calls.PDPreviewFreeCall">
         <classes>
 
@@ -67,4 +75,6 @@
             <class name="utils.BeforeAfter"/>
         </classes>
     </test>
+
+
 </suite>

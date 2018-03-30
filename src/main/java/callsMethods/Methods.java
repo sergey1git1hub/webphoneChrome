@@ -787,5 +787,32 @@ public class Methods {
         return false;
     }
 
+    public static void callToQueue() throws FindFailed, InterruptedException, IOException {
+        App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
+        Screen screen = new Screen();
+        org.sikuli.script.Pattern numberFour = new org.sikuli.script.Pattern("C:\\SikuliImages\\numberFour.png");
+        screen.wait(numberFour, 5);
+        screen.click(numberFour);
+
+        org.sikuli.script.Pattern numberNine = new org.sikuli.script.Pattern("C:\\SikuliImages\\numberNine.png");
+        screen.wait(numberNine, 5);
+        screen.click(numberNine);
+
+        org.sikuli.script.Pattern numberZero = new org.sikuli.script.Pattern("C:\\SikuliImages\\numberZero.png");
+        screen.wait(numberZero, 5);
+        screen.click(numberZero);
+
+        org.sikuli.script.Pattern button3CXCall = new org.sikuli.script.Pattern("C:\\SikuliImages\\button3CXCall.png");
+        screen.wait(button3CXCall, 5);
+        screen.click(button3CXCall);
+
+        if (fast = false)
+            Thread.sleep(1000);
+        org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
+        screen.wait(closePhoneWindow, 10);
+        screen.click(closePhoneWindow);
+
+    }
+
 
 }

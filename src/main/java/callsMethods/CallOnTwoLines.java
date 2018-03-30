@@ -1,8 +1,10 @@
 package callsMethods;
+
 import data.Data;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
@@ -23,7 +25,7 @@ public class CallOnTwoLines {
 
     public static void createTestData() throws UnknownHostException {
         data = createData();
-        if(isLocal()){
+        if (isLocal()) {
             data.group = "Automation Outbound Calls Local";
         } else {
             data.group = "Automation Outbound Calls Jenkins";
@@ -64,6 +66,7 @@ public class CallOnTwoLines {
         callOnFirstLine();
         callOnSecondLine();
     }
+
     public static void call() throws InterruptedException, IOException, FindFailed {
         createTestData();
         Login();
@@ -75,6 +78,11 @@ public class CallOnTwoLines {
         Login();
     }
 
+    public static void login(String group) throws InterruptedException, FindFailed, IOException {
+        createTestData();
+        data.group = group;
+        Login();
+    }
 
 
     public static void setResultCodeAndCheckAvailableStatus() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
