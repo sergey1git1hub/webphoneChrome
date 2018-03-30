@@ -73,7 +73,7 @@ public class Methods {
 
             /**********PLAY WITH CAPABILITIES*********************/
             ieCapabilities.setCapability("initialBrowserUrl", webphoneUrl);
-            ieCapabilities.setCapability("nativeEvents", false);
+            ieCapabilities.setCapability("nativeEvents", true);
             //ieCapabilities.setCapability("unexpectedAlertBehaviour", "accept");
             ieCapabilities.setCapability("ignoreProtectedModeSettings", true);
             ieCapabilities.setCapability("disable-popup-blocking", true);
@@ -360,7 +360,26 @@ public class Methods {
 
     public static void unhold(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
         WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
-        button_Hold.click();
+
+        if (isIE(driver)) {
+
+            try {
+                if (driver instanceof JavascriptExecutor) {
+                    ((JavascriptExecutor) driver)
+                            .executeScript("wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;");
+                    System.out.println("Button hold pressed by javascript.");
+                }
+            } catch (Exception e) {
+                if (debug == true)
+                    e.printStackTrace();
+                else System.out.println("JavaScript execution error!");
+            }
+
+            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
+        } else {
+            button_Hold.click();
+
+        }
         checkStatus(driver, "Incall", 6);
 
     }
