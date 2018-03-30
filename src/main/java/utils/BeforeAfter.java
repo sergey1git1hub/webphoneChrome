@@ -36,10 +36,10 @@ public class BeforeAfter {
     @BeforeSuite
     public static void beforeSuite(ITestContext ctx) throws IOException, InterruptedException {
         killDrivers();
-        System.setProperty("browserName", "chrome");
+
         if (isLocal()) {
             System.setProperty("webdriver.ie.driver.loglevel", "ERROR");
-
+            System.setProperty("browserName", "chrome");
             if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("transfer")) {
                 System.setProperty("folderName", "transfer");
             } else if(ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("supervisor")){
