@@ -7,7 +7,9 @@ import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
+import static callsMethods.Methods.nicePrint;
 import static utils.Flags.isLocal;
 import static utils.Logs.createFolder;
 import static utils.Video.moveVideo;
@@ -35,6 +37,9 @@ public class BeforeAfter {
 
     @BeforeSuite
     public static void beforeSuite(ITestContext ctx) throws IOException, InterruptedException {
+        String testProperty = System.getProperty("test.property");
+        nicePrint(testProperty);
+
         killDrivers();
 
         if (isLocal()) {
@@ -42,7 +47,7 @@ public class BeforeAfter {
             System.setProperty("browserName", "chrome");
             if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("transfer")) {
                 System.setProperty("folderName", "transfer");
-            } else if(ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("supervisor")){
+            } else if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("supervisor")) {
                 System.setProperty("folderName", "supervisor");
             } else {
                 System.setProperty("folderName", System.getProperty("browserName"));

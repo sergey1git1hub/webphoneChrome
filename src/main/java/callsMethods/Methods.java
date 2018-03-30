@@ -788,9 +788,7 @@ public class Methods {
                 button_Yes.click();
             }
         } catch (Exception e) {
-            System.out.println("=============================================");
-            System.out.println("Logout window not found.");
-            System.out.println("=============================================");
+            nicePrint("Logout window not found.");
             //e.printStackTrace();
         }
         return driver;
@@ -901,6 +899,12 @@ public class Methods {
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
 
+    }
+
+    public static void nicePrint(String text){
+        System.out.println("=============================================");
+        System.out.println(text);
+        System.out.println("=============================================");
     }
 
 
