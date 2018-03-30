@@ -386,13 +386,50 @@ public class Methods {
 
     public static void mute(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
         WebElement button_Mute = driver.findElement(By.cssSelector("#btn_mute"));
-        button_Mute.click();
+
+        if (isIE(driver)) {
+
+            try {
+                if (driver instanceof JavascriptExecutor) {
+                    ((JavascriptExecutor) driver)
+                            .executeScript("wp_common.wp_Mute();log(event);PrimeFaces.ab({source:'btn_mute'});return false;");
+                    System.out.println("Button mute pressed by javascript.");
+                }
+            } catch (Exception e) {
+                if (debug == true)
+                    e.printStackTrace();
+                else System.out.println("JavaScript execution error!");
+            }
+
+            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
+        } else {
+            button_Mute.click();
+
+        }
         checkStatus(driver, "Muted", 6);
     }
 
     public static void unmute(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
         WebElement button_Mute = driver.findElement(By.cssSelector("#btn_mute"));
-        button_Mute.click();
+        if (isIE(driver)) {
+
+            try {
+                if (driver instanceof JavascriptExecutor) {
+                    ((JavascriptExecutor) driver)
+                            .executeScript("wp_common.wp_Mute();log(event);PrimeFaces.ab({source:'btn_mute'});return false;");
+                    System.out.println("Button mute pressed by javascript.");
+                }
+            } catch (Exception e) {
+                if (debug == true)
+                    e.printStackTrace();
+                else System.out.println("JavaScript execution error!");
+            }
+
+            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
+        } else {
+            button_Mute.click();
+
+        }
         checkStatus(driver, "Incall", 6);
     }
 
