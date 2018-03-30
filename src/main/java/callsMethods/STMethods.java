@@ -38,6 +38,21 @@ public class STMethods {
         return driver;
     }
 
+    public static WebDriver loginInitiator(WebDriver driver, String username, String group) throws InterruptedException, FindFailed, IOException {
+       /* Methods.openCXphone(100);*/
+        driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/");
+        Methods.login(driver, "usual", username, group);
+        Methods.checkStatus(driver, "Available", 30);
+        return driver;
+    }
+
+    public static WebDriver loginReceiver(WebDriver driver, String username, String group) throws InterruptedException, FindFailed, IOException {
+        driver = Methods.openWebphoneLoginPage(driver, "ie", "http://172.21.24.109/gbwebphone/");
+        Methods.login(driver, "usual", username, group);
+        Methods.checkStatus(driver, "Available", 60);
+        return driver;
+    }
+
 
     public static void call(WebDriver driver, String number) throws InterruptedException, FindFailed, UnknownHostException {
         Methods.call(driver, 1, number);

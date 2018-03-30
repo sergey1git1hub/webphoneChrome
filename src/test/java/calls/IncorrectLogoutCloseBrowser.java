@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static utils.Flags.isIE;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
 
@@ -24,24 +25,33 @@ import static utils.TestTeardown.teardown;
  * Created by SChubuk on 04.10.2017.
  */
 @Listeners(VideoListener.class)
-public class IncorrectLogoutCloseBrowser extends IncorrectLogout{
+public class IncorrectLogoutCloseBrowser extends IncorrectLogout {
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public void incorrectLogoutCloseBrowser() throws Exception {
-        IncorrectLogoutCloseBrowser incorrectLogoutCloseBrowser = new  IncorrectLogoutCloseBrowser();
+        IncorrectLogoutCloseBrowser incorrectLogoutCloseBrowser = new IncorrectLogoutCloseBrowser();
         incorrectLogoutCloseBrowser.incorrectLogout();
 
     }
 
     @Override
     public void logoutHook() throws FindFailed, InterruptedException {
-        Screen screen = new Screen();
-        org.sikuli.script.Pattern closeChromeWindow1 = new org.sikuli.script.Pattern("C:\\SikuliImages\\closeChromeWindow1.png");
-        screen.wait(closeChromeWindow1, 2);
-        screen.click(closeChromeWindow1);
 
+        if (isIE(driver)) {
+            Screen screen = new Screen();
+            org.sikuli.script.Pattern closeIEWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closeIEWindow.png");
+            screen.wait(closeIEWindow, 2);
+            screen.click(closeIEWindow);
 
+        } else {
+            Screen screen = new Screen();
+            org.sikuli.script.Pattern closeChromeWindow1 = new org.sikuli.script.Pattern("C:\\SikuliImages\\closeChromeWindow1.png");
+            screen.wait(closeChromeWindow1, 2);
+            screen.click(closeChromeWindow1);
+        }
+
+//closeIEWindow.png
         Thread.sleep(2000);
         driver.switchTo().alert().accept();
     }

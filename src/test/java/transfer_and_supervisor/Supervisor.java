@@ -1,4 +1,4 @@
-package transfer_supervisor_and_queue;
+package transfer_and_supervisor;
 
 import callsMethods.CallOnTwoLines;
 import callsMethods.Methods;
@@ -21,7 +21,6 @@ import utils.Flags;
 import utils.RetryAnalyzer;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import static callsMethods.STMethods.loginInitiator;
 import static callsMethods.STMethods.loginReceiver;

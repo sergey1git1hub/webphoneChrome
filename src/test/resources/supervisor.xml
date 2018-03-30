@@ -7,7 +7,7 @@
         <classes>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
-            <class name="transfer_supervisor_and_queue.Supervisor">
+            <class name="transfer_and_supervisor.Supervisor">
                 <methods>
                     <include name="call"/>
                     <include name="listen"/>

@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static utils.Flags.isIE;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
 
@@ -23,17 +24,22 @@ import static utils.TestTeardown.teardown;
  * Created by SChubuk on 04.10.2017.
  */
 @Listeners(VideoListener.class)
-public class IncorrectLogoutKillProcess  extends IncorrectLogout{
+public class IncorrectLogoutKillProcess extends IncorrectLogout {
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public void incorrectLogoutKillProcess() throws Exception {
-        IncorrectLogoutKillProcess incorrectLogoutKillProcess = new  IncorrectLogoutKillProcess();
+        IncorrectLogoutKillProcess incorrectLogoutKillProcess = new IncorrectLogoutKillProcess();
         incorrectLogoutKillProcess.incorrectLogout();
     }
 
     public void logoutHook() throws IOException, InterruptedException {
-        Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+        if (isIE(driver)) {
+            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+        } else {
+            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+        }
+
         Thread.sleep(60000);
     }
 

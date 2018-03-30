@@ -1,4 +1,4 @@
-package transfer_supervisor_and_queue; /**
+package transfer_and_supervisor; /**
  * Created by SChubuk on 15.11.2017.
  */
 
@@ -6,18 +6,15 @@ import callsMethods.Methods;
 import callsMethods.STMethods;
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
-import data.Data;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import utils.Flags;
 import utils.RetryAnalyzer;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
