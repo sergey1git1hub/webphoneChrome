@@ -788,7 +788,10 @@ public class Methods {
                 button_Yes.click();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("=============================================");
+            System.out.println("Logout window not found.");
+            System.out.println("=============================================");
+            //e.printStackTrace();
         }
         return driver;
     }
