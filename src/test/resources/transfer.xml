@@ -9,12 +9,10 @@
             <class name="utils.BeforeAfter"/>
             <class name="transfer_and_supervisor.Transfer">
                 <methods>
-                    <include name="blindTransferToNumber"/>
-                    <include name="attendedTransferToNumber"/>
+                    <!--<include name="blindTransferToNumber"/>-->
+                    <!--<include name="attendedTransferToNumber"/>-->
                     <include name="blindTransferToAgent"/>
                     <include name="attendedTransferToAgent"/>
-                    <include name="blindTransferToQueue"/>
-                    <include name="attendedTransferToQueue"/>
                     <include name="blindTransferToPoint"/>
                 </methods>
             </class>

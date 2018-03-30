@@ -39,16 +39,6 @@ public class IncorrectLogoutKillProcess extends IncorrectLogout {
         } else {
             Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
         }
-
-        waitBeforeCheckingDB(60);
     }
 
-    public void waitBeforeCheckingDB(int waitTimeSeconds) throws InterruptedException {
-        for (int i = 0; i < waitTimeSeconds; i++) {
-            System.out.println("Wait before checking DB.");
-            Thread.sleep(1000);
-
-        }
-
-    }
 }

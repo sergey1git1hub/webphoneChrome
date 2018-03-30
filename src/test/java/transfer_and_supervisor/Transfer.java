@@ -33,8 +33,6 @@ public class Transfer {
     static String transferFromAgent;
     static WebDriver dummiDriver;
 
-    static String transferToQueue = "33333";
-
     static boolean fast = false;
     static int delay = 2;
 
@@ -151,40 +149,6 @@ public class Transfer {
             throw e;
         }
     }
-
-/*    //call to queue 33333
-    @Test(retryAnalyzer = RetryAnalyzer.class)
-    @Video
-    public static void blindTransferToQueue() throws InterruptedException, IOException, FindFailed {
-        transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
-        STMethods.call(transferInitiator, callToNumber);
-        STMethods.makeTransfer(transferInitiator, "blind", transferToQueue);
-        STMethods.setResultCodeAndCheckAvailableStatus(transferInitiator);
-        Thread.sleep(10000);
-        transferReceiver = transferInitiator;
-        STMethods.acceptTransfer(transferReceiver);
-        Thread.sleep(5000);
-        Methods.clientHangup(transferReceiver, 1);
-        STMethods.setResultCodeAndCheckAvailableStatus(transferReceiver);
-    }
-
-    //ATTENDED TRANSFER TO QUEUE SHOULD BE THE SAME AS TRANSFER TO AGENT EXCEPT 33333
-    @Test(retryAnalyzer = RetryAnalyzer.class)
-    @Video
-    public static void attendedTransferToQueue() throws InterruptedException, IOException, FindFailed {
-        STMethods.login(transferReceiver);
-        STMethods.login(transferInitiator);
-        STMethods.call(transferInitiator, callToNumber);
-        STMethods.makeTransfer(transferInitiator, "attended", transferToAgent);
-        STMethods.switchWindow();
-        STMethods.acceptTransfer(transferReceiver);
-        Thread.sleep(5000);
-        Methods.agentHangup(transferInitiator,1);
-        STMethods.switchWindow();
-        Thread.sleep(5000);
-        Methods.agentHangup(transferReceiver,1);
-        STMethods.setResultCodeAndCheckAvailableStatus(transferReceiver);
-    }*/
 
 
     @Test(retryAnalyzer = RetryAnalyzer.class)

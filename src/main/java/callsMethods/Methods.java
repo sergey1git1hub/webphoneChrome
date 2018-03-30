@@ -529,9 +529,10 @@ public class Methods {
         Thread.sleep(500);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_Hangup = driver.findElement(By.cssSelector("#btn_hangup"));
-        if (browser.equalsIgnoreCase("chrome"))
+        if (isIE(driver))
+            executor.executeScript("arguments[0].click();", button_Hangup);
+        else
             button_Hangup.click();
-        else executor.executeScript("arguments[0].click();", button_Hangup);
         return driver;
     }
 
@@ -812,8 +813,20 @@ public class Methods {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
     }
 
+    public static boolean isLogoutRecordPresent(String dateBeforeLogout, String username, int poolingInterval, int waitTime) throws SQLException, ClassNotFoundException, InterruptedException {
+        for (int i = 0; i < waitTime; i += poolingInterval) {
 
-    public static boolean isLogoutRecordPresent(String dateBeforeLogout, String username) throws SQLException, ClassNotFoundException {
+            if (isLogoutRecordPresentIteration(dateBeforeLogout, username)) {
+                return true;
+            }
+            System.out.println("Wait before checking DB.");
+            Thread.sleep(poolingInterval * 1000);
+
+        }
+        return false;
+    }
+
+    public static boolean isLogoutRecordPresentIteration(String dateBeforeLogout, String username) throws SQLException, ClassNotFoundException {
 
         Connection connection = getConnection();
         Statement statement = null;

@@ -82,11 +82,11 @@ public class STMethods {
         By byIdAccept = By.cssSelector("[id = 'btn_preview_accept'], [id = 'btn_accept']");
         WebElement button_Accept = driver.findElement(byIdAccept);
         Thread.sleep(500);
-      /*  if (isIE(driver) == true) {
+        if (isIE(driver) == true) {
             clickIEelement(driver, button_Accept);
-        } else {*/
+        } else {
             button_Accept.click();
-        /*}*/
+        }
 
     }
 

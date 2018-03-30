@@ -49,7 +49,8 @@ public class IncorrectLogout {
         logoutHook();
 
         Thread.sleep(1000);
-        Assert.assertTrue(Methods.isLogoutRecordPresent(stringDateBeforeLogout, data.username));
+
+        Assert.assertTrue(Methods.isLogoutRecordPresent(stringDateBeforeLogout, data.username,1,120));
 
         CallOnTwoLines.login();
         driver = CallOnTwoLines.driver;
