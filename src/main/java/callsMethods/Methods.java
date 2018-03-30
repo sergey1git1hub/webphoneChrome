@@ -73,7 +73,7 @@ public class Methods {
 
             /**********PLAY WITH CAPABILITIES*********************/
             ieCapabilities.setCapability("initialBrowserUrl", webphoneUrl);
-            ieCapabilities.setCapability("nativeEvents", true);
+            ieCapabilities.setCapability("nativeEvents", false);
             //ieCapabilities.setCapability("unexpectedAlertBehaviour", "accept");
             ieCapabilities.setCapability("ignoreProtectedModeSettings", true);
             ieCapabilities.setCapability("disable-popup-blocking", true);
@@ -335,9 +335,26 @@ public class Methods {
     public static void hold(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
 
         WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
-        button_Hold.click();
-        checkStatus(driver, "Onhold", 6);
+        if (isIE(driver)) {
 
+            try {
+                if (driver instanceof JavascriptExecutor) {
+                    ((JavascriptExecutor) driver)
+                            .executeScript("wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;");
+                    System.out.println("Button hold pressed by javascript.");
+                }
+            } catch (Exception e) {
+                if (debug == true)
+                    e.printStackTrace();
+                else System.out.println("JavaScript execution error!");
+            }
+
+            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
+        } else {
+            button_Hold.click();
+
+        }
+        checkStatus(driver, "Onhold", 6);
 
     }
 
@@ -745,8 +762,8 @@ public class Methods {
         Connection connection = getConnection();
         Statement statement = null;
         String query = "select *, username from wbp_user_log  inner join wbp_user on " +
-        "wbp_user_log.user_id = wbp_user.id where log_date>'" + dateBeforeLogout + "'" +
-        "and log_type = 'logout' and username = '" + username + "';";
+                "wbp_user_log.user_id = wbp_user.id where log_date>'" + dateBeforeLogout + "'" +
+                "and log_type = 'logout' and username = '" + username + "';";
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -771,7 +788,7 @@ public class Methods {
                 boolean usernameMatches = username.equals(dbUserName);
                 boolean logTypeMatches = logType.equals("logout");
 
-                if (usernameMatches&&logTypeMatches) {
+                if (usernameMatches && logTypeMatches) {
                     return true;
                 }
 
