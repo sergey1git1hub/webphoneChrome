@@ -23,7 +23,7 @@ public class Video {
 
     public static void moveVideo() throws IOException, InterruptedException {
         File sourceDirectory = new File("video");
-        File destDirectory = new File(Logs.path);
+        File destDirectory = new File(System.getProperty("path"));
         //Thread.sleep(100 * 1000);
         FileUtils.copyDirectory(sourceDirectory, destDirectory);
         FileUtils.deleteDirectory(sourceDirectory);

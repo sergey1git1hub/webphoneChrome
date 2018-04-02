@@ -3,21 +3,31 @@ package utils;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import static callsMethods.Methods.log;
 import static utils.Flags.isLocal;
 import static callsMethods.Methods.openCXphone;
+import static utils.Logs.createLogFile;
 
 /**
  * Created by SChubuk on 03.01.2018.
  */
 public class TestSetup {
-    public static void setup(WebDriver driver) throws InterruptedException, FindFailed, IOException {
+    public static FileWriter fileWriter;
+    public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
+        if(fileWriter==null){
+            fileWriter = createLogFile(testName + " ");
+            fileWriter.write(testName.toUpperCase() + "\n");
+            System.out.println(testName.toUpperCase());
+        }
+
         if (Boolean.getBoolean("closeBrowser")) {
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
             Thread.sleep(2000); //might fix phone not opened problem
-            System.out.println("3CXPhone killed from setup method.");
+            log("3CXPhone killed from setup method.", "DEBUG");
             String hostName = InetAddress.getLocalHost().getHostName();
 
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
@@ -25,7 +35,7 @@ public class TestSetup {
                 Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
             }
             openCXphone(60);
-            System.out.println("openCXphone method called from setup method.");
+            log("OpenCXphone method called from setup method.", "DEBUG");
         }
     }
 }

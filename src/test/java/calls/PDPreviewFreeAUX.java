@@ -21,12 +21,13 @@ public class PDPreviewFreeAUX {
     static Data data;
     static WebDriver driver;
     static boolean debug = true;
+    public static String testName = "Agent cannot receive preview free call from Powerdialer while in AUX";
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void pDPreviewFreeAUX() throws Exception {
         try {
-            setup(PreviewFree.driver);
+            setup(PreviewFree.driver, testName);
             PreviewFree.createTestData();
             PreviewFree.LoginAD();
             Methods.switchToAdTab(PreviewFree.driver);
@@ -42,7 +43,7 @@ public class PDPreviewFreeAUX {
             PreviewFree.changeStatusToAvailable();
             //no incoming call
             PreviewFree.processCall();
-            teardown(PreviewFree.driver, "pDPreviewFreeAUX");
+            teardown(PreviewFree.driver, testName);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

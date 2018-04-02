@@ -27,11 +27,12 @@ public class CallFromQueue {
     static WebDriver driver;
     static boolean fast = false;
     static int delay = 2;
+    public static String testName = "Receive call from queue";
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public void callFromQueue() throws Exception {
-        setup(driver);
+        setup(driver, testName);
         CallOnTwoLines.login("Automation Call From Queue");
         driver = CallOnTwoLines.driver;
         data = CallOnTwoLines.data;
@@ -44,7 +45,7 @@ public class CallFromQueue {
         Methods.agentHangup(driver, 1);
         Thread.sleep(1000);
         CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-        teardown(driver, "callFromQueue");
+        teardown(driver, testName);
 
     }
 

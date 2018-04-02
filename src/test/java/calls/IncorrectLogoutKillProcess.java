@@ -25,12 +25,15 @@ import static utils.TestTeardown.teardown;
  */
 @Listeners(VideoListener.class)
 public class IncorrectLogoutKillProcess extends IncorrectLogout {
+    public static String testName = "Incorrect logout when browser process killed";
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public void incorrectLogoutKillProcess() throws Exception {
+        setup(driver, testName);
         IncorrectLogoutKillProcess incorrectLogoutKillProcess = new IncorrectLogoutKillProcess();
         incorrectLogoutKillProcess.incorrectLogout();
+        teardown(driver, testName);
     }
 
     public void logoutHook() throws IOException, InterruptedException {

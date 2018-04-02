@@ -60,7 +60,7 @@ public class Transfer {
     @Video
     public static void blindTransferToNumber() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "blindTransferToNumber");
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             System.out.println("Transfer Initiator  is : " + transferInitiator);
             Thread.sleep(10000);
@@ -82,7 +82,7 @@ public class Transfer {
     @Video
     public static void attendedTransferToNumber() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "attendedTransferToNumber");
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
             STMethods.makeTransfer(transferInitiator, "attended", transferToNumber);
@@ -104,7 +104,7 @@ public class Transfer {
     @Video
     public static void blindTransferToAgent() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "blindTransferToAgent");
             transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
@@ -128,7 +128,7 @@ public class Transfer {
     @Video
     public static void attendedTransferToAgent() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "attendedTransferToAgent");
             transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
@@ -155,7 +155,7 @@ public class Transfer {
     @Video
     public static void blindTransferToPoint() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "blindTransferToPoint");
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
             STMethods.makeTransfer(transferInitiator, "point", transferToNumber);

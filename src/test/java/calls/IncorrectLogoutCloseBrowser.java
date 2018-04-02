@@ -27,11 +27,14 @@ import static utils.TestTeardown.teardown;
 @Listeners(VideoListener.class)
 public class IncorrectLogoutCloseBrowser extends IncorrectLogout {
 
+    public static String testName = "Incorrect logout when browser window closed";
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public void incorrectLogoutCloseBrowser() throws Exception {
+        setup(driver, testName);
         IncorrectLogoutCloseBrowser incorrectLogoutCloseBrowser = new IncorrectLogoutCloseBrowser();
         incorrectLogoutCloseBrowser.incorrectLogout();
+        teardown(driver, testName);
 
     }
 

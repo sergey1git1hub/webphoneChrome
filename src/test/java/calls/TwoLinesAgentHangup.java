@@ -22,12 +22,13 @@ import static utils.TestTeardown.teardown;
 public class TwoLinesAgentHangup {
     static WebDriver driver;
     static Data data;
+    public static String testName = "Call on two lines with hangup on agent side";
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void twoLinesAgentHangup() throws Exception {
         try {
-            setup(driver);
+            setup(driver, testName);
             CallOnTwoLines.callOnTwoLines();
             driver = CallOnTwoLines.driver;
             data = CallOnTwoLines.data;
@@ -40,7 +41,7 @@ public class TwoLinesAgentHangup {
             Methods.agentHangup(driver, 2);
             Thread.sleep(1000);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            teardown(driver, "twoLinesAgentHangup");
+            teardown(driver, testName);
 
         } catch (Exception e) {
             e.printStackTrace();

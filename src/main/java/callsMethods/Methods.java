@@ -15,6 +15,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 import org.testng.Assert;
 import utils.LoaderThread;
+import utils.TestSetup;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -22,6 +23,7 @@ import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.regex.Pattern;
 
+import static utils.Flags.isChrome;
 import static utils.Flags.isIE;
 import static utils.Flags.isLocal;
 
@@ -36,7 +38,8 @@ public class Methods {
     public static String browser;
     public static boolean onJenkins;
     static boolean killProcess = true;
-    static boolean debug = true;
+    static boolean debug = Boolean.parseBoolean(System.getProperty("debug"));
+    public static FileWriter fileWriter;
 
     static boolean fast;
 
@@ -88,9 +91,8 @@ public class Methods {
                 public void run() {
                     Screen screen;
                     try {
-                        System.out.println("openWebphoneLoginPage.updateJavaLater");
+                        log("Waiting for update java later dialog.", "DEBUG");
                         screen = new Screen();
-
                         org.sikuli.script.Pattern checkbox_doNotAskAgain = new org.sikuli.script.Pattern("C:\\SikuliImages\\checkbox_doNotAskAgain.png");
                         screen.wait(checkbox_doNotAskAgain, 2);
                         screen.click(checkbox_doNotAskAgain);
@@ -99,15 +101,16 @@ public class Methods {
                         screen.wait(option_updateJavaLater, 2);
                         screen.click(option_updateJavaLater);
                     } catch (FindFailed findFailed) {
-                        if (debug == true) {
+                        log("There is no update java later window!", "DEBUG");
 
+                        if (debug == true) {
                             findFailed.printStackTrace();
                         } else {
-                            System.out.println("There is no update java later window!");
+
                         }
                     }
                     try {
-                        System.out.println("openWebphoneLoginPage.DoYouWantToRunThisApplication");
+                        //System.out.println("openWebphoneLoginPage.DoYouWantToRunThisApplication");
                         screen = new Screen();
                         org.sikuli.script.Pattern checkbox_acceptTheRisk = new org.sikuli.script.Pattern("C:\\SikuliImages\\checkbox_acceptTheRisk.png");
                         screen.wait(checkbox_acceptTheRisk, 2);
@@ -119,7 +122,7 @@ public class Methods {
                         if (debug == true) {
                             findFailed.printStackTrace();
                         } else {
-                            System.out.println("There is no do you want to run this application window!");
+                            log("There is no do you want to run this application window!", "DEBUG");
                         }
                     }
                 }
@@ -147,7 +150,6 @@ public class Methods {
 
 
     public static WebDriver login(WebDriver driver, String method, String username, String group) throws InterruptedException {
-        System.out.println("login");
         if (method == "sso") {
             WebElement button_SSO = driver.findElement(By.cssSelector("#ssoButton > span"));
             String winHandleBefore = driver.getWindowHandle();
@@ -188,7 +190,6 @@ public class Methods {
 
             WebElement button_Connect = driver.findElement(By.cssSelector("[name='btn_connect']"));
             button_Connect.click();
-
             driver = handleLogoutWindow(driver);
         }
 
@@ -210,37 +211,39 @@ public class Methods {
         WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label='" + group + "']"));
         groupInDropdown.click();
         Thread.sleep(2000);
-        System.out.println("Delay before button Continue.");
+
+        log("Delay before button Continue.", "DEBUG");
         WebElement btnContinue = driver.findElement(By.cssSelector("#btn_continue > span.ui-button-text.ui-c"));
         btnContinue.click();
 
+        log("Login to webphone as " + username + "/" + group + ".", "INFO");
         return driver;
     }
 
     public static WebDriver checkStatus(WebDriver driver, String status, int waitTime) throws UnknownHostException, UnsupportedEncodingException, InterruptedException {
 
-        System.out.println("checkStatus");
         if ((!isLocal()) && (status.equals("Тренинг"))) {
             Thread.sleep(10000);
         } else {
             WebDriverWait waitForStatus = new WebDriverWait(driver, waitTime);
             waitForStatus.until(ExpectedConditions.textMatches(By.cssSelector(
                     "#statusButton > span.ui-button-text.ui-c"), Pattern.compile(".*\\b" + status + "\\b.*")));
-            System.out.println("Wait for status.");
+            // System.out.println("Wait for status.");
 
             WebElement currentStatus = driver.findElement(By.cssSelector(
                     "#statusButton > span.ui-button-text.ui-c"));
-            System.out.println("Before assert status is: " + currentStatus.getText() + ".");
-            System.out.println("Asserting that contains: " + status + ".");
 
+            // System.out.println("Before assert status is: " + currentStatus.getText() + ".");
             Assert.assertTrue(currentStatus.getText().contains(status));
-            System.out.println("Check Status.");
+            //System.out.println("Asserting that contains: " + status + ".");
+            log("Check that status is " + status + ".", "INFO");
+
         }
         return driver;
     }
 
     public static WebDriver changeStatusNewDontWork(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
-        System.out.println("changeStatus");
+
         if (status.equalsIgnoreCase("Available")) {
             Screen screen = new Screen();
             org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
@@ -265,14 +268,15 @@ public class Methods {
         }
 
         checkStatus(driver, status, 2);
+        log("Change status to " + status + ".", "INFO");
         return driver;
     }
 
 
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
-        System.out.println("changeStatus");
+        //System.out.println("Changing status to " + status + ".");
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (!isLocal() && !browser.equals("chrome")) {
+        if (!isLocal() && isIE(driver)) {
             if (status.equalsIgnoreCase("Available")) {
                 Screen screen = new Screen();
                 org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
@@ -296,8 +300,8 @@ public class Methods {
                 screen.click(auxStatus);
             }
             checkStatus(driver, status, 2);
-            System.out.println("Host is: kv1-it-pc-jtest and browser is not Chrome.");
-        } else if (browser.equals("chrome")) {
+            //System.out.println("Host is: kv1-it-pc-jtest and browser is not Chrome.");
+        } else if (isChrome(driver)) {
             WebElement currentStatus = driver.findElement(By.cssSelector(
                     "#statusButton > span.ui-button-text.ui-c"));
             currentStatus.click();
@@ -311,7 +315,7 @@ public class Methods {
             }
             desirableStatus.click();
             checkStatus(driver, status, 2);
-            System.out.println("Browser is Chrome.");
+            // System.out.println("Browser is Chrome.");
         } else {
             JavascriptExecutor executor = (JavascriptExecutor) driver;
             WebElement currentStatus = driver.findElement(By.cssSelector(
@@ -327,8 +331,8 @@ public class Methods {
             }
             executor.executeScript("arguments[0].click();", desirableStatus);
             checkStatus(driver, status, 2);
-            System.out.println("Else.");
         }
+        log("Change status to " + status + ".", "INFO");
         return driver;
     }
 
@@ -354,6 +358,7 @@ public class Methods {
             button_Hold.click();
 
         }
+        System.out.println("Press button Onhold.");
         checkStatus(driver, "Onhold", 6);
 
     }
@@ -380,6 +385,7 @@ public class Methods {
             button_Hold.click();
 
         }
+        System.out.println("Unhold the call.");
         checkStatus(driver, "Incall", 6);
 
     }
@@ -406,6 +412,7 @@ public class Methods {
             button_Mute.click();
 
         }
+        System.out.println("Press button Mute.");
         checkStatus(driver, "Muted", 6);
     }
 
@@ -430,11 +437,11 @@ public class Methods {
             button_Mute.click();
 
         }
+        System.out.println("Unmute the call.");
         checkStatus(driver, "Incall", 6);
     }
 
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
-        System.out.println("switchLine");
         String hostName = InetAddress.getLocalHost().getHostName();
         if (driver.equals("chrome") && isLocal()) {
             System.out.println("Browser is chrome.");
@@ -444,7 +451,6 @@ public class Methods {
             Thread.sleep(1000);
             System.out.println("Slept 1000 ms.");
             lineElement.click();
-            System.out.println("Line switched by webdriver.");
         } else {
             /*System.out.println("Browser is not chrome or running on Jenkns.");
             if (!isLocal()) {
@@ -460,34 +466,32 @@ public class Methods {
             } catch (Exception e) {
                 if (debug == true)
                     e.printStackTrace();
-                else System.out.println("JavaScript execution error!");
+                else log("JavaScript execution error!", "DEBUG");
             }
         }
+        System.out.println("Switch to the " + line + " line.");
         return driver;
     }
 
 
     public static WebDriver call(WebDriver driver, int line, String number) throws FindFailed, InterruptedException, UnknownHostException {
-        System.out.println("call");
         String hostName = InetAddress.getLocalHost().getHostName();
         if (true/*hostName.equalsIgnoreCase("kv1-it-pc-jtest")*/) {
             switchLine(driver, line);
-            System.out.println("Line switched.");
             Thread.sleep(1000);
-            System.out.println("Sleep after Line switched.");
+            log("Sleep after Line switched.", "DEBUG");
             Screen screen = new Screen();
-            if (!(!isLocal() && browser.equals("chrome"))) {
+            if (!(!isLocal() && isChrome(driver))) {
                 org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
                 screen.wait(phoneNumberField_Sikuli, 10);
                 screen.click(phoneNumberField_Sikuli);
             }
-            System.out.println("Sikuli clkicked phone number filed.");
+            log("Sikuli clkicked phone number filed.", "DEBUG");
             WebElement phoneNumberField = driver.findElement(By.cssSelector("#PhoneNumber"));
             phoneNumberField.click();
             phoneNumberField.clear();
             phoneNumberField.sendKeys(number);
             Thread.sleep(200);
-            System.out.println("Selenium send phone number key.");
             WebElement button_Call = driver.findElement(By.cssSelector("#btn_call"));
             button_Call.click();
            /* JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -496,6 +500,8 @@ public class Methods {
         } else {
 
         }
+
+        log("Call to " + number + " on the " + line + " line.", "INFO");
         return driver;
 
     }
@@ -506,6 +512,7 @@ public class Methods {
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
         screen.wait(closePhoneWindow, waitTime);
         screen.click(closePhoneWindow);
+        log("Open 3CXPhone window.", "DEBUG");
 
     }
 
@@ -519,12 +526,11 @@ public class Methods {
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
-
+        log("Answer call on client side.", "INFO");
     }
 
     public static WebDriver agentHangup(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
 
-        System.out.println("agentHangup");
         switchLine(driver, line);
         Thread.sleep(500);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -533,6 +539,7 @@ public class Methods {
             executor.executeScript("arguments[0].click();", button_Hangup);
         else
             button_Hangup.click();
+        log("Hangup the call on agent side on the " + line + " line.", "INFO");
         return driver;
     }
 
@@ -551,10 +558,11 @@ public class Methods {
         screen.click(button_3CXHangupCall);
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
+        log("Hangup the call on client side on the " + line + "line.", "INFO");
     }
 
     public static WebDriver setWebphoneResultCode(WebDriver driver) throws InterruptedException, UnknownHostException, FindFailed {
-        System.out.println("setWebphoneResultCode");
+
         String hostName = InetAddress.getLocalHost().getHostName();
         if (!isLocal()) {
             Screen screen = new Screen();
@@ -584,6 +592,7 @@ public class Methods {
             WebElement button_Save = driver.findElement(By.cssSelector("#btn_rslt > span.ui-button-text.ui-c"));
             executor.executeScript("arguments[0].click();", button_Save);
         }
+        log("Select result code \"Udachno\".", "INFO");
         return driver;
 
 
@@ -629,8 +638,8 @@ public class Methods {
     }
 
     public static void runSqlQuery(String dbTable, String dbPhoneNumber) throws SQLException, ClassNotFoundException {
-        System.out.println("runSqlQuery");
         updateRecord(getConnection(), dbTable, dbPhoneNumber);
+        log("Add new number: " + dbPhoneNumber + " to " + dbTable + " table in database", "INFO");
     }
 
 
@@ -654,6 +663,11 @@ public class Methods {
         } else {
             button_Accept.click();
         }
+        if (isPreview) {
+            log("Accept preview call on agent side.", "INFO");
+        } else {
+            log("Accept call on agent side.", "INFO");
+        }
         return driver;
     }
 
@@ -665,7 +679,7 @@ public class Methods {
         Screen screen = new Screen();
 
         org.sikuli.script.Pattern mltest;
-        if (browser.equals("chrome")) {
+        if (isChrome(driver)) {
             mltest = new org.sikuli.script.Pattern("C:\\SikuliImages\\mltestChrome.png");
         } else {
             mltest = new org.sikuli.script.Pattern("C:\\SikuliImages\\mltest.png");
@@ -677,6 +691,8 @@ public class Methods {
         screen.wait(button_OK, 10);
         screen.click(button_OK);
 
+        log("Select MLTest card", "INFO");
+
         driver.switchTo().frame("TAB_123");
         try {
             WebElement visitDate = driver.findElement(By.cssSelector("[name = 'cardValues[0].value']"));
@@ -686,6 +702,8 @@ public class Methods {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log("Fill visit date", "INFO");
+
         //visitDate.click();
 
         driver.switchTo().defaultContent();
@@ -698,6 +716,7 @@ public class Methods {
         screen.wait(button_save, 10);
         screen.click(button_save);
 
+        log("Click button \"next\" to open select result code window.", "INFO");
         org.sikuli.script.Pattern selectResultCode = new org.sikuli.script.Pattern("C:\\SikuliImages\\selectResultCode.png");
         screen.wait(selectResultCode, 10);
         screen.click(selectResultCode);
@@ -705,14 +724,17 @@ public class Methods {
         org.sikuli.script.Pattern callLater = new org.sikuli.script.Pattern("C:\\SikuliImages\\callLater.png");
         screen.wait(callLater, 10);
         screen.click(callLater);
+
+        log("Select result code \"Call later\".", "INFO");
         Thread.sleep(2000);
         screen.wait(button_save, 10);
         screen.click(button_save);
+        log("Save CRM card.", "INFO");
+
         return driver;
     }
 
     public static WebDriver loginToPD() throws InterruptedException {
-        System.out.println("loginToPD");
         System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
         WebDriver agentPD = new ChromeDriver();
         agentPD.manage().window().maximize();
@@ -729,11 +751,13 @@ public class Methods {
         password.sendKeys("1");
         WebElement button_SignIn = agentPD.findElement(By.cssSelector("#loginModal > div > div > form > div.modal-footer > button"));
         button_SignIn.click();
+
+        log("Login to powerdialer as 81016(password=1)", "INFO");
         return agentPD;
     }
 
     public static void runPDCampaign(WebDriver agentPD, int campaignId) throws InterruptedException {
-        System.out.println("runPDCampaign");
+
         Thread.sleep(2000);
 
         WebElement columns = agentPD.findElement(By.xpath("//*[@id=\"campaignGrid\"]/div/div[1]"));
@@ -759,18 +783,18 @@ public class Methods {
             button_Start.click();
         }
         agentPD.quit();
+        log("Run powerdialer campaign with id = " + campaignId + ".", "INFO");
     }
 
 
     public static void clickIEelement(WebDriver driver, WebElement element) {
-        System.out.println("clickIEelement");
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element);
+        log("IE element clicked through JavascriptExecutor.", "DEBUG");
     }
 
 
     public static WebDriver handleLogoutWindow(WebDriver driver) {
-        System.out.println("handleLogoutWindow");
         try {
             WebDriverWait waitForLogoutWindow = new WebDriverWait(driver, 6);
             waitForLogoutWindow.until(ExpectedConditions.elementToBeClickable(
@@ -788,14 +812,15 @@ public class Methods {
                 button_Yes.click();
             }
         } catch (Exception e) {
-            nicePrint("Logout window not found.");
+            log("Logout window not found.", "DEBUG");
             //e.printStackTrace();
         }
+
+        log("Handle logout window.", "DEBUG");
         return driver;
     }
 
     public static void focusCXphone(int waitTime) throws FindFailed, InterruptedException, IOException {
-        System.out.println("openCXphone");
         String hostName = InetAddress.getLocalHost().getHostName();
         Thread.sleep(1000);
         if (hostName.equalsIgnoreCase("kv1-it-pc-jtest")) {
@@ -805,6 +830,7 @@ public class Methods {
             App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
             Thread.sleep(waitTime);
         }
+        log("3CXPhone opened and in focus.", "DEBUG");
     }
 
     public static void logOut(WebDriver driver) {
@@ -812,6 +838,7 @@ public class Methods {
         button_LogOut.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
+        log("Log out.", "INFO");
     }
 
     public static boolean isLogoutRecordPresent(String dateBeforeLogout, String username, int poolingInterval, int waitTime) throws SQLException, ClassNotFoundException, InterruptedException {
@@ -820,10 +847,11 @@ public class Methods {
             if (isLogoutRecordPresentIteration(dateBeforeLogout, username)) {
                 return true;
             }
-            System.out.println("Wait before checking DB.");
+            log("Wait before checking DB.", "DEBUG");
             Thread.sleep(poolingInterval * 1000);
 
         }
+        log("Check that logout record is present for user " + username, "INFO");
         return false;
     }
 
@@ -899,12 +927,38 @@ public class Methods {
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
 
+        log("Call to queue (490).", "INFO");
+
     }
 
-    public static void nicePrint(String text){
+    public static void nicePrint(String text) {
         System.out.println("=============================================");
         System.out.println(text);
         System.out.println("=============================================");
+    }
+
+    public static void log(String text, String logLevel) { //INFO, DEBUG, ERROR
+
+            String LOGLEVEL = System.getProperty("LOGLEVEL");
+            if (logLevel.equalsIgnoreCase(LOGLEVEL)) {
+                System.out.println(text);
+                writeLog(text);
+            }
+
+    }
+
+
+    public static void writeLog(String text) {
+        fileWriter = TestSetup.fileWriter;
+
+
+        try {
+            fileWriter.write(text + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

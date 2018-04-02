@@ -24,11 +24,13 @@ public class HoldMute {
     static WebDriver driver;
     static boolean fast = false;
     static int delay = 2;
+    public static String testName = "Check Hold and Mute functionality";
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void holdMute() throws Exception {
-        setup(driver);
+
+        setup(driver, testName);
         CallOnTwoLines.call();
         driver = CallOnTwoLines.driver;
         data = CallOnTwoLines.data;
@@ -48,7 +50,7 @@ public class HoldMute {
 
         Methods.clientHangup(driver, 1);
         CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-        teardown(driver, "holdMute");
+        teardown(driver, testName);
 
 
     }

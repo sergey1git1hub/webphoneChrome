@@ -29,6 +29,7 @@ public class PDProgressiveReleasedAgentHangup {
     static Data data;
     static WebDriver driver;
     static boolean debug = true;
+    public static String testName = "Agent receives progressive released call from Powerdialer";
 
     public static void IELogin() throws InterruptedException, IOException, FindFailed {
         data = createData();
@@ -92,7 +93,7 @@ public class PDProgressiveReleasedAgentHangup {
     @Video
     public static void pDProgressiveReleasedAgentHangup() throws Exception {
         try {
-            setup(driver);
+            setup(driver, testName);
             IELogin();
             changeStatusToAUX();
             runSQLQuery();
@@ -101,7 +102,7 @@ public class PDProgressiveReleasedAgentHangup {
             answerCallOnClientSide();
             agentHangup();
             setResultCodeAndCheckAvailableStatus();
-            teardown(driver, "pDProgressiveReleasedAgentHangup");
+            teardown(driver, testName);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

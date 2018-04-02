@@ -35,7 +35,6 @@ public class IncorrectLogout {
 
 
     public void incorrectLogout() throws Exception {
-        setup(driver);
         CallOnTwoLines.login();
         driver = CallOnTwoLines.driver;
         data = CallOnTwoLines.data;
@@ -57,7 +56,7 @@ public class IncorrectLogout {
 
         Thread.sleep(2000);
 
-        teardown(driver, "incorrectLogout");
+
 
     }
 

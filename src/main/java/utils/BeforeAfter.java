@@ -5,12 +5,12 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 import static callsMethods.Methods.nicePrint;
 import static utils.Flags.isLocal;
+import static utils.Logs.confSikulilogs;
 import static utils.Logs.createFolder;
 import static utils.Video.moveVideo;
 
@@ -18,7 +18,6 @@ import static utils.Video.moveVideo;
  * Created by SChubuk on 04.01.2018.
  */
 public class BeforeAfter {
-
 
     public static void killDrivers() throws IOException {
         Runtime.getRuntime().exec("taskkill /F /IM iedriverserver.exe");
@@ -29,7 +28,7 @@ public class BeforeAfter {
 
         File sourceDirectory = new File("video");
         FileUtils.deleteDirectory(sourceDirectory);
-        if (isLocal()) {
+        if (Boolean.getBoolean(System.getProperty("videoAndLogs.deleteIfLocal"))) {
             sourceDirectory = new File("videoAndLogs");
             FileUtils.deleteDirectory(sourceDirectory);
         }
@@ -37,14 +36,13 @@ public class BeforeAfter {
 
     @BeforeSuite
     public static void beforeSuite(ITestContext ctx) throws IOException, InterruptedException {
-        String testProperty = System.getProperty("test.property");
-        nicePrint(testProperty);
 
+        loadProperties();
         killDrivers();
+        confSikulilogs();
+
 
         if (isLocal()) {
-            System.setProperty("webdriver.ie.driver.loglevel", "ERROR");
-            System.setProperty("browserName", "chrome");
             if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("transfer")) {
                 System.setProperty("folderName", "transfer");
             } else if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("supervisor")) {
@@ -63,5 +61,36 @@ public class BeforeAfter {
         moveVideo();
     }
 
+    public static void loadProperties() {
+
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+
+            input = new FileInputStream("src\\resources\\autotest.properties");
+
+            // load a properties file
+            prop.load(input);
+
+            for (String name : prop.stringPropertyNames()) {
+                String value = prop.getProperty(name);
+                System.setProperty(name, value);
+                nicePrint(name + "=" + value);
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
 }

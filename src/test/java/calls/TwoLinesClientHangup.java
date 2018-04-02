@@ -21,12 +21,13 @@ public class TwoLinesClientHangup {
     static WebDriver driver;
     static boolean fast = false;
     static int delay = 2;
+    public static String testName = "Call on two lines with hangup on client side";
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void twoLinesClientHangup() throws Exception {
         try {
-        setup(driver);
+        setup(driver, testName);
         CallOnTwoLines.callOnTwoLines();
         driver = CallOnTwoLines.driver;
         data = CallOnTwoLines.data;
@@ -41,7 +42,7 @@ public class TwoLinesClientHangup {
             Methods.clientHangup(driver, 2);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         }
-        teardown(driver, "twoLinesClientHangup");
+        teardown(driver, testName);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

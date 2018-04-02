@@ -21,12 +21,13 @@ import static utils.TestTeardown.teardown;
 public class PDPreviewFreeCall {
     static Data data;
     static WebDriver driver;
+    public static String testName = "Agent receives preview free call from Powerdialer";
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void pDPreviewFreeCall() throws Exception {
         try {
-            setup(PreviewFree.driver);
+            setup(PreviewFree.driver, testName);
             PreviewFree.createTestData();
             PreviewFree.LoginAD();
             PreviewFree.changeStatusToAvailable();
@@ -37,7 +38,7 @@ public class PDPreviewFreeCall {
                 Methods.runSqlQuery("pd_automation_preview_free_jenkins", "94944");
             }
             PreviewFree.processCall();
-            teardown(PreviewFree.driver, "pDPreviewFreeCall");
+            teardown(PreviewFree.driver, testName);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

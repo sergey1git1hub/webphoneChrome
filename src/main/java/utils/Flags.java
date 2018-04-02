@@ -22,13 +22,15 @@ public class Flags {
 
 
     public static boolean isIE(WebDriver driver) {
-        System.out.println("isIE");
         Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
         String browserName = cap.getBrowserName().toLowerCase();
-        System.out.println(browserName);
         if (browserName.equals("internet explorer"))
             return true;
         else return false;
+    }
+
+    public static boolean isChrome(WebDriver driver){
+        return !isIE(driver);
     }
 
 }

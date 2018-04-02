@@ -67,7 +67,7 @@ public class Supervisor {
         //OPEN IE
         try {
 
-            setup(dummiDriver);
+            setup(dummiDriver, "listen");
             supervisor = loginReceiver(supervisor, supervisor_number);
 
             //OPEN CHROME
@@ -114,7 +114,7 @@ public class Supervisor {
     @Video
     public static void talkToUser() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "talkToUser");
 
             //OPEN IE
             supervisor = loginReceiver(supervisor, supervisor_number);
@@ -156,7 +156,7 @@ public class Supervisor {
     @Video
     public static void bargeIn() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "bargeIn");
             //OPEN IE
             supervisor = loginReceiver(supervisor, "81058");
 
@@ -204,7 +204,7 @@ public class Supervisor {
     @Video
     public static void sendNotification() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "sendNotification");
             //OPEN IE
             supervisor = loginReceiver(supervisor, "81058");
 
@@ -270,7 +270,7 @@ public class Supervisor {
     @Video
     public static void assist() throws Exception {
         try {
-            setup(dummiDriver);
+            setup(dummiDriver, "assist");
             //OPEN IE
             supervisor = loginReceiver(supervisor, "81058");
 

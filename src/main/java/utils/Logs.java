@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 
+import static utils.Flags.isChrome;
 import static utils.Flags.isIE;
 
 /**
@@ -34,24 +35,29 @@ public class Logs {
         String folderName = System.getProperty("folderName");
         path = "videoAndLogs\\" + folderName + "VideoAndLogs" + dateFormat.format(date).replaceAll("\\s", "");
         new File(path).mkdirs();
+        System.setProperty("path", path);
     }
 
     public static void saveLogs(WebDriver driverForLogs, String methodName) throws IOException {
-        if(!isIE(driverForLogs)){
+        if(isChrome(driverForLogs)){
             LogEntries logEntries = driverForLogs.manage().logs().get(LogType.BROWSER);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
-            Date date = new Date();
-
-            String logFilePath = "video\\" + methodName + dateFormat.format(date) + ".log";
-            File driverLog = new File(logFilePath);
-            driverLog.getParentFile().mkdirs();
-            driverLog.createNewFile();
-            FileWriter writer = new FileWriter(driverLog);
+            FileWriter writer = createLogFile(methodName);
             for (LogEntry logEntry : logEntries.getAll()) {
                 writer.write(logEntry.toString() + "\\n");
             }
             writer.close();
         }
+    }
+
+    public static FileWriter createLogFile(String methodName) throws IOException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
+        Date date = new Date();
+        String logFilePath = "video\\" + methodName + dateFormat.format(date) + ".log";
+        File driverLog = new File(logFilePath);
+        driverLog.getParentFile().mkdirs();
+        driverLog.createNewFile();
+        FileWriter writer = new FileWriter(driverLog);
+        return writer;
     }
 
     public static ChromeOptions setChromeLogs(){
@@ -68,7 +74,7 @@ public class Logs {
     }
 
     public static void confSikulilogs() throws IOException {
-        int level = 3;
+        int level = Integer.parseInt(System.getProperty("SIKULILOGLEVEL"));
         Debug.setDebugLevel(level);
     }
 }

@@ -136,15 +136,16 @@
             <version>2.20.1</version>
             <configuration>
                 <systemPropertyVariables>
-                    <closeBrowser>true</closeBrowser>
-                    <autoOpenDevtoolsForTabs>false</autoOpenDevtoolsForTabs>
-                    <CHROME_LOG_FILE>video</CHROME_LOG_FILE>
-                    <!--<browserName>ie</browserName>--> <!--do not work-->
+                    <closeBrowser>${closeBrowser}</closeBrowser>
+                    <autoOpenDevtoolsForTabs>${autoOpenDevtoolsForTabs}</autoOpenDevtoolsForTabs>
+                    <CHROME_LOG_FILE>${CHROME_LOG_FILE}</CHROME_LOG_FILE>
                 </systemPropertyVariables>
 
                 <suiteXmlFiles>
                     <suiteXmlFile>${suiteFile}</suiteXmlFile>
                 </suiteXmlFiles>
+
+
             </configuration>
         </plugin>
         </plugins>

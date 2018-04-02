@@ -1,10 +1,12 @@
 package utils;
 
+import callsMethods.Methods;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
 import java.net.InetAddress;
 
+import static callsMethods.Methods.log;
 import static callsMethods.Methods.logOut;
 import static utils.Flags.isLocal;
 
@@ -16,7 +18,7 @@ import static utils.Logs.saveLogs;
  */
 public class TestTeardown {
     public static void teardown(WebDriver driver, String testName) throws IOException, InterruptedException {
-        saveLogs(driver, testName);
+        saveLogs(driver, "b" + testName);
         logOut(driver);
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
@@ -32,7 +34,8 @@ public class TestTeardown {
                 }
             }
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
-            System.out.println("3CXPhone killed from teardown method.");
+            log("3CXPhone killed from teardown method.", "DEBUG");
+            Methods.fileWriter.close();
         }
     }
 
