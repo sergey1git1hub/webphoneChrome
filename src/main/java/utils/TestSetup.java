@@ -2,6 +2,7 @@ package utils;
 
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
+import org.testng.ITestContext;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import static utils.Logs.createLogFile;
 public class TestSetup {
     public static FileWriter fileWriter;
     public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
+
         if(fileWriter==null){
             fileWriter = createLogFile(testName + " ");
             fileWriter.write(testName.toUpperCase() + "\n");
@@ -38,4 +40,29 @@ public class TestSetup {
             log("OpenCXphone method called from setup method.", "DEBUG");
         }
     }
+
+
+    public static void setup(WebDriver driver, ITestContext ctx) throws InterruptedException, FindFailed, IOException {
+        String testName = ctx.getCurrentXmlTest().getName();
+        if(fileWriter==null){
+            fileWriter = createLogFile(testName + " ");
+            fileWriter.write(testName.toUpperCase() + "\n");
+            System.out.println(testName.toUpperCase());
+        }
+
+        if (Boolean.getBoolean("closeBrowser")) {
+            Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+            Thread.sleep(2000); //might fix phone not opened problem
+            log("3CXPhone killed from setup method.", "DEBUG");
+            String hostName = InetAddress.getLocalHost().getHostName();
+
+            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+            if (!isLocal()) {
+                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+            }
+            openCXphone(60);
+            log("OpenCXphone method called from setup method.", "DEBUG");
+        }
+    }
+
 }

@@ -42,7 +42,7 @@ public class BeforeAfter {
         confSikulilogs();
 
 
-        if (isLocal()) {
+       // if (isLocal()) {
             if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("transfer")) {
                 System.setProperty("folderName", "transfer");
             } else if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("supervisor")) {
@@ -51,7 +51,7 @@ public class BeforeAfter {
                 System.setProperty("folderName", System.getProperty("browserName"));
             }
 
-        }
+       // }
         deleteDirectories();
         createFolder();
     }

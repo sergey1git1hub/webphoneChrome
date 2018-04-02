@@ -6,6 +6,7 @@ import data.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.ITestContext;
 import org.testng.annotations.*;
 import callsMethods.CallOnTwoLines;
 import callsMethods.Methods;
@@ -26,9 +27,9 @@ public class TwoLinesAgentHangup {
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void twoLinesAgentHangup() throws Exception {
+    public static void twoLinesAgentHangup(ITestContext ctx) throws Exception {
         try {
-            setup(driver, testName);
+            setup(driver, ctx);
             CallOnTwoLines.callOnTwoLines();
             driver = CallOnTwoLines.driver;
             data = CallOnTwoLines.data;
@@ -41,7 +42,7 @@ public class TwoLinesAgentHangup {
             Methods.agentHangup(driver, 2);
             Thread.sleep(1000);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            teardown(driver, testName);
+            teardown(driver, ctx);
 
         } catch (Exception e) {
             e.printStackTrace();
