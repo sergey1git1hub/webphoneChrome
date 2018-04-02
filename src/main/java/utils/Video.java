@@ -25,7 +25,7 @@ public class Video {
         File sourceDirectory = new File("video");
         File destDirectory = new File(System.getProperty("path"));
         //Thread.sleep(100 * 1000);
-       // FileUtils.copyDirectory(sourceDirectory, destDirectory);
-        //FileUtils.deleteDirectory(sourceDirectory);
+        FileUtils.copyDirectory(sourceDirectory, destDirectory);
+        FileUtils.deleteDirectory(sourceDirectory);
     }
 }

@@ -13,7 +13,7 @@
         </classes>
     </test>
 
-    <!--<test name="calls.TwoLinesClientHangup">
+    <test name="calls.TwoLinesClientHangup">
         <classes>
             <class name="calls.TwoLinesClientHangup"/>
             <class name="callsMethods.Methods"/>
@@ -73,7 +73,7 @@
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>-->
+    </test>
 
 
 </suite>
