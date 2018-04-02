@@ -558,7 +558,7 @@ public class Methods {
         screen.click(button_3CXHangupCall);
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
-        log("Hangup the call on client side on the " + line + "line.", "INFO");
+        log("Hangup the call on client side on the " + line + " line.", "INFO");
     }
 
     public static WebDriver setWebphoneResultCode(WebDriver driver) throws InterruptedException, UnknownHostException, FindFailed {
