@@ -29,7 +29,7 @@ public class TwoLinesAgentHangup {
     @Video
     public static void twoLinesAgentHangup(ITestContext ctx) throws Exception {
         try {
-            setup(driver, ctx);
+            setup(driver, testName);
             CallOnTwoLines.callOnTwoLines();
             driver = CallOnTwoLines.driver;
             data = CallOnTwoLines.data;
@@ -42,7 +42,7 @@ public class TwoLinesAgentHangup {
             Methods.agentHangup(driver, 2);
             Thread.sleep(1000);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            teardown(driver, ctx);
+            teardown(driver, testName);
 
         } catch (Exception e) {
             e.printStackTrace();
