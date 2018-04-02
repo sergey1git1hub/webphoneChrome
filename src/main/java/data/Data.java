@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import static callsMethods.Methods.log;
 import static utils.Flags.isLocal;
 
 /**
@@ -53,7 +54,7 @@ public class Data {
             data = new IEData();
         }
         try {
-            System.out.println(data.browser);
+            log(data.toString() +  " created with createData() method ", "DEBUG");
         } catch (Exception e) {
             e.printStackTrace();
         }

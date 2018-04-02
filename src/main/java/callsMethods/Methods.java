@@ -950,8 +950,6 @@ public class Methods {
 
     public static void writeLog(String text) {
         fileWriter = TestSetup.fileWriter;
-
-
         try {
             fileWriter.write(text + "\n");
         } catch (IOException e) {

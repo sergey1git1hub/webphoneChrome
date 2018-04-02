@@ -20,11 +20,11 @@ public class TestSetup {
     public static FileWriter fileWriter;
     public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
 
-        if(fileWriter==null){
+
             fileWriter = createLogFile(testName + " ");
             fileWriter.write(testName.toUpperCase() + "\n");
             System.out.println(testName.toUpperCase());
-        }
+
 
         if (Boolean.getBoolean("closeBrowser")) {
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
@@ -44,11 +44,11 @@ public class TestSetup {
 
     public static void setup(WebDriver driver, ITestContext ctx) throws InterruptedException, FindFailed, IOException {
         String testName = ctx.getCurrentXmlTest().getName();
-        if(fileWriter==null){
+
             fileWriter = createLogFile(testName + " ");
             fileWriter.write(testName.toUpperCase() + "\n");
             System.out.println(testName.toUpperCase());
-        }
+
 
         if (Boolean.getBoolean("closeBrowser")) {
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
