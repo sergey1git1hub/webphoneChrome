@@ -619,12 +619,12 @@ public class Methods {
     }
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        System.out.println("getConnection");
         String userName = "GBWebPhoneTest";
         String password = "yt~k$tCW8%Gj";
         String url = "jdbc:sqlserver://172.21.65.14\\\\corporate;DatabaseName=GBWebPhoneTest;portNumber=1438";
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection conn = DriverManager.getConnection(url, userName, password);
+        log("Got Database connection", "DEBUG");
         return conn;
     }
 
@@ -869,13 +869,13 @@ public class Methods {
             int columnsNumber = resultSetMetaData.getColumnCount();
 
             while (resultSet.next()) {
-                System.out.println("New Row: ");
+                log("Logout record found", "INFO");
                 for (int i = 1; i <= columnsNumber; i++) {
                     if (i > 1) System.out.print(",  ");
                     String columnValue = resultSet.getString(i);
-                    System.out.print(resultSetMetaData.getColumnName(i) + ": " + columnValue + "|");
+                    log(resultSetMetaData.getColumnName(i) + ": " + columnValue + "|", "DEBUG");
                 }
-                System.out.println("");
+                //System.out.println("");
 
                 String dbUserName = resultSet.getString("username");
                 String logType = resultSet.getString("log_type");
