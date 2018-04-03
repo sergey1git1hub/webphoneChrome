@@ -59,6 +59,8 @@ public class BeforeAfter {
     @AfterSuite
     public static void afterSuite() throws IOException, InterruptedException {
         moveVideo();
+        final File sourceDirectory = new File("video");
+        FileUtils.deleteDirectory(sourceDirectory);
     }
 
     public static void loadProperties() {

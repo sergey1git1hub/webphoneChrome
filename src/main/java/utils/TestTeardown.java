@@ -12,6 +12,7 @@ import static callsMethods.Methods.logOut;
 import static utils.Flags.isLocal;
 
 import static utils.Logs.saveLogs;
+import static utils.Video.moveVideo;
 
 
 /**
@@ -21,6 +22,7 @@ public class TestTeardown {
     public static void teardown(WebDriver driver, String testName) throws IOException, InterruptedException {
         saveLogs(driver, "b" + testName);
         logOut(driver);
+        moveVideo();
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
             driver.quit();

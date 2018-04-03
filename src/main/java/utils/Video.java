@@ -25,19 +25,27 @@ public class Video {
 
     public static void moveVideo() throws IOException, InterruptedException {
         try{
-        File sourceDirectory = new File("video");
+        final File sourceDirectory = new File("video");
         //  moved to TestSetup setup method
-        File destDirectory = new File(System.getProperty("path"));
+        final File destDirectory = new File(System.getProperty("path"));
         //Thread.sleep(100 * 1000);
             System.out.println();
             /*log("Source directory is: " + sourceDirectory, "INFO");
             log("Destination directory is: " + destDirectory, "INFO");*/
             System.out.println("Source directory is: " + sourceDirectory);
             System.out.println("Destination directory is: " + destDirectory);
-
-        FileUtils.copyDirectory(sourceDirectory, destDirectory);
-        Thread.sleep(1000);
-        FileUtils.deleteDirectory(sourceDirectory);
+        Thread t1 = new Thread(new Runnable(){
+            public void run(){
+                try {
+                    FileUtils.copyDirectory(sourceDirectory, destDirectory);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t1.start();
+        t1.join();
+        //Thread.sleep(1000);
         } catch(Exception e){
             e.printStackTrace();
         }
