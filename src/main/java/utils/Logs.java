@@ -36,6 +36,7 @@ public class Logs {
         path = "videoAndLogs\\" + folderName + "VideoAndLogs" + dateFormat.format(date).replaceAll("\\s", "");
         new File(path).mkdirs();
         System.setProperty("path", path);
+        System.setProperty("video.folder", path);
     }
 
     public static void saveLogs(WebDriver driverForLogs, String methodName) throws IOException {

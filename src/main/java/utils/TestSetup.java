@@ -23,9 +23,6 @@ public class TestSetup {
 
     public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
 
-       /* File sourceDirectory = new File("video");
-        FileUtils.deleteDirectory(sourceDirectory);*/
-
         fileWriter = createLogFile(testName + " ");
         fileWriter.write(testName.toUpperCase() + "\n");
         System.out.println(testName.toUpperCase());

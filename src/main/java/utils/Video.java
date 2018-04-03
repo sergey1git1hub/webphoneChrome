@@ -22,31 +22,46 @@ import static callsMethods.Methods.log;
 
 
 public class Video {
+    static final File sourceDirectory = new File("video");
+
+    public static void moveOnTeardown() throws IOException, InterruptedException {
+       /* //Thread.sleep(5000);
+        moveVideo();
+        //Thread.sleep(5000);
+        FileUtils.cleanDirectory(sourceDirectory);*/
+    }
+
+    public static void moveDirectoryAfterSuite() throws IOException, InterruptedException {
+        Thread.sleep(5000);
+        moveVideo();
+    }
+
+    public static void deleteDirectoryAfterSuite() throws IOException, InterruptedException {
+        Thread.sleep(5000);
+        FileUtils.deleteDirectory(sourceDirectory);
+    }
 
     public static void moveVideo() throws IOException, InterruptedException {
-        try{
-        final File sourceDirectory = new File("video");
-        //  moved to TestSetup setup method
-        final File destDirectory = new File(System.getProperty("path"));
-        //Thread.sleep(100 * 1000);
+        try {
+            final File destDirectory = new File(System.getProperty("path"));
             System.out.println();
             /*log("Source directory is: " + sourceDirectory, "INFO");
             log("Destination directory is: " + destDirectory, "INFO");*/
             System.out.println("Source directory is: " + sourceDirectory);
             System.out.println("Destination directory is: " + destDirectory);
-        Thread t1 = new Thread(new Runnable(){
-            public void run(){
-                try {
-                    FileUtils.copyDirectory(sourceDirectory, destDirectory);
-                } catch (IOException e) {
-                    e.printStackTrace();
+            Thread t1 = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        FileUtils.copyDirectory(sourceDirectory, destDirectory);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
-        t1.start();
-        t1.join();
-        //Thread.sleep(1000);
-        } catch(Exception e){
+            });
+            t1.start();
+            t1.join();
+            //Thread.sleep(1000);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

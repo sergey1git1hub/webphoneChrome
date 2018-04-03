@@ -12,6 +12,8 @@ import static callsMethods.Methods.nicePrint;
 import static utils.Flags.isLocal;
 import static utils.Logs.confSikulilogs;
 import static utils.Logs.createFolder;
+import static utils.Video.deleteDirectoryAfterSuite;
+import static utils.Video.moveDirectoryAfterSuite;
 import static utils.Video.moveVideo;
 
 /**
@@ -24,7 +26,7 @@ public class BeforeAfter {
         Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
     }
 
-    public static void deleteDirectories() throws IOException {
+   /* public static void deleteDirectories() throws IOException {
 
         File sourceDirectory = new File("video");
         FileUtils.deleteDirectory(sourceDirectory);
@@ -32,7 +34,7 @@ public class BeforeAfter {
             sourceDirectory = new File("videoAndLogs");
             FileUtils.deleteDirectory(sourceDirectory);
         }
-    }
+    }*/
 
     @BeforeSuite
     public static void beforeSuite(ITestContext ctx) throws IOException, InterruptedException {
@@ -52,15 +54,14 @@ public class BeforeAfter {
             }
 
        // }
-        deleteDirectories();
+
         createFolder();
     }
 
     @AfterSuite
     public static void afterSuite() throws IOException, InterruptedException {
-        moveVideo();
-        final File sourceDirectory = new File("video");
-        FileUtils.deleteDirectory(sourceDirectory);
+        moveDirectoryAfterSuite();
+        deleteDirectoryAfterSuite();
     }
 
     public static void loadProperties() {
