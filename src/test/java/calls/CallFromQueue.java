@@ -39,7 +39,7 @@ public class CallFromQueue {
         Thread.sleep(2000);
 
         Methods.callToQueue();
-        Methods.agentAcceptCall(driver, 30000, false);
+        Methods.agentAcceptCall(driver, 30, false);
         Thread.sleep(4000);
 
         Methods.agentHangup(driver, 1);

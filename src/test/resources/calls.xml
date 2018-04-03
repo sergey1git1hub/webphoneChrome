@@ -5,7 +5,7 @@
     <listeners>
         <listener class-name="utils.SuiteListener" />
     </listeners>
-    <test name="Call on two lines with hangup on agent side">
+    <!--<test name="Call on two lines with hangup on agent side">
         <classes>
             <class name="calls.TwoLinesAgentHangup"/>
             <class name="callsMethods.Methods"/>
@@ -42,7 +42,7 @@
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test>-->
 
        <test name="calls.CallFromQueue">
         <classes>
