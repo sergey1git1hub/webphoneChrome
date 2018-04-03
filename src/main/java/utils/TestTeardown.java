@@ -1,9 +1,11 @@
 package utils;
 
 import callsMethods.Methods;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 
@@ -20,9 +22,11 @@ import static utils.Video.moveVideo;
  */
 public class TestTeardown {
     public static void teardown(WebDriver driver, String testName) throws IOException, InterruptedException {
+        final File sourceDirectory = new File("video");
         saveLogs(driver, "b" + testName);
         logOut(driver);
         moveVideo();
+        FileUtils.cleanDirectory(sourceDirectory);
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
             driver.quit();
