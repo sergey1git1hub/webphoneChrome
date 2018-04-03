@@ -26,6 +26,7 @@ public class Video {
     public static void moveVideo() throws IOException, InterruptedException {
         try{
         File sourceDirectory = new File("video");
+        FileUtils.deleteDirectory(sourceDirectory);//  moved to TestSetup setup method
         File destDirectory = new File(System.getProperty("path"));
         //Thread.sleep(100 * 1000);
             System.out.println();
