@@ -49,7 +49,8 @@ public class Video {
             log("Destination directory is: " + destDirectory, "INFO");*/
             System.out.println("Source directory is: " + sourceDirectory);
             System.out.println("Destination directory is: " + destDirectory);
-            Thread t1 = new Thread(new Runnable() {
+            FileUtils.copyDirectory(sourceDirectory, destDirectory);
+            /*Thread t1 = new Thread(new Runnable() {
                 public void run() {
                     try {
                         FileUtils.copyDirectory(sourceDirectory, destDirectory);
@@ -59,7 +60,7 @@ public class Video {
                 }
             });
             t1.start();
-            t1.join();
+            t1.join();*/
             //Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
