@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
+import static callsMethods.Methods.log;
+
 /**
  * Created by SChubuk on 03.01.2018.
  */
@@ -22,10 +24,20 @@ import java.util.Properties;
 public class Video {
 
     public static void moveVideo() throws IOException, InterruptedException {
+        try{
         File sourceDirectory = new File("video");
         File destDirectory = new File(System.getProperty("path"));
         //Thread.sleep(100 * 1000);
+            System.out.println();
+            /*log("Source directory is: " + sourceDirectory, "INFO");
+            log("Destination directory is: " + destDirectory, "INFO");*/
+            System.out.println("Source directory is: " + sourceDirectory);
+            System.out.println("Destination directory is: " + destDirectory);
+
         FileUtils.copyDirectory(sourceDirectory, destDirectory);
         FileUtils.deleteDirectory(sourceDirectory);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
