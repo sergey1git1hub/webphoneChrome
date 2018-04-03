@@ -56,6 +56,7 @@ public class BeforeAfter {
        // }
 
         createFolder();
+        deleteDirectoryAfterSuite();
     }
 
     @AfterSuite

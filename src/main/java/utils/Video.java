@@ -32,12 +32,12 @@ public class Video {
     }
 
     public static void moveDirectoryAfterSuite() throws IOException, InterruptedException {
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         moveVideo();
     }
 
     public static void deleteDirectoryAfterSuite() throws IOException, InterruptedException {
-        Thread.sleep(5000);
+       // Thread.sleep(5000);
         FileUtils.deleteDirectory(sourceDirectory);
     }
 
