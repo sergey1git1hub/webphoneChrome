@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="regression" verbose="10">
+<suite name="regression" verbose="10" time-out="300000">
     <listeners>
         <listener class-name="utils.SuiteListener" />
     </listeners>
