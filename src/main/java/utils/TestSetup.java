@@ -1,9 +1,11 @@
 package utils;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
 import org.testng.ITestContext;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -18,12 +20,15 @@ import static utils.Logs.createLogFile;
  */
 public class TestSetup {
     public static FileWriter fileWriter;
+
     public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
 
+        File sourceDirectory = new File("video");
+        FileUtils.deleteDirectory(sourceDirectory);
 
-            fileWriter = createLogFile(testName + " ");
-            fileWriter.write(testName.toUpperCase() + "\n");
-            System.out.println(testName.toUpperCase());
+        fileWriter = createLogFile(testName + " ");
+        fileWriter.write(testName.toUpperCase() + "\n");
+        System.out.println(testName.toUpperCase());
 
 
         if (Boolean.getBoolean("closeBrowser")) {
@@ -45,9 +50,9 @@ public class TestSetup {
     public static void setup(WebDriver driver, ITestContext ctx) throws InterruptedException, FindFailed, IOException {
         String testName = ctx.getCurrentXmlTest().getName();
 
-            fileWriter = createLogFile(testName + " ");
-            fileWriter.write(testName.toUpperCase() + "\n");
-            System.out.println(testName.toUpperCase());
+        fileWriter = createLogFile(testName + " ");
+        fileWriter.write(testName.toUpperCase() + "\n");
+        System.out.println(testName.toUpperCase());
 
 
         if (Boolean.getBoolean("closeBrowser")) {
