@@ -35,7 +35,7 @@ public class Video {
             System.out.println("Destination directory is: " + destDirectory);
 
         FileUtils.copyDirectory(sourceDirectory, destDirectory);
-        FileUtils.deleteDirectory(sourceDirectory);
+        //FileUtils.deleteDirectory(sourceDirectory);
         } catch(Exception e){
             e.printStackTrace();
         }
