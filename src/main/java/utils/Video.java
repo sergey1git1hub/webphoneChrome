@@ -53,8 +53,8 @@ public class Video {
             System.out.println();
             /*log("Source directory is: " + sourceDirectory, "INFO");
             log("Destination directory is: " + destDirectory, "INFO");*/
-            System.out.println("Source directory is: " + sourceDirectory);
-            System.out.println("Destination directory is: " + destDirectory);
+            //System.out.println("Source directory is: " + sourceDirectory);
+            //System.out.println("Destination directory is: " + destDirectory);
             FileUtils.copyDirectory(sourceDirectory, destDirectory);
 
         } catch (Exception e) {

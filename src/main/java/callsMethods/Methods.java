@@ -603,7 +603,6 @@ public class Methods {
     }
 
     public static WebDriver switchToAdTab(WebDriver driver) {
-        System.out.println("switchToAdTab");
         WebElement adTab = driver.findElement(By.xpath("//a[@href = '#tabView:tab123']"));
         adTab.click();
         try {
@@ -619,6 +618,7 @@ public class Methods {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log("Switch to Agentdestop tab.", "DEBUG");
         return driver;
     }
 
@@ -633,7 +633,6 @@ public class Methods {
     }
 
     public static void updateRecord(Connection con, String dbTable, String dbPhoneNumber) throws SQLException {
-        System.out.println("updateRecord");
         String query;
         query = "INSERT INTO GBWebPhoneTest.dbo." + dbTable + "(phone_number_1)"
                 + " VALUES ('" + dbPhoneNumber + "');";
