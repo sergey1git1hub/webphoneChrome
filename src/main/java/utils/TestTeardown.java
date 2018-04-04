@@ -25,9 +25,11 @@ public class TestTeardown {
     public static void teardown(WebDriver driver, String testName) throws IOException, InterruptedException {
         saveLogs(driver, "b" + testName);
         logOut(driver);
+        System.out.println(Boolean.getBoolean("closeBrowser"));
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
             driver.quit();
+            System.out.println("Quit method called.");
             boolean isIE = Flags.isIE(driver);
             String hostName = InetAddress.getLocalHost().getHostName();
 
@@ -36,6 +38,7 @@ public class TestTeardown {
             } else {
                 if (!isLocal()) {
                     Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+                    System.out.println("Chrome Browser killed from teardown method.");
                 }
             }
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");

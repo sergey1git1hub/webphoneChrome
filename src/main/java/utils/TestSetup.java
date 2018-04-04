@@ -37,6 +37,7 @@ public class TestSetup {
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
             if (!isLocal()) {
                 Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+                System.out.println("Chrome Browser killed from setup method.");
             }
             openCXphone(60);
             log("OpenCXphone method called from setup method.", "DEBUG");
