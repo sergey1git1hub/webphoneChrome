@@ -73,11 +73,14 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
 
-    public static void answerCallOnClientSide() throws FindFailed, InterruptedException, UnknownHostException {
-            Methods.cxAnswer();
+    public static void answerCallOnClientSide() throws FindFailed, InterruptedException, UnknownHostException, UnsupportedEncodingException {
+        Methods.cxAnswer();
+        Methods.checkStatus(driver, "Incall", 5);
     }
-    public static void answerCallOnClientSide(int waitTime) throws FindFailed, InterruptedException, UnknownHostException {
+
+    public static void answerCallOnClientSide(int waitTime) throws FindFailed, InterruptedException, UnknownHostException, UnsupportedEncodingException {
         Methods.cxAnswer(waitTime);
+        Methods.checkStatus(driver, "Incall", 5);
     }
 
     public static void agentHangup() throws InterruptedException, FindFailed, UnknownHostException {
