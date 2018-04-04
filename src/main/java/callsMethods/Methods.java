@@ -41,7 +41,7 @@ public class Methods {
     public static boolean onJenkins;
     static boolean killProcess = true;
     static boolean debug = Boolean.parseBoolean(System.getProperty("debug"));
-    public static FileWriter fileWriter;
+    public static File manualLogFile;
 
     static boolean fast;
 
@@ -955,13 +955,16 @@ public class Methods {
     }
 
 
+    //open and close file here
     public static void writeLog(String text) {
-        fileWriter = TestSetup.fileWriter;
+        manualLogFile = TestSetup.manualLogFile;
         if(Boolean.getBoolean("withPound")){
             text = "# " + text;
         }
         try {
-            fileWriter.write(text + "\n");
+            FileWriter writer = new FileWriter(manualLogFile);
+            writer.write(text + "\n");
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.logging.Level;
 
 import static utils.Flags.isChrome;
-import static utils.Flags.isIE;
 
 /**
  * Created by SChubuk on 03.01.2018.
@@ -42,7 +41,10 @@ public class Logs {
     public static void saveLogs(WebDriver driverForLogs, String methodName) throws IOException {
         if(isChrome(driverForLogs)){
             LogEntries logEntries = driverForLogs.manage().logs().get(LogType.BROWSER);
-            FileWriter writer = createLogFile(methodName);
+            /* FileWriter writer = new FileWriter(driverLog);
+        return writer;*/
+            File driverLog = createLogFile(methodName);
+            FileWriter writer = new FileWriter(driverLog);
             for (LogEntry logEntry : logEntries.getAll()) {
                 writer.write(logEntry.toString() + "\\n");
             }
@@ -50,15 +52,15 @@ public class Logs {
         }
     }
 
-    public static FileWriter createLogFile(String methodName) throws IOException {
+    public static File createLogFile(String methodName) throws IOException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
         Date date = new Date();
         String logFilePath = "video\\" + methodName + dateFormat.format(date) + ".log";
         File driverLog = new File(logFilePath);
         driverLog.getParentFile().mkdirs();
         driverLog.createNewFile();
-        FileWriter writer = new FileWriter(driverLog);
-        return writer;
+        return driverLog;
+
     }
 
     public static ChromeOptions setChromeLogs(){

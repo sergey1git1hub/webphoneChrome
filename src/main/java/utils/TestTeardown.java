@@ -36,16 +36,12 @@ public class TestTeardown {
             if (isIE) {
                 Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
             } else {
-                if (!isLocal()) {
-                    Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-                    System.out.println("Chrome Browser killed from teardown method.");
-                }
+                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+                System.out.println("Chrome Browser killed from teardown method.");
             }
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
             log("3CXPhone killed from teardown method.", "DEBUG");
-            Methods.fileWriter.close();
         }
-
         moveOnTeardown();
     }
 
@@ -63,13 +59,10 @@ public class TestTeardown {
             if (isIE) {
                 Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
             } else {
-                if (!isLocal()) {
                     Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-                }
             }
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
             log("3CXPhone killed from teardown method.", "DEBUG");
-            Methods.fileWriter.close();
         }
     }
 

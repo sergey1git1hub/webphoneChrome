@@ -6,6 +6,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.*;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import static callsMethods.Methods.nicePrint;
@@ -49,6 +50,16 @@ public class BeforeAfter {
         Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
     }
 
+    public static void printSystemProperties(){
+        Properties p = System.getProperties();
+        Enumeration keys = p.keys();
+        while (keys.hasMoreElements()) {
+            String key = (String)keys.nextElement();
+            String value = (String)p.get(key);
+            System.out.println(key + ": " + value);
+        }
+    }
+
     public static void loadProperties() {
 
         Properties prop = new Properties();
@@ -60,14 +71,20 @@ public class BeforeAfter {
 
             // load a properties file
             prop.load(input);
+           /* System.out.println("Properties before reading properties file");
+            printSystemProperties();*/
 
             for (String name : prop.stringPropertyNames()) {
                 String value = prop.getProperty(name);
                 if (System.getProperty(name)==null){
                     System.setProperty(name, value);
+                    nicePrint(name + "=" + System.getProperty(name));
                 }
-                nicePrint(name + "=" + value);
+
             }
+
+           /* System.out.println("Properties after reading properties file");
+            printSystemProperties();*/
 
         } catch (IOException ex) {
             ex.printStackTrace();

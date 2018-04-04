@@ -19,12 +19,14 @@ import static utils.Logs.createLogFile;
  * Created by SChubuk on 03.01.2018.
  */
 public class TestSetup {
-    public static FileWriter fileWriter;
+    public static File manualLogFile;
 
     public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
 
-        fileWriter = createLogFile(testName + " ");
-        fileWriter.write(testName.toUpperCase() + "\n");
+        manualLogFile = createLogFile(testName + " ");
+        FileWriter writer = new FileWriter(manualLogFile);
+        writer.write(testName.toUpperCase() + "\n");
+        writer.close();
         System.out.println(testName.toUpperCase());
 
 
@@ -35,21 +37,21 @@ public class TestSetup {
             String hostName = InetAddress.getLocalHost().getHostName();
 
             Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            if (!isLocal()) {
-                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-               // System.out.println("Chrome Browser killed from setup method.");
-            }
-            openCXphone(60);
-            log("OpenCXphone method called from setup method.", "DEBUG");
+            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
         }
+        openCXphone(60);
+        log("OpenCXphone method called from setup method.", "DEBUG");
     }
 
 
-    public static void setup(WebDriver driver, ITestContext ctx) throws InterruptedException, FindFailed, IOException {
+
+   /* public static void setup(WebDriver driver, ITestContext ctx) throws InterruptedException, FindFailed, IOException {
         String testName = ctx.getCurrentXmlTest().getName();
+          *//* FileWriter writer = new FileWriter(driverLog);
+        return writer;*//*
 
-        fileWriter = createLogFile(testName + " ");
-        fileWriter.write(testName.toUpperCase() + "\n");
+        manualLogFile = createLogFile(testName + " ");
+        manualLogFile.write(testName.toUpperCase() + "\n");
         System.out.println(testName.toUpperCase());
 
 
@@ -66,6 +68,6 @@ public class TestSetup {
             openCXphone(60);
             log("OpenCXphone method called from setup method.", "DEBUG");
         }
-    }
+    }*/
 
 }
