@@ -962,7 +962,7 @@ public class Methods {
             text = "# " + text;
         }
         try {
-            FileWriter writer = new FileWriter(manualLogFile);
+            FileWriter writer = new FileWriter(manualLogFile, true);
             writer.write(text + "\n");
             writer.close();
         } catch (IOException e) {

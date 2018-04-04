@@ -24,7 +24,7 @@ public class TestSetup {
     public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
 
         manualLogFile = createLogFile(testName + " ");
-        FileWriter writer = new FileWriter(manualLogFile);
+        FileWriter writer = new FileWriter(manualLogFile, true);
         writer.write(testName.toUpperCase() + "\n");
         writer.close();
         System.out.println(testName.toUpperCase());

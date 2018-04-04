@@ -44,7 +44,7 @@ public class Logs {
             /* FileWriter writer = new FileWriter(driverLog);
         return writer;*/
             File driverLog = createLogFile(methodName);
-            FileWriter writer = new FileWriter(driverLog);
+            FileWriter writer = new FileWriter(driverLog, true);
             for (LogEntry logEntry : logEntries.getAll()) {
                 writer.write(logEntry.toString() + "\\n");
             }
