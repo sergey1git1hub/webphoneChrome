@@ -521,9 +521,13 @@ public class Methods {
     }
 
     public static void cxAnswer() throws FindFailed, InterruptedException {
+        cxAnswer(10);
+    }
+
+    public static void cxAnswer(int waitTime) throws FindFailed, InterruptedException {
         Screen screen = new Screen();
         org.sikuli.script.Pattern button_3CXAcceptCall = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_3CXAcceptCall.png");
-        screen.wait(button_3CXAcceptCall, 15);
+        screen.wait(button_3CXAcceptCall, waitTime);
         screen.click(button_3CXAcceptCall);
         if (fast = false)
             Thread.sleep(1000);

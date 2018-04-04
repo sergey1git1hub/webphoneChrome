@@ -76,6 +76,9 @@ public class PDProgressiveReleasedAgentHangup {
     public static void answerCallOnClientSide() throws FindFailed, InterruptedException, UnknownHostException {
             Methods.cxAnswer();
     }
+    public static void answerCallOnClientSide(int waitTime) throws FindFailed, InterruptedException, UnknownHostException {
+        Methods.cxAnswer(waitTime);
+    }
 
     public static void agentHangup() throws InterruptedException, FindFailed, UnknownHostException {
         Thread.sleep(2000);
@@ -99,7 +102,7 @@ public class PDProgressiveReleasedAgentHangup {
             runSQLQuery();
             noIncomingCallToClient();
             changeStatusToAvailable();
-            answerCallOnClientSide();
+            answerCallOnClientSide(40);
             agentHangup();
             setResultCodeAndCheckAvailableStatus();
             teardown(driver, testName);
