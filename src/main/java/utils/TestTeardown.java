@@ -25,7 +25,7 @@ public class TestTeardown {
     public static void teardown(WebDriver driver, String testName) throws IOException, InterruptedException {
         saveLogs(driver, "b" + testName);
         logOut(driver);
-        System.out.println(Boolean.getBoolean("closeBrowser"));
+        System.out.println("closeBrowser: " + Boolean.getBoolean("closeBrowser"));
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
             driver.quit();
