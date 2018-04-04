@@ -2,6 +2,7 @@ package legacy;
 
 import callsMethods.Methods;
 import callsMethods.STMethods;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -134,4 +135,27 @@ public static String webchatServerUrl;
         }
         return choice;
     }
+
+        public static void deleteDirectories() throws IOException {
+
+        File sourceDirectory = new File("video");
+        FileUtils.deleteDirectory(sourceDirectory);
+        if (Boolean.getBoolean("videoAndLogs.deleteIfLocal")) {
+            sourceDirectory = new File("videoAndLogs");
+            FileUtils.deleteDirectory(sourceDirectory);
+        }
+    }
+
+     /*Thread t1 = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        FileUtils.copyDirectory(sourceDirectory, destDirectory);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            t1.start();
+            t1.join();*/
+    //Thread.sleep(1000);
 }

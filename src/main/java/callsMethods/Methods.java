@@ -28,6 +28,8 @@ import static utils.Flags.isIE;
 import static utils.Flags.isLocal;
 
 import static utils.Logs.setChromeLogs;
+import static utils.NativeServiceUpdate.updateNativeService;
+import static utils.NativeServiceUpdate.waitForServiceUpdate;
 
 
 /**
@@ -149,7 +151,7 @@ public class Methods {
     }
 
 
-    public static WebDriver login(WebDriver driver, String method, String username, String group) throws InterruptedException {
+    public static WebDriver login(WebDriver driver, String method, String username, String group) throws InterruptedException, IOException {
         if (method == "sso") {
             WebElement button_SSO = driver.findElement(By.cssSelector("#ssoButton > span"));
             String winHandleBefore = driver.getWindowHandle();
@@ -217,6 +219,8 @@ public class Methods {
         btnContinue.click();
 
         log("Login to webphone as " + username + "/" + group + ".", "INFO");
+
+        waitForServiceUpdate(driver);
         return driver;
     }
 
@@ -869,7 +873,7 @@ public class Methods {
             int columnsNumber = resultSetMetaData.getColumnCount();
 
             while (resultSet.next()) {
-                log("Logout record found", "INFO");
+                log("Logout record found.", "INFO");
                 for (int i = 1; i <= columnsNumber; i++) {
                     if (i > 1) System.out.print(",  ");
                     String columnValue = resultSet.getString(i);
@@ -950,6 +954,9 @@ public class Methods {
 
     public static void writeLog(String text) {
         fileWriter = TestSetup.fileWriter;
+        if(Boolean.getBoolean("withPound")){
+            text = "# " + text;
+        }
         try {
             fileWriter.write(text + "\n");
         } catch (IOException e) {

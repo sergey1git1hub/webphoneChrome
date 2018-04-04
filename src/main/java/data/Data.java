@@ -34,6 +34,7 @@ public class Data {
             username = "81046";
             number1 = "94949";
             number2 = "94948";
+            retryLimit = Integer.parseInt(System.getProperty("localRetryLimit"));
         } else {
             username = "81048";
             number1 = "94944";
