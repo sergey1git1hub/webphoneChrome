@@ -279,6 +279,7 @@ public class Methods {
 
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         //System.out.println("Changing status to " + status + ".");
+        log("Change status to " + status + ".", "INFO");
         String hostName = InetAddress.getLocalHost().getHostName();
         if (!isLocal() && isIE(driver)) {
             if (status.equalsIgnoreCase("Available")) {
@@ -336,7 +337,6 @@ public class Methods {
             executor.executeScript("arguments[0].click();", desirableStatus);
             checkStatus(driver, status, 2);
         }
-        log("Change status to " + status + ".", "INFO");
         return driver;
     }
 
@@ -646,7 +646,7 @@ public class Methods {
 
     public static void runSqlQuery(String dbTable, String dbPhoneNumber) throws SQLException, ClassNotFoundException {
         updateRecord(getConnection(), dbTable, dbPhoneNumber);
-        log("Add new number: " + dbPhoneNumber + " to " + dbTable + " table in database", "INFO");
+        log("Add new number: " + dbPhoneNumber + " to " + dbTable + " table in database.", "INFO");
     }
 
 

@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 
+import static callsMethods.Methods.log;
 import static data.Data.createData;
 import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
@@ -46,7 +47,6 @@ public class PDProgressiveReleasedAgentHangup {
 
     public static void changeStatusToAUX() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.changeStatus(driver, "AUX");
-        Methods.checkStatus(driver, "AUX", 3);
     }
 
 
@@ -65,11 +65,11 @@ public class PDProgressiveReleasedAgentHangup {
         if (debug == true)
             Thread.sleep(5000);
         else Thread.sleep(20000);
+        log("Check that there is no incoming call to client", "DEBUG");
     }
 
     public static void changeStatusToAvailable() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
         Methods.changeStatus(driver, "Available");
-        Methods.checkStatus(driver, "Available", 3);
     }
 
 
