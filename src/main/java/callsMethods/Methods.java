@@ -70,8 +70,6 @@ public class Methods {
         } else {
 
             System.setProperty("webdriver.ie.driver", "C:/iedriver32/IEDriverServer.exe");
-            System.setProperty("webdriver.ie.driver.loglevel", "INFO");
-
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
                     true);
@@ -705,11 +703,13 @@ public class Methods {
             WebElement visitDate = driver.findElement(By.cssSelector("[name = 'cardValues[0].value']"));
             if (visitDate.getText().equalsIgnoreCase("")) {
                 visitDate.sendKeys("2018-03-20");
+                log("Fill visit date", "INFO");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getMessage();
+            log("Visit date not changed", "INFO");
         }
-        log("Fill visit date", "INFO");
+
 
         //visitDate.click();
 
