@@ -845,21 +845,27 @@ public class Methods {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
         if (isIE(driver)) {
-            executor.executeScript("arguments[0].click();", button_LogOut);
-            WebDriverWait waitForAlert = new WebDriverWait(driver, 30);
-            waitForAlert.until(ExpectedConditions.alertIsPresent());
-            driver.switchTo().alert().accept();
-            Thread.sleep(500);
-            driver.navigate().refresh();
+            try {
+                executor.executeScript("arguments[0].click();", button_LogOut);
+                try {
+                    WebDriverWait waitForAlert = new WebDriverWait(driver, 30);
+                    waitForAlert.until(ExpectedConditions.alertIsPresent());
+                    driver.switchTo().alert().accept();
+                    Thread.sleep(500);
+                    driver.navigate().refresh();
+                } catch (Exception e) {
+                    log("There is no logout alert in IE11.", "DEBUG");
+                }
+                WebDriverWait wait = new WebDriverWait(driver, 10);
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
+                log("Log out.", "INFO");
+            } catch (Exception e) {
+                log("Logout failed in IE11.", "INFO");
+            }
+
         } else {
             button_LogOut.click();
-        }
-        try{
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
-        log("Log out.", "INFO");
-        } catch(Exception e){
-            log("Logout failed in IE11.", "INFO");
+            log("Log out.", "INFO");
         }
     }
 
