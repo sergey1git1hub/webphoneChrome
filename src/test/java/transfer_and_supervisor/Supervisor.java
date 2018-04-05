@@ -22,6 +22,7 @@ import utils.RetryAnalyzer;
 
 import java.io.IOException;
 
+import static callsMethods.Methods.executeJavaScriptOrClick;
 import static callsMethods.STMethods.loginInitiator;
 import static callsMethods.STMethods.loginReceiver;
 import static utils.Flags.isLocal;
@@ -129,8 +130,9 @@ public class Supervisor {
             STMethods.switchWindow();
             WebElement userName = supervisor.findElement(By.xpath("//*[text()='" + agent_number + "']"));
             userName.click();
-            JavascriptExecutor js = (JavascriptExecutor) supervisor;
-            js.executeScript("runSupervisorAction('whisper');PrimeFaces.ab({source:'tabView:supervisorTalk',update:'growl'});");
+            WebElement talkToUser = supervisor.findElement(By.cssSelector("#tabView\3a supervisorTalk"));
+            executeJavaScriptOrClick(supervisor, talkToUser,  "runSupervisorAction('whisper');" +
+                    "PrimeFaces.ab({source:'tabView:supervisorTalk',update:'growl'});");
             System.out.println("JavaScript has been executed.");
             //listen.click();
             //Methods.clickIEelement(supervisor, listen);
@@ -171,8 +173,9 @@ public class Supervisor {
             STMethods.switchWindow();
             WebElement userName = supervisor.findElement(By.xpath("//*[text()='81016']"));
             userName.click();
-            JavascriptExecutor js = (JavascriptExecutor) supervisor;
-            js.executeScript("runSupervisorAction('intrude');PrimeFaces.ab({source:'tabView:supervisorBargein',update:'growl'});");
+            WebElement bargeIn = supervisor.findElement(By.cssSelector("#tabView\\3a supervisorBargein"));
+            executeJavaScriptOrClick(supervisor, bargeIn,  "runSupervisorAction('intrude');" +
+                    "PrimeFaces.ab({source:'tabView:supervisorBargein',update:'growl'});");
             System.out.println("JavaScript has been executed.");
             //listen.click();
             //Methods.clickIEelement(supervisor, listen);
@@ -228,8 +231,8 @@ public class Supervisor {
             waitForButton_Notify.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#tabView\\:supervisorNotify")));
             WebElement button_Notify = supervisor.findElement(By.cssSelector("#tabView\\:supervisorNotify"));
             button_Notify.click();
-        /*JavascriptExecutor js = (JavascriptExecutor) supervisor;
-        js.executeScript("PrimeFaces.ab({source:'tabView:supervisorNotify',update:'growl'});");*/
+            WebElement supervisorNotify = supervisor.findElement(By.cssSelector("#tabView\\3a supervisorNotify"));
+            executeJavaScriptOrClick(supervisor, supervisorNotify, "PrimeFaces.ab({source:'tabView:supervisorNotify',update:'growl'});");
             System.out.println("JavaScript has been executed.");
             //listen.click();
             //Methods.clickIEelement(supervisor, listen);

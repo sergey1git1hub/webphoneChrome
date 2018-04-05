@@ -206,7 +206,8 @@ public class Methods {
         By groupSelector = By.cssSelector("[data-label='" + group + "']");
         log(groupSelector.toString(), "DEBUG");
         WebElement element = driver.findElement(groupSelector);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        //do not remove JavascriptExecutor here
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", element);
         Thread.sleep(500);
         WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label='" + group + "']"));
         groupInDropdown.click();
@@ -215,9 +216,7 @@ public class Methods {
         log("Delay before button Continue.", "DEBUG");
         WebElement btnContinue = driver.findElement(By.cssSelector("#btn_continue > span.ui-button-text.ui-c"));
         btnContinue.click();
-
         log("Login to webphone as " + username + "/" + group + ".", "INFO");
-
         waitForServiceUpdate(driver);
         return driver;
     }
@@ -320,10 +319,9 @@ public class Methods {
             checkStatus(driver, status, 2);
             // System.out.println("Browser is Chrome.");
         } else {
-            JavascriptExecutor executor = (JavascriptExecutor) driver;
             WebElement currentStatus = driver.findElement(By.cssSelector(
                     "#statusButton > span.ui-button-text.ui-c"));
-            executor.executeScript("arguments[0].click();", currentStatus);
+            executeJavaScriptOrClick(driver, currentStatus);
             WebElement desirableStatus;
             if (!status.equals("AUX")) {
                 desirableStatus = driver.findElement(By.xpath(
@@ -332,7 +330,7 @@ public class Methods {
                 desirableStatus = driver.findElement(By.xpath(
                         "//*[contains(text(),'AUX') and not(contains(text(),'Доступен'))]"));
             }
-            executor.executeScript("arguments[0].click();", desirableStatus);
+            executeJavaScriptOrClick(driver, desirableStatus);
             checkStatus(driver, status, 2);
         }
         return driver;
@@ -341,106 +339,36 @@ public class Methods {
     public static void hold(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
 
         WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
-        if (isIE(driver)) {
-
-            try {
-                if (driver instanceof JavascriptExecutor) {
-                    ((JavascriptExecutor) driver)
-                            .executeScript("wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;");
-                    System.out.println("Button hold pressed by javascript.");
-                }
-            } catch (Exception e) {
-                if (debug == true)
-                    e.printStackTrace();
-                else System.out.println("JavaScript execution error!");
-            }
-
-            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
-        } else {
-            button_Hold.click();
-
-        }
-        System.out.println("Press button Onhold.");
+        executeJavaScriptOrClick(driver, button_Hold, "wp_common.wp_HoldOrVoicemail();log(event);" +
+                "PrimeFaces.ab({source:'btn_hold'});return false;");
+        log("Press button Onhold.", "INFO");
         checkStatus(driver, "Onhold", 6);
 
     }
 
     public static void unhold(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
         WebElement button_Hold = driver.findElement(By.cssSelector("#btn_hold"));
-
-        if (isIE(driver)) {
-
-            try {
-                if (driver instanceof JavascriptExecutor) {
-                    ((JavascriptExecutor) driver)
-                            .executeScript("wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;");
-                    System.out.println("Button hold pressed by javascript.");
-                }
-            } catch (Exception e) {
-                if (debug == true)
-                    e.printStackTrace();
-                else System.out.println("JavaScript execution error!");
-            }
-
-            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
-        } else {
-            button_Hold.click();
-
-        }
-        System.out.println("Unhold the call.");
+        executeJavaScriptOrClick(driver, button_Hold, "wp_common.wp_HoldOrVoicemail();log(event);" +
+                "PrimeFaces.ab({source:'btn_hold'});return false;");
+        log("Unhold the call.", "INFO");
         checkStatus(driver, "Incall", 6);
-
     }
 
     public static void mute(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
         WebElement button_Mute = driver.findElement(By.cssSelector("#btn_mute"));
-
-        if (isIE(driver)) {
-
-            try {
-                if (driver instanceof JavascriptExecutor) {
-                    ((JavascriptExecutor) driver)
-                            .executeScript("wp_common.wp_Mute();log(event);PrimeFaces.ab({source:'btn_mute'});return false;");
-                    System.out.println("Button mute pressed by javascript.");
-                }
-            } catch (Exception e) {
-                if (debug == true)
-                    e.printStackTrace();
-                else System.out.println("JavaScript execution error!");
-            }
-
-            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
-        } else {
-            button_Mute.click();
-
-        }
-        System.out.println("Press button Mute.");
+        executeJavaScriptOrClick(driver, button_Mute, "wp_common.wp_HoldOrVoicemail();log(event);" +
+                "PrimeFaces.ab({source:'btn_hold'});return false;");
+        log("Press button Mute.", "INFO");
         checkStatus(driver, "Muted", 6);
     }
 
     public static void unmute(WebDriver driver) throws InterruptedException, UnsupportedEncodingException, UnknownHostException {
         WebElement button_Mute = driver.findElement(By.cssSelector("#btn_mute"));
-        if (isIE(driver)) {
-
-            try {
-                if (driver instanceof JavascriptExecutor) {
-                    ((JavascriptExecutor) driver)
-                            .executeScript("wp_common.wp_Mute();log(event);PrimeFaces.ab({source:'btn_mute'});return false;");
-                    System.out.println("Button mute pressed by javascript.");
-                }
-            } catch (Exception e) {
-                if (debug == true)
-                    e.printStackTrace();
-                else System.out.println("JavaScript execution error!");
-            }
-
-            //wp_common.wp_HoldOrVoicemail();log(event);PrimeFaces.ab({source:'btn_hold'});return false;
-        } else {
-            button_Mute.click();
-
-        }
-        System.out.println("Unmute the call.");
+        executeJavaScriptOrClick(driver, button_Mute, "wp_common.wp_HoldOrVoicemail();log(event);" +
+                "PrimeFaces.ab({source:'btn_hold'});return false;");
+        log("Unmute the call.", "INFO");
         checkStatus(driver, "Incall", 6);
+
     }
 
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
@@ -519,10 +447,17 @@ public class Methods {
     }
 
     public static void cxAnswer() throws FindFailed, InterruptedException {
-        cxAnswer(10);
+        cxAnswer(10, "Answer call on client side.");
+    }
+    public static void cxAnswer(String logMessage) throws FindFailed, InterruptedException {
+        cxAnswer(10, logMessage);
     }
 
     public static void cxAnswer(int waitTime) throws FindFailed, InterruptedException {
+        cxAnswer(waitTime, "Answer call on client side.");
+    }
+
+    public static void cxAnswer(int waitTime, String logMessage) throws FindFailed, InterruptedException {
         Screen screen = new Screen();
         org.sikuli.script.Pattern button_3CXAcceptCall = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_3CXAcceptCall.png");
         screen.wait(button_3CXAcceptCall, waitTime);
@@ -532,22 +467,56 @@ public class Methods {
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
         screen.wait(closePhoneWindow, 10);
         screen.click(closePhoneWindow);
-        log("Answer call on client side.", "INFO");
+        log(logMessage, "INFO");
     }
 
     public static WebDriver agentHangup(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
 
         switchLine(driver, line);
         Thread.sleep(500);
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_Hangup = driver.findElement(By.cssSelector("#btn_hangup"));
-        if (isIE(driver))
-            executor.executeScript("arguments[0].click();", button_Hangup);
-        else
-            button_Hangup.click();
+        executeJavaScriptOrClick(driver, button_Hangup, "arguments[0].click();");
         log("Hangup the call on agent side on the " + line + " line.", "INFO");
         return driver;
     }
+
+
+    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element, String script) {
+        if (isIE(driver)) {
+            try {
+                if (driver instanceof JavascriptExecutor) {
+                    ((JavascriptExecutor) driver)
+                            .executeScript(script, element);
+                    //System.out.println("Button " + element.toString() + " pressed by javascript.");
+                }
+            } catch (Exception e) {
+                if (debug == true)
+                    e.printStackTrace();
+                else log("JavaScript execution error!", "INFO");
+            }
+        } else {
+            element.click();
+        }
+    }
+
+    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element) {
+        if (isIE(driver)) {
+            try {
+                if (driver instanceof JavascriptExecutor) {
+                    ((JavascriptExecutor) driver)
+                            .executeScript("arguments[0].click();", element);
+                    //System.out.println("Button " + element.toString() + " pressed by javascript.");
+                }
+            } catch (Exception e) {
+                if (debug == true)
+                    e.printStackTrace();
+                else log("JavaScript execution error!", "INFO");
+            }
+        } else {
+            element.click();
+        }
+    }
+
 
     public static void clientHangup(WebDriver driver, int line) throws FindFailed {
         App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
@@ -592,15 +561,13 @@ public class Methods {
             waitForResultCode.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='Удачно']")));
 
             WebElement resultCode = driver.findElement(By.xpath("//td[text()='Удачно']"));
-            JavascriptExecutor executor = (JavascriptExecutor) driver;
-            executor.executeScript("arguments[0].click();", resultCode);
+            executeJavaScriptOrClick(driver, resultCode);
             Thread.sleep(1000);
             WebElement button_Save = driver.findElement(By.cssSelector("#btn_rslt > span.ui-button-text.ui-c"));
-            executor.executeScript("arguments[0].click();", button_Save);
+            executeJavaScriptOrClick(driver, button_Save);
         }
         log("Select result code \"Udachno\".", "INFO");
         return driver;
-
 
     }
 
@@ -795,8 +762,7 @@ public class Methods {
 
 
     public static void clickIEelement(WebDriver driver, WebElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", element);
+        executeJavaScriptOrClick(driver, element);
         log("IE element clicked through JavascriptExecutor.", "DEBUG");
     }
 
@@ -807,17 +773,8 @@ public class Methods {
             waitForLogoutWindow.until(ExpectedConditions.elementToBeClickable(
                     By.cssSelector("#userLogoutForm\\3a btn_userlogout_yes > span.ui-button-text.ui-c")));
             WebElement button_Yes = driver.findElement(By.cssSelector("#userLogoutForm\\3a btn_userlogout_yes > span.ui-button-text.ui-c"));
-            Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
-            String browserName = cap.getBrowserName().toLowerCase();
-            System.out.println(browserName);
-            if (browserName.equals("internet explorer")) {
-                JavascriptExecutor executor = (JavascriptExecutor) driver;
-                WebElement currentStatus = driver.findElement(By.cssSelector(
-                        "#statusButton > span.ui-button-text.ui-c"));
-                executor.executeScript("arguments[0].click();", button_Yes);
-            } else {
-                button_Yes.click();
-            }
+            executeJavaScriptOrClick(driver, button_Yes);
+
         } catch (Exception e) {
             log("Logout window not found.", "DEBUG");
             //e.printStackTrace();
@@ -842,13 +799,12 @@ public class Methods {
 
     public static void logOut(WebDriver driver) throws InterruptedException {
 
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
         if (isIE(driver)) {
             try {
-                executor.executeScript("arguments[0].click();", button_LogOut);
+                executeJavaScriptOrClick(driver, button_LogOut, "arguments[0].click();");
                 try {
-                    WebDriverWait waitForAlert = new WebDriverWait(driver, 30);
+                    WebDriverWait waitForAlert = new WebDriverWait(driver, 12);
                     waitForAlert.until(ExpectedConditions.alertIsPresent());
                     driver.switchTo().alert().accept();
                     Thread.sleep(500);

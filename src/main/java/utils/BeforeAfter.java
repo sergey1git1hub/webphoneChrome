@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import static callsMethods.Methods.log;
 import static callsMethods.Methods.nicePrint;
 import static utils.Flags.isLocal;
 import static utils.Logs.confSikulilogs;
@@ -25,7 +26,7 @@ public class BeforeAfter {
     public static void beforeSuite(ITestContext ctx) throws IOException, InterruptedException {
         loadProperties(); //should be executed first!
         updateNativeService();
-        killDrivers();
+        killPhoneAndDrivers();
         confSikulilogs();
 
         if (ctx.getCurrentXmlTest().getSuite().getName().equalsIgnoreCase("transfer")) {
@@ -45,11 +46,17 @@ public class BeforeAfter {
         deleteDirectoryAfterSuite();
     }
 
-    public static void killDrivers() throws IOException {
-        if (System.getProperty("browserName").equalsIgnoreCase("ie"))
-            Runtime.getRuntime().exec("taskkill /F /IM iedriverserver.exe");
-        if (System.getProperty("browserName").equalsIgnoreCase("ie"))
-            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+    public static void killPhoneAndDrivers() throws IOException {
+
+        Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+        log("3CXPhone killed.", "DEBUG");
+        if (Boolean.getBoolean("closeBrowser")) {
+            if (System.getProperty("browserName").equalsIgnoreCase("ie"))
+                Runtime.getRuntime().exec("taskkill /F /IM iedriverserver.exe");
+            if (System.getProperty("browserName").equalsIgnoreCase("ie"))
+                Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+            log("Drivers killed.", "DEBUG");
+        }
     }
 
     public static void printSystemProperties() {

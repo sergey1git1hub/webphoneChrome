@@ -37,14 +37,13 @@ public class Video {
     }
     public static void deleteDirectoryBeforeSuite() throws IOException, InterruptedException {
         FileUtils.deleteDirectory(sourceDirectory);
+        if (Boolean.getBoolean("videoAndLogs.deleteIfLocal")) {
+            FileUtils.deleteDirectory(new File("videoAndLogs"));
+        }
     }
 
     public static void deleteDirectoryAfterSuite() throws IOException, InterruptedException {
         FileUtils.deleteDirectory(sourceDirectory);
-        if (Boolean.getBoolean("videoAndLogs.deleteIfLocal")) {
-            FileUtils.deleteDirectory(new File("videoAndLogs"));
-        }
-
     }
 
     public static void moveVideo() throws IOException, InterruptedException {

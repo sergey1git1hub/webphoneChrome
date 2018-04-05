@@ -42,12 +42,11 @@ public class TwoLinesAgentHangup {
             Methods.agentHangup(driver, 2);
             Thread.sleep(1000);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            teardown(driver, testName);
-
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
+        teardown(driver, testName);
     }
 
 }

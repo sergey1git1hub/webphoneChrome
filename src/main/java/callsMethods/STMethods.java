@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 
 import static callsMethods.Methods.clickIEelement;
+import static callsMethods.Methods.log;
 import static utils.Flags.isIE;
 
 /**
@@ -26,7 +27,7 @@ public class STMethods {
     public static WebDriver loginInitiator(WebDriver driver, String username) throws InterruptedException, FindFailed, IOException {
        /* Methods.openCXphone(100);*/
         driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/");
-        Methods.login(driver, "usual", username, "\\!test_group5_5220");
+        Methods.login(driver, "usual", username, "!test_group5_5220");
         Methods.checkStatus(driver, "Available", 30);
         return driver;
     }
@@ -73,8 +74,11 @@ public class STMethods {
 
         WebElement transferNumber = driver.findElement(By.cssSelector("#transfer_number"));
         transferNumber.sendKeys(number);
+        if (!fast)
+            Thread.sleep(1000);
         WebElement button_form_transfer = driver.findElement(By.cssSelector("#btn_trnsfr"));
         button_form_transfer.click();
+        log("Make " + transferType + " transfer to " + number + ".", "INFO");
     }
 
     public static void acceptTransfer(WebDriver driver) throws InterruptedException {
