@@ -28,7 +28,7 @@ public class Logs {
     public static String path;
 
 
-    public static void createFolder(){
+    public static void createFolder() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
         Date date = new Date();
         String folderName = System.getProperty("folderName");
@@ -39,7 +39,7 @@ public class Logs {
     }
 
     public static void saveLogs(WebDriver driverForLogs, String methodName) throws IOException {
-        if(isChrome(driverForLogs)){
+        if (isChrome(driverForLogs)) {
             LogEntries logEntries = driverForLogs.manage().logs().get(LogType.BROWSER);
             /* FileWriter writer = new FileWriter(driverLog);
         return writer;*/
@@ -63,7 +63,7 @@ public class Logs {
 
     }
 
-    public static ChromeOptions setChromeLogs(){
+    public static ChromeOptions setChromeLogs() {
         System.setProperty("webdriver.chrome.verboseLogging", "false");
         DesiredCapabilities caps = DesiredCapabilities.chrome();
         LoggingPreferences logPrefs = new LoggingPreferences();
@@ -77,7 +77,7 @@ public class Logs {
     }
 
     public static void confSikulilogs() throws IOException {
-        int level = Integer.parseInt(System.getProperty("SIKULILOGLEVEL"));
-        Debug.setDebugLevel(level);
+        //Debug.setLogFile("/video");
+
     }
 }

@@ -204,7 +204,7 @@ public class Methods {
         groupList.click();
 
         By groupSelector = By.cssSelector("[data-label='" + group + "']");
-        System.out.println(groupSelector);
+        log(groupSelector.toString(), "DEBUG");
         WebElement element = driver.findElement(groupSelector);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         Thread.sleep(500);
