@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="transfer" verbose="10">
-
+<suite name="transfer" verbose="10" time-out="300000">
+    <listeners>
+        <listener class-name="utils.SuiteListener"/>
+    </listeners>
     <test name="transfer_and_supervisor.TransferRefactored">
         <classes>
             <class name="callsMethods.Methods"/>
