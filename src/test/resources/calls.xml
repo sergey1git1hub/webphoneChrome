@@ -60,7 +60,7 @@
               <class name="utils.BeforeAfter"/>
           </classes>
       </test>
-      <test name="Agent doesn't receive preview free call in AUX status>
+      <test name="Agent doesn't receive preview free call in AUX status">
           <classes>
               <class name="calls.PDPreviewFreeAUX"/>
               <class name="callsMethods.Methods"/>
