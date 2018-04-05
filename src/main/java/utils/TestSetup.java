@@ -25,7 +25,8 @@ public class TestSetup {
         writer.close();
         System.out.println(testName.toUpperCase());
         killPhoneAndDrivers();
-        openCXphone(60);
+        Thread.sleep(1000);
+        openCXphone(30);
         log("OpenCXphone method called from setup method.", "DEBUG");
     }
 
