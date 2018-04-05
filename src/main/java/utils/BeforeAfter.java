@@ -46,16 +46,18 @@ public class BeforeAfter {
     }
 
     public static void killDrivers() throws IOException {
-        Runtime.getRuntime().exec("taskkill /F /IM iedriverserver.exe");
-        Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+        if (System.getProperty("browserName").equalsIgnoreCase("ie"))
+            Runtime.getRuntime().exec("taskkill /F /IM iedriverserver.exe");
+        if (System.getProperty("browserName").equalsIgnoreCase("ie"))
+            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
     }
 
-    public static void printSystemProperties(){
+    public static void printSystemProperties() {
         Properties p = System.getProperties();
         Enumeration keys = p.keys();
         while (keys.hasMoreElements()) {
-            String key = (String)keys.nextElement();
-            String value = (String)p.get(key);
+            String key = (String) keys.nextElement();
+            String value = (String) p.get(key);
             System.out.println(key + ": " + value);
         }
     }
@@ -76,7 +78,7 @@ public class BeforeAfter {
 
             for (String name : prop.stringPropertyNames()) {
                 String value = prop.getProperty(name);
-                if (System.getProperty(name)==null){
+                if (System.getProperty(name) == null) {
                     System.setProperty(name, value);
                     nicePrint(name + "=" + System.getProperty(name));
                 }

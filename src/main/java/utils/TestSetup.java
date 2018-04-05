@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import static callsMethods.Methods.log;
+import static utils.BeforeAfter.killDrivers;
 import static utils.Flags.isLocal;
 import static callsMethods.Methods.openCXphone;
 import static utils.Logs.createLogFile;
@@ -36,8 +37,7 @@ public class TestSetup {
             log("3CXPhone killed from setup method.", "DEBUG");
             String hostName = InetAddress.getLocalHost().getHostName();
 
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+            killDrivers();
         }
         openCXphone(60);
         log("OpenCXphone method called from setup method.", "DEBUG");

@@ -840,12 +840,27 @@ public class Methods {
         log("3CXPhone opened and in focus.", "DEBUG");
     }
 
-    public static void logOut(WebDriver driver) {
+    public static void logOut(WebDriver driver) throws InterruptedException {
+
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
-        button_LogOut.click();
+        if (isIE(driver)) {
+            executor.executeScript("arguments[0].click();", button_LogOut);
+            WebDriverWait waitForAlert = new WebDriverWait(driver, 30);
+            waitForAlert.until(ExpectedConditions.alertIsPresent());
+            driver.switchTo().alert().accept();
+            Thread.sleep(500);
+            driver.navigate().refresh();
+        } else {
+            button_LogOut.click();
+        }
+        try{
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
         log("Log out.", "INFO");
+        } catch(Exception e){
+            log("Logout failed in IE11.", "INFO");
+        }
     }
 
     public static boolean isLogoutRecordPresent(String dateBeforeLogout, String username, int poolingInterval, int waitTime) throws SQLException, ClassNotFoundException, InterruptedException {
@@ -946,11 +961,11 @@ public class Methods {
 
     public static void log(String text, String logLevel) { //INFO, DEBUG, ERROR
 
-            String LOGLEVEL = System.getProperty("LOGLEVEL");
-            if (logLevel.equalsIgnoreCase(LOGLEVEL)) {
-                System.out.println(text);
-                writeLog(text);
-            }
+        String LOGLEVEL = System.getProperty("LOGLEVEL");
+        if (logLevel.equalsIgnoreCase(LOGLEVEL)) {
+            System.out.println(text);
+            writeLog(text);
+        }
 
     }
 
@@ -958,7 +973,7 @@ public class Methods {
     //open and close file here
     public static void writeLog(String text) {
         manualLogFile = TestSetup.manualLogFile;
-        if(Boolean.getBoolean("withPound")){
+        if (Boolean.getBoolean("withPound")) {
             text = "# " + text;
         }
         try {

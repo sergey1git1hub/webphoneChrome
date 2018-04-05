@@ -5,6 +5,7 @@
     <listeners>
         <listener class-name="utils.SuiteListener" />
     </listeners>
+
     <test name="Call on two lines with hangup on agent side">
         <classes>
             <class name="calls.TwoLinesAgentHangup"/>
@@ -12,7 +13,7 @@
             <class name="utils.BeforeAfter"/>
         </classes>
     </test>
-    <test name="calls.TwoLinesClientHangup">
+   <!-- <test name="calls.TwoLinesClientHangup">
         <classes>
             <class name="calls.TwoLinesClientHangup"/>
             <class name="callsMethods.Methods"/>
@@ -41,7 +42,7 @@
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test>-->
 
        <test name="calls.CallFromQueue">
         <classes>
@@ -51,21 +52,22 @@
         </classes>
     </test>
 
-    <test name="calls.PDPreviewFreeCall">
-        <classes>
+    <!--  <test name="calls.PDPreviewFreeCall">
+          <classes>
 
-            <class name="calls.PDPreviewFreeCall"/>
-            <class name="callsMethods.Methods"/>
-            <class name="utils.BeforeAfter"/>
-        </classes>
-    </test>
-    <test name="calls.PDPreviewFreeAUX">
-        <classes>
-            <class name="calls.PDPreviewFreeAUX"/>
-            <class name="callsMethods.Methods"/>
-            <class name="utils.BeforeAfter"/>
-        </classes>
-    </test>
+              <class name="calls.PDPreviewFreeCall"/>
+              <class name="callsMethods.Methods"/>
+              <class name="utils.BeforeAfter"/>
+          </classes>
+      </test>
+      <test name="calls.PDPreviewFreeAUX">
+          <classes>
+              <class name="calls.PDPreviewFreeAUX"/>
+              <class name="callsMethods.Methods"/>
+              <class name="utils.BeforeAfter"/>
+          </classes>
+      </test>-->
+
     <test name="calls.PDProgressiveReleasedAgentHangup">
         <classes>
             <class name="calls.PDProgressiveReleasedAgentHangup"/>
