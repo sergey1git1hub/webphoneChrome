@@ -46,8 +46,8 @@ public class Transfer {
                 transferToAgent = "81046";
                 transferFromAgent = "81047";
             } else{
-                callToNumber = "94949";
-                transferToNumber = "94948";
+                callToNumber = "94944";
+                transferToNumber = "94947";
                 transferToAgent = "81048";
                 transferFromAgent = "81049";
             }
