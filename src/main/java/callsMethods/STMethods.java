@@ -73,6 +73,7 @@ public class STMethods {
         }
 
         WebElement transferNumber = driver.findElement(By.cssSelector("#transfer_number"));
+        transferNumber.click();
         transferNumber.sendKeys(number);
         if (!fast)
             Thread.sleep(1000);
