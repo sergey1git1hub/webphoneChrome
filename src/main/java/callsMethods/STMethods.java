@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 
+import static callsMethods.Methods.agentAcceptCall;
 import static callsMethods.Methods.clickIEelement;
 import static callsMethods.Methods.log;
 import static utils.Flags.isIE;
@@ -24,36 +25,56 @@ public class STMethods {
 
     static boolean fast = false;
 
+    @Deprecated
     public static WebDriver loginInitiator(WebDriver driver, String username) throws InterruptedException, FindFailed, IOException {
+        return loginInitiator(driver, username, false);
+    }
+    @Deprecated
+    public static WebDriver loginInitiator(WebDriver driver, String username, Boolean remote) throws InterruptedException, FindFailed, IOException {
        /* Methods.openCXphone(100);*/
-        driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/");
+        driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/", remote);
         Methods.login(driver, "usual", username, "!test_group5_5220");
         Methods.checkStatus(driver, "Available", 30);
         return driver;
     }
 
-    public static WebDriver loginReceiver(WebDriver driver, String username) throws InterruptedException, FindFailed, IOException {
-        driver = Methods.openWebphoneLoginPage(driver, "ie", "http://172.21.24.109/gbwebphone/");
+    @Deprecated
+    public static WebDriver loginReceiver(WebDriver driver, String username, Boolean remote) throws InterruptedException, FindFailed, IOException {
+        driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/", remote);
         Methods.login(driver, "usual", username, "\\!test_group5_5220");
         Methods.checkStatus(driver, "Available", 60);
+
         return driver;
     }
 
+    @Deprecated
     public static WebDriver loginInitiator(WebDriver driver, String username, String group) throws InterruptedException, FindFailed, IOException {
        /* Methods.openCXphone(100);*/
         driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/");
         Methods.login(driver, "usual", username, group);
         Methods.checkStatus(driver, "Available", 30);
+
         return driver;
     }
-
-    public static WebDriver loginReceiver(WebDriver driver, String username, String group) throws InterruptedException, FindFailed, IOException {
-        driver = Methods.openWebphoneLoginPage(driver, "ie", "http://172.21.24.109/gbwebphone/");
+    @Deprecated
+    public static WebDriver loginReceiver(WebDriver driver, String username, String group, Boolean remote) throws InterruptedException, FindFailed, IOException {
+        driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/", remote);
         Methods.login(driver, "usual", username, group);
         Methods.checkStatus(driver, "Available", 60);
         return driver;
     }
 
+    public static WebDriver login(WebDriver driver, String username, String group, Boolean remote) throws InterruptedException, FindFailed, IOException {
+        driver = Methods.openWebphoneLoginPage(driver, "chrome", "http://172.21.7.239/gbwebphone/", remote);
+        Methods.login(driver, "usual", username, group);
+        Methods.checkStatus(driver, "Available", 60);
+        if(remote){
+            log("Login as agent. " + group + "/" + username, "CONSOLE");
+        } else {
+            log("Login as supervisor. " + group + "/" + username, "CONSOLE");
+        }
+        return driver;
+    }
 
     public static void call(WebDriver driver, String number) throws InterruptedException, FindFailed, UnknownHostException {
         Methods.call(driver, 1, number);
@@ -87,11 +108,7 @@ public class STMethods {
         By byIdAccept = By.cssSelector("[id = 'btn_preview_accept'], [id = 'btn_accept']");
         WebElement button_Accept = driver.findElement(byIdAccept);
         Thread.sleep(500);
-        if (isIE(driver) == true) {
-            clickIEelement(driver, button_Accept);
-        } else {
-            button_Accept.click();
-        }
+        agentAcceptCall(driver, 5, false);
 
     }
 
@@ -119,6 +136,15 @@ public class STMethods {
             Methods.checkStatus(driver, "Meeting", 7);
         }
 
+    }
+
+    public static void clickUsername(WebDriver driver, String username){
+        WebDriverWait waitForUsername = new WebDriverWait(driver, 10);
+        By usernameSelector = By.xpath("//*[text()='" + username +"']");
+        waitForUsername.until(ExpectedConditions.visibilityOfElementLocated(usernameSelector));
+        WebElement userName = driver.findElement(usernameSelector);
+        userName.click();
+        log("Select agent " + username + " on Supervisor tab.", "CONSOLE");
     }
 
 

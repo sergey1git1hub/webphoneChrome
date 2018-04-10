@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="transfer" verbose="10" time-out="300000">
+<suite name="Transfer Functionality" verbose="10" time-out="300000">
     <listeners>
         <listener class-name="utils.SuiteListener"/>
     </listeners>
-    <test name="transfer_and_supervisor.TransferRefactored">
+    <test name="Transfer Functionality">
         <classes>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
@@ -13,9 +13,9 @@
                 <methods>
                     <include name="blindTransferToNumber"/>
                     <include name="attendedTransferToNumber"/>
-                    <!--<include name="blindTransferToAgent"/>
+                    <include name="blindTransferToAgent"/>
                     <include name="attendedTransferToAgent"/>
-                    <include name="blindTransferToPoint"/>-->
+                    <include name="blindTransferToPoint"/>
                 </methods>
             </class>
         </classes>

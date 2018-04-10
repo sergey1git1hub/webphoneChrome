@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="regression" verbose="10" time-out="300000">
+    <listeners>
+        <listener class-name="utils.SuiteListener" />
+    </listeners>
+
+
+    <test name="Selenium Remote">
+        <classes>
+            <class name="transfer_and_supervisor.SeleniumRemote"/>
+            <class name="callsMethods.Methods"/>
+            <class name="utils.BeforeAfter"/>
+        </classes>
+    </test>
+
+
+</suite>

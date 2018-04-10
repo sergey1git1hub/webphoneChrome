@@ -19,6 +19,7 @@ import utils.TestSetup;
 
 import java.io.*;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.regex.Pattern;
@@ -43,10 +44,15 @@ public class Methods {
     static boolean debug = Boolean.parseBoolean(System.getProperty("debug"));
     public static File manualLogFile;
 
-    static boolean fast;
+    static boolean fast = true;
 
 
     public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, String webphoneUrl) throws InterruptedException, IOException, FindFailed {
+        return openWebphoneLoginPage(driver, browser, webphoneUrl, false);
+    }
+
+
+    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, String webphoneUrl, Boolean remote) throws InterruptedException, IOException, FindFailed {
         if (System.getProperty("webphoneUrl") != null) {
             webphoneUrl = System.getProperty("webphoneUrl");
         }
@@ -62,7 +68,11 @@ public class Methods {
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
             chromeOptions.addArguments("--preserve-log");
-            driver = new ChromeDriver(chromeOptions);
+            if (remote) {
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
+            } else {
+                driver = new ChromeDriver(chromeOptions);
+            }
             driver.get(webphoneUrl);
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
             waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
@@ -207,11 +217,12 @@ public class Methods {
         log(groupSelector.toString(), "DEBUG");
         WebElement element = driver.findElement(groupSelector);
         //do not remove JavascriptExecutor here
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         Thread.sleep(500);
         WebElement groupInDropdown = driver.findElement(By.cssSelector("[data-label='" + group + "']"));
         groupInDropdown.click();
-        Thread.sleep(2000);
+        if (fast == false)
+            Thread.sleep(2000);
 
         log("Delay before button Continue.", "DEBUG");
         WebElement btnContinue = driver.findElement(By.cssSelector("#btn_continue > span.ui-button-text.ui-c"));
@@ -246,26 +257,16 @@ public class Methods {
     public static WebDriver changeStatusNewDontWork(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
 
         if (status.equalsIgnoreCase("Available")) {
-            Screen screen = new Screen();
-            org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
-            screen.wait(currentStatus, 10);
+            sikuliClickElement("currentStatus");
             Thread.sleep(1000);
-            screen.click(currentStatus);
-            Thread.sleep(1000);
-            org.sikuli.script.Pattern availableStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\availableStatus.png");
-            screen.wait(availableStatus, 10);
-            screen.click(availableStatus);
+            sikuliClickElement("availableStatus");
+
         }
         if (status.equalsIgnoreCase("AUX")) {
-            Screen screen = new Screen();
-            org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
-            screen.wait(currentStatus, 10);
-            //Thread.sleep(2000);
-            screen.click(currentStatus);
+            sikuliClickElement("currentStatus");
             Thread.sleep(1000);
-            org.sikuli.script.Pattern auxStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\auxStatus.png");
-            screen.wait(auxStatus, 10);
-            screen.click(auxStatus);
+            sikuliClickElement("auxStatus");
+            Thread.sleep(1000);
         }
 
         checkStatus(driver, status, 2);
@@ -279,28 +280,7 @@ public class Methods {
         log("Change status to " + status + ".", "INFO");
         String hostName = InetAddress.getLocalHost().getHostName();
         if (!isLocal() && isIE(driver)) {
-            if (status.equalsIgnoreCase("Available")) {
-                Screen screen = new Screen();
-                org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
-                screen.wait(currentStatus, 10);
-                Thread.sleep(1000);
-                screen.click(currentStatus);
-                Thread.sleep(1000);
-                org.sikuli.script.Pattern availableStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\availableStatus.png");
-                screen.wait(availableStatus, 10);
-                screen.click(availableStatus);
-            }
-            if (status.equalsIgnoreCase("AUX")) {
-                Screen screen = new Screen();
-                org.sikuli.script.Pattern currentStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\currentStatus.png");
-                screen.wait(currentStatus, 10);
-                //Thread.sleep(2000);
-                screen.click(currentStatus);
-                Thread.sleep(1000);
-                org.sikuli.script.Pattern auxStatus = new org.sikuli.script.Pattern("C:\\SikuliImages\\auxStatus.png");
-                screen.wait(auxStatus, 10);
-                screen.click(auxStatus);
-            }
+            changeStatusNewDontWork(driver, status);
             checkStatus(driver, status, 2);
             //System.out.println("Host is: kv1-it-pc-jtest and browser is not Chrome.");
         } else if (isChrome(driver)) {
@@ -410,11 +390,8 @@ public class Methods {
             switchLine(driver, line);
             Thread.sleep(1000);
             log("Sleep after Line switched.", "DEBUG");
-            Screen screen = new Screen();
             if (!(!isLocal() && isChrome(driver))) {
-                org.sikuli.script.Pattern phoneNumberField_Sikuli = new org.sikuli.script.Pattern("C:\\SikuliImages\\phoneNumberField_Sikuli.png");
-                screen.wait(phoneNumberField_Sikuli, 10);
-                screen.click(phoneNumberField_Sikuli);
+               sikuliClickElement("phoneNumberField_Sikuli");
             }
             log("Sikuli clkicked phone number filed.", "DEBUG");
             WebElement phoneNumberField = driver.findElement(By.cssSelector("#PhoneNumber"));
@@ -437,11 +414,10 @@ public class Methods {
     }
 
     public static void openCXphone(int waitTime) throws FindFailed, InterruptedException, IOException {
-        Screen screen = new Screen();
+
+        Thread.sleep(1000);
         App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
-        org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
-        screen.wait(closePhoneWindow, waitTime);
-        screen.click(closePhoneWindow);
+        sikuliClickElement("closePhoneWindow");
         log("Open 3CXPhone window.", "DEBUG");
 
     }
@@ -449,6 +425,7 @@ public class Methods {
     public static void cxAnswer() throws FindFailed, InterruptedException {
         cxAnswer(10, "Answer call on client side.");
     }
+
     public static void cxAnswer(String logMessage) throws FindFailed, InterruptedException {
         cxAnswer(10, logMessage);
     }
@@ -458,15 +435,10 @@ public class Methods {
     }
 
     public static void cxAnswer(int waitTime, String logMessage) throws FindFailed, InterruptedException {
-        Screen screen = new Screen();
-        org.sikuli.script.Pattern button_3CXAcceptCall = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_3CXAcceptCall.png");
-        screen.wait(button_3CXAcceptCall, waitTime);
-        screen.click(button_3CXAcceptCall);
+        sikuliClickElement("button_3CXAcceptCall");
         if (fast = false)
             Thread.sleep(1000);
-        org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
-        screen.wait(closePhoneWindow, 10);
-        screen.click(closePhoneWindow);
+        sikuliClickElement("closePhoneWindow");
         log(logMessage, "INFO");
     }
 
@@ -480,9 +452,13 @@ public class Methods {
         return driver;
     }
 
-
+    //@Deprecated
     public static void executeJavaScriptOrClick(WebDriver driver, WebElement element, String script) {
-        if (isIE(driver)) {
+        executeJavaScriptOrClick(driver, element, script, false);
+    }
+
+    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element, String script, Boolean inAllBrowsers) {
+        if (isIE(driver)||inAllBrowsers) {
             try {
                 if (driver instanceof JavascriptExecutor) {
                     ((JavascriptExecutor) driver)
@@ -498,9 +474,9 @@ public class Methods {
             element.click();
         }
     }
-
-    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element) {
-        if (isIE(driver)) {
+    //@Deprecated
+    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element, Boolean inAllBrowsers) {
+        if ((isIE(driver)||inAllBrowsers)) {
             try {
                 if (driver instanceof JavascriptExecutor) {
                     ((JavascriptExecutor) driver)
@@ -515,24 +491,24 @@ public class Methods {
         } else {
             element.click();
         }
+
+
+    }
+
+    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element){
+        executeJavaScriptOrClick(driver, element, true);
     }
 
 
     public static void clientHangup(WebDriver driver, int line) throws FindFailed {
         App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
-        Screen screen = new Screen();
-        org.sikuli.script.Pattern line_3CXLine1 = new org.sikuli.script.Pattern("C:\\SikuliImages\\line_3CXLine1.png");
         org.sikuli.script.Pattern line_3CXLine2 = new org.sikuli.script.Pattern("C:\\SikuliImages\\line_3CXLine2.png");
-        org.sikuli.script.Pattern button_3CXHangupCall = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_3CXHangupCall.png");
         org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
         if (line == 2) {
-            screen.wait(line_3CXLine1, 10);
-            screen.click(line_3CXLine1);
+            sikuliClickElement("line_3CXLine1");
         }
 
-        screen.click(button_3CXHangupCall);
-        screen.wait(closePhoneWindow, 10);
-        screen.click(closePhoneWindow);
+        sikuliClickElement("button_3CXHangupCall");
         log("Hangup the call on client side on the " + line + " line.", "INFO");
     }
 
@@ -540,10 +516,7 @@ public class Methods {
 
         String hostName = InetAddress.getLocalHost().getHostName();
         if (!isLocal()) {
-            Screen screen = new Screen();
-            org.sikuli.script.Pattern resultCodeUdachno = new org.sikuli.script.Pattern("C:\\SikuliImages\\resultCodeUdachno.png");
-            screen.wait(resultCodeUdachno, 10);
-            screen.click(resultCodeUdachno);
+            sikuliClickElement("resultCodeUdachno");
             Thread.sleep(1000); //necessary
             WebElement button_Save = driver.findElement(By.cssSelector("#btn_rslt > span.ui-button-text.ui-c"));
             button_Save.click();
@@ -760,7 +733,7 @@ public class Methods {
         log("Run powerdialer campaign with id = " + campaignId + ".", "INFO");
     }
 
-
+    @Deprecated(/**Use executeJavaScriptOrClick(driver, element) instead"*/)
     public static void clickIEelement(WebDriver driver, WebElement element) {
         executeJavaScriptOrClick(driver, element);
         log("IE element clicked through JavascriptExecutor.", "DEBUG");
@@ -798,7 +771,9 @@ public class Methods {
     }
 
     public static void logOut(WebDriver driver) throws InterruptedException {
-
+        if( driver.findElement(By.cssSelector("#btn_connect")).isDisplayed()){
+            return;
+        }
         WebElement button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
         if (isIE(driver)) {
             try {
@@ -888,29 +863,15 @@ public class Methods {
 
     public static void callToQueue() throws FindFailed, InterruptedException, IOException {
         App cxphone = App.open("C:\\Program Files (x86)\\3CXPhone\\3CXPhone.exe");
-        Screen screen = new Screen();
-        org.sikuli.script.Pattern numberFour = new org.sikuli.script.Pattern("C:\\SikuliImages\\numberFour.png");
-        screen.wait(numberFour, 5);
-        screen.click(numberFour);
 
-        org.sikuli.script.Pattern numberNine = new org.sikuli.script.Pattern("C:\\SikuliImages\\numberNine.png");
-        screen.wait(numberNine, 5);
-        screen.click(numberNine);
-
-        org.sikuli.script.Pattern numberZero = new org.sikuli.script.Pattern("C:\\SikuliImages\\numberZero.png");
-        screen.wait(numberZero, 5);
-        screen.click(numberZero);
-
-        org.sikuli.script.Pattern button3CXCall = new org.sikuli.script.Pattern("C:\\SikuliImages\\button3CXCall.png");
-        screen.wait(button3CXCall, 5);
-        screen.click(button3CXCall);
-
+        sikuliClickElement("numberFour");
+        sikuliClickElement("numberNine");
+        sikuliClickElement("numberZero");
+        sikuliClickElement("button3CXCall");
         if (fast = false)
             Thread.sleep(1000);
-        org.sikuli.script.Pattern closePhoneWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closePhoneWindow.png");
-        screen.wait(closePhoneWindow, 10);
-        screen.click(closePhoneWindow);
 
+        sikuliClickElement("closePhoneWindow");
         log("Call to queue (490).", "INFO");
 
     }
@@ -924,7 +885,7 @@ public class Methods {
     public static void log(String text, String logLevel) { //INFO, DEBUG, ERROR
 
         String LOGLEVEL = System.getProperty("LOGLEVEL");
-        if (logLevel.equalsIgnoreCase(LOGLEVEL)) {
+        if (logLevel.equalsIgnoreCase(LOGLEVEL)||logLevel.equalsIgnoreCase("CONSOLE")) {
             System.out.println(text);
             writeLog(text);
         }
@@ -942,11 +903,22 @@ public class Methods {
             FileWriter writer = new FileWriter(manualLogFile, true);
             writer.write(text + "\n");
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.getMessage();
         }
 
+    }
 
+    public static void sikuliClickElement(String elementName) throws FindFailed {
+        sikuliClickElement(elementName, 10);
+    }
+
+    public static void sikuliClickElement(String elementName, int timeout) throws FindFailed {
+        Screen screen = new Screen();
+        org.sikuli.script.Pattern element = new org.sikuli.script.Pattern("C:\\SikuliImages\\" + elementName + ".png");
+        screen.wait(element, timeout);
+        screen.click(element);
+        log("Click " + elementName + ".", "CONSOLE");
     }
 
 

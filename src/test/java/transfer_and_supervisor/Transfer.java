@@ -6,8 +6,10 @@ import callsMethods.Methods;
 import callsMethods.STMethods;
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.FindFailed;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -110,46 +112,44 @@ public class Transfer {
     @Video
     public static void blindTransferToAgent() throws Exception {
         try {
-            setup(dummiDriver, "blindTransferToAgent");
-            transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent);
+            String testName = "Blind transfer to Agent";
+            setup(dummiDriver, testName);
+            transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent, true);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
             STMethods.makeTransfer(transferInitiator, "blind", transferToAgent);
-            STMethods.switchWindow();
             STMethods.acceptTransfer(transferReceiver);
-            STMethods.switchWindow();
+            Thread.sleep(3000);
             STMethods.setResultCodeAndCheckAvailableStatus(transferInitiator);
-            STMethods.switchWindow();
             Thread.sleep(5000);
             Methods.agentHangup(transferReceiver, 1);
             STMethods.setResultCodeAndCheckAvailableStatus(transferReceiver);
-            utils.TestTeardown.teardown(transferInitiator, "blindTransferToAgent");
+            utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
+       // Assert.assertTrue(false);
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void attendedTransferToAgent() throws Exception {
         try {
-            setup(dummiDriver, "attendedTransferToAgent");
-            transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent);
+            String testName = "Attended transfer to Agent";
+            setup(dummiDriver, testName);
+            transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent, true);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
             STMethods.makeTransfer(transferInitiator, "attended", transferToAgent);
-            STMethods.switchWindow();
             STMethods.acceptTransfer(transferReceiver);
-            STMethods.switchWindow();
             Thread.sleep(5000);
             Methods.agentHangup(transferInitiator, 1);
             STMethods.setResultCodeAndCheckAvailableStatus(transferInitiator);
             Thread.sleep(5000);
-            STMethods.switchWindow();
             Methods.agentHangup(transferReceiver, 1);
             STMethods.setResultCodeAndCheckAvailableStatus(transferReceiver);
-            utils.TestTeardown.teardown(transferInitiator, "attendedTransferToAgent");
+            utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -161,7 +161,8 @@ public class Transfer {
     @Video
     public static void blindTransferToPoint() throws Exception {
         try {
-            setup(dummiDriver, "blindTransferToPoint");
+            String testName = "Blind transfer to Point";
+            setup(dummiDriver, testName);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
             STMethods.makeTransfer(transferInitiator, "point", transferToNumber);
@@ -170,7 +171,7 @@ public class Transfer {
             Methods.focusCXphone(1);
             Thread.sleep(5000);
             Methods.clientHangup(transferInitiator, 1);
-            utils.TestTeardown.teardown(transferInitiator, "blindTransferToPoint");
+            utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -193,9 +194,11 @@ public class Transfer {
     }*/
 
     //alailability schedule for transfer point - not really needed
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public static void teardown() throws IOException {
         try {
+            Methods.logOut(transferReceiver);
+            Methods.logOut(transferInitiator);
             transferInitiator.quit();
             transferReceiver.quit();
             boolean isIE = Flags.isIE(transferInitiator) || Flags.isIE(transferReceiver);

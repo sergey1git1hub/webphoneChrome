@@ -2,7 +2,6 @@ package transfer_and_supervisor;
 
 import callsMethods.CallOnTwoLines;
 import callsMethods.Methods;
-import callsMethods.STMethods;
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import data.Data;
@@ -15,16 +14,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.FindFailed;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import utils.BeforeAfter;
 import utils.Flags;
 import utils.RetryAnalyzer;
+import utils.TestTeardown;
 
 import java.io.IOException;
 
 import static callsMethods.Methods.executeJavaScriptOrClick;
-import static callsMethods.STMethods.loginInitiator;
-import static callsMethods.STMethods.loginReceiver;
+import static callsMethods.Methods.log;
+import static callsMethods.Methods.sikuliClickElement;
+import static callsMethods.STMethods.*;
 import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
 
@@ -38,23 +41,24 @@ public class Supervisor {
     static Data data;
     static WebDriver agent;
     static WebDriver supervisor;
-    static boolean fast = false;
+    static boolean slow = true;
     static int delay = 2;
-    static String supervisor_number;
-    static String agent_number;
+    static String supervisorUsername;
+    static String agentUsername;
     static WebDriver dummiDriver;
+    static String group = "!test_group5_5220";
 
 
     static {
 
         try {
             if (isLocal()) {
-                supervisor_number = "81046";
-                agent_number = "81047";
+                supervisorUsername = "81046";
+                agentUsername = "81047";
 
             } else {
-                supervisor_number = "81048";
-                agent_number = "81049";
+                supervisorUsername = "81048";
+                agentUsername = "81049";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,180 +66,129 @@ public class Supervisor {
 
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
-    @Video
-    public static void listen() throws Exception {
-        //OPEN IE
+    public static void supervisorAction(String sikuliElement, String statusAfterAction, String testName) throws Exception {
         try {
-
-            setup(dummiDriver, "listen");
-            supervisor = loginReceiver(supervisor, supervisor_number);
-
+            supervisor = login(supervisor, supervisorUsername, group, false);
             //OPEN CHROME
             System.setProperty("browserName", "chrome");
-            agent = loginInitiator(agent, agent_number);
+            agent = login(agent, agentUsername, group, true);
+
             Methods.openCXphone(5000);
             Methods.call(agent, 1, "94949");
             Methods.cxAnswer();
             Thread.sleep(1000);
 
             //LISTEN FROM IE, CALL IN CHROME
-            STMethods.switchWindow();
-            WebElement userName = supervisor.findElement(By.xpath("//*[text()='" + agent_number + "']"));
-            userName.click();
-            By button_listen_selector = By.cssSelector("[id = 'tabView:supervisorListen']");
-            WebDriverWait waitForButtonListen = new WebDriverWait(supervisor, 5);
-            waitForButtonListen.until(ExpectedConditions.elementToBeClickable(button_listen_selector));
-
-            WebElement button_listen = supervisor.findElement(button_listen_selector);
-            button_listen.click();
-   /*         JavascriptExecutor js = (JavascriptExecutor) supervisor;
-            js.executeScript("runSupervisorAction('silent');PrimeFaces.ab({source:'tabView:supervisorListen',update:'growl'});");*/
-
-
+            clickUsername(supervisor, agentUsername);
+            sikuliClickElement(sikuliElement);  //can't do it on remote PC!
+            Thread.sleep(1000);
+            sikuliClickElement(sikuliElement);
             //END LISTENING IN IE
-            Methods.checkStatus(supervisor, "Listening", 5);
+            Methods.checkStatus(supervisor, statusAfterAction, 5);
+            Thread.sleep(5000);
             Methods.agentHangup(supervisor, 1);
             Methods.checkStatus(supervisor, "Available", 5);
 
             //END CALL IN CHROME
-            STMethods.switchWindow();
+
             Methods.agentHangup(agent, 1);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
 
         } catch (Exception e) {
             e.printStackTrace();
-            utils.TestTeardown.teardown(agent, "blindTransferToNumber");
             throw e;
         }
+    }
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Video
+    public static void call() throws Exception {
+        try {
+            log("This is a log message.", "DEBUG");
+            supervisor = loginReceiver(supervisor, supervisorUsername, false);
+
+            //OPEN CHROME
+            System.setProperty("browserName", "chrome");
+            agent = loginInitiator(agent, agentUsername, true);
+
+            clickUsername(supervisor, agentUsername);
+            sikuliClickElement("button_Call");//can't do it on remote PC!
+            Thread.sleep(5000);
+            Methods.checkStatus(supervisor, "Incall", 5);
+            Thread.sleep(5000);
+            Methods.agentHangup(supervisor, 1);
+            Methods.checkStatus(supervisor, "Wrapup", 5);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Video
+    public static void listen() throws Exception {
+        supervisorAction("button_Listen", "Listening", "Supervisor Listen");
     }
 
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
+    //Whispering
     public static void talkToUser() throws Exception {
-        try {
-            setup(dummiDriver, "talkToUser");
-
-            //OPEN IE
-            supervisor = loginReceiver(supervisor, supervisor_number);
-            //talk to user
-            //OPEN CHROME
-            CallOnTwoLines.call();
-            agent = CallOnTwoLines.driver;
-            data = CallOnTwoLines.data;
-            Thread.sleep(1000);
-
-            //LISTEN FROM IE CALL IN CHROME
-            STMethods.switchWindow();
-            WebElement userName = supervisor.findElement(By.xpath("//*[text()='" + agent_number + "']"));
-            userName.click();
-            WebElement talkToUser = supervisor.findElement(By.cssSelector("#tabView\3a supervisorTalk"));
-            executeJavaScriptOrClick(supervisor, talkToUser,  "runSupervisorAction('whisper');" +
-                    "PrimeFaces.ab({source:'tabView:supervisorTalk',update:'growl'});");
-            System.out.println("JavaScript has been executed.");
-            //listen.click();
-            //Methods.clickIEelement(supervisor, listen);
-
-            //END LISTENING IN IE
-            Methods.checkStatus(supervisor, "Whispering", 5);
-            Methods.agentHangup(supervisor, 1);
-            Methods.checkStatus(supervisor, "Available", 5);
-
-            //END CALL IN CHROME
-            STMethods.switchWindow();
-            Methods.agentHangup(agent, 1);
-            CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            utils.TestTeardown.teardown(agent, "blindTransferToNumber");
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-
+        supervisorAction("button_TalkToUser", "Whispering", "Supervisor Talk to user");
     }
+
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
+    //Barged
     public static void bargeIn() throws Exception {
-        try {
-            setup(dummiDriver, "bargeIn");
-            //OPEN IE
-            supervisor = loginReceiver(supervisor, "81058");
-
-
-            //OPEN CHROME
-            CallOnTwoLines.call();
-            agent = CallOnTwoLines.driver;
-            data = CallOnTwoLines.data;
-            Thread.sleep(1000);
-
-            //LISTEN FROM IE CALL IN CHROME
-            STMethods.switchWindow();
-            WebElement userName = supervisor.findElement(By.xpath("//*[text()='81016']"));
-            userName.click();
-            WebElement bargeIn = supervisor.findElement(By.cssSelector("#tabView\\3a supervisorBargein"));
-            executeJavaScriptOrClick(supervisor, bargeIn,  "runSupervisorAction('intrude');" +
-                    "PrimeFaces.ab({source:'tabView:supervisorBargein',update:'growl'});");
-            System.out.println("JavaScript has been executed.");
-            //listen.click();
-            //Methods.clickIEelement(supervisor, listen);
-
-            //END LISTENING IN IE
-            Methods.checkStatus(supervisor, "Barged", 5);
-            Methods.agentHangup(supervisor, 1);
-            Methods.checkStatus(supervisor, "Available", 5);
-
-            //END CALL IN CHROME
-            STMethods.switchWindow();
-            Methods.agentHangup(agent, 1);
-            CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-            utils.TestTeardown.teardown(agent, "blindTransferToNumber");
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-
+        supervisorAction("button_BargeIn", "Barged", "Supervisor Talk to user");
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void logUserOut() throws InterruptedException, IOException, FindFailed {
+    public static void logUserOut() throws Exception {
+        try {
 
+            supervisor = loginReceiver(supervisor, supervisorUsername, false);
+
+            //OPEN CHROME
+            System.setProperty("browserName", "chrome");
+            agent = loginInitiator(agent, agentUsername, true);
+
+            clickUsername(supervisor, agentUsername);
+            sikuliClickElement("button_LogUserOut");  //can't do it on remote PC!
+            Thread.sleep(1000);
+            sikuliClickElement("button_LogUserOut");
+
+            Thread.sleep(5000);
+
+            WebDriverWait wait = new WebDriverWait(agent, 10);
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void sendNotification() throws Exception {
         try {
-            setup(dummiDriver, "sendNotification");
             //OPEN IE
-            supervisor = loginReceiver(supervisor, "81058");
+            supervisor = login(supervisor, supervisorUsername, "\\!test_group5_5220", false);
+            agent = login(agent, agentUsername, "\\!test_group5_5220", true);
+
+            clickUsername(supervisor, agentUsername);
 
 
-            //OPEN CHROME
-            agent = Methods.openWebphoneLoginPage(agent, "chrome", "http://172.21.7.239/gbwebphone/");
-            Methods.login(agent, "usual", "81016", "\\!test_group5_5220");
-            Methods.checkStatus(agent, "Available", 60);
-            Thread.sleep(1000);
 
-
-            STMethods.switchWindow();
-            WebDriverWait waitForUsername = new WebDriverWait(supervisor, 10);
-            waitForUsername.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='81016']")));
-            WebElement userName = supervisor.findElement(By.xpath("//*[text()='81016']"));
-            userName.click();
-            //Thread.sleep(1000);
-            //remove sikuli script
-
-            WebDriverWait waitForButton_Notify = new WebDriverWait(supervisor, 10);
-            waitForButton_Notify.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#tabView\\:supervisorNotify")));
-            WebElement button_Notify = supervisor.findElement(By.cssSelector("#tabView\\:supervisorNotify"));
-            button_Notify.click();
-            WebElement supervisorNotify = supervisor.findElement(By.cssSelector("#tabView\\3a supervisorNotify"));
-            executeJavaScriptOrClick(supervisor, supervisorNotify, "PrimeFaces.ab({source:'tabView:supervisorNotify',update:'growl'});");
-            System.out.println("JavaScript has been executed.");
-            //listen.click();
-            //Methods.clickIEelement(supervisor, listen);
+            sikuliClickElement("button_SendNotification");
             Thread.sleep(2000);
 
             //ENTER MESSAGE IN NOTIFICATION BOX
@@ -254,15 +207,13 @@ public class Supervisor {
             Assert.assertTrue(growl_container.getText().contains("Sending notification(s)"));
 
             //Check that message received in chrome.
-            STMethods.switchWindow();
+
             WebDriverWait waitForGrowlSocketMessage_container = new WebDriverWait(agent, 10);
             waitForGrowlSocketMessage_container.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#growlSocketMessage_container")));
             WebElement growlSocketMessage_container = agent.findElement(By.cssSelector("#growlSocketMessage_container"));
             Assert.assertTrue(growlSocketMessage_container.isDisplayed());
             Assert.assertTrue(growlSocketMessage_container.getText().contains("This is notification."));
-
             System.out.println("Notification arrived.");
-            utils.TestTeardown.teardown(agent, "blindTransferToNumber");
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -273,63 +224,31 @@ public class Supervisor {
     @Video
     public static void assist() throws Exception {
         try {
-            setup(dummiDriver, "assist");
-            //OPEN IE
-            supervisor = loginReceiver(supervisor, "81058");
-
-
-            //OPEN CHROME
-            agent = Methods.openWebphoneLoginPage(agent, "chrome", "http://172.21.7.239/gbwebphone/");
-            Methods.login(agent, "usual", "81016", "\\!test_group5_5220");
-            Methods.checkStatus(agent, "Available", 60);
-            Thread.sleep(1000);
-
-            //SELECT USER
-            STMethods.switchWindow();
-            WebDriverWait waitForUsername = new WebDriverWait(supervisor, 10);
-            waitForUsername.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='81016']")));
-            WebElement userName = supervisor.findElement(By.xpath("//*[text()='81016']"));
-            userName.click();
-            //Thread.sleep(1000);
+            supervisor = login(supervisor, supervisorUsername, "\\!test_group5_5220",  false);
+            agent = login(agent, agentUsername, "\\!test_group5_5220",  true);
+            clickUsername(supervisor, agentUsername);
 
             WebDriverWait waitForButton_Assist = new WebDriverWait(supervisor, 10);
             waitForButton_Assist.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#tabView\\:supervisorAssist")));
-            WebElement button_Assist = supervisor.findElement(By.cssSelector("#tabView\\:supervisorAssist"));
-            button_Assist.click();
-        /*JavascriptExecutor js = (JavascriptExecutor) supervisor;
-        js.executeScript("PrimeFaces.ab({source:'tabView:supervisorNotify',update:'growl'});");*/
-            System.out.println("JavaScript has been executed.");
-            //listen.click();
-            //Methods.clickIEelement(supervisor, listen);
+
+            sikuliClickElement("button_Assist");
             Thread.sleep(2000);
 
-            //ENTER MESSAGE IN ASSIST BOX
-            WebElement assistanceBox = supervisor.findElement(By.xpath("//*[contains(@id,'message_assistanceDialog_81016_81049')]"));
-            assistanceBox.sendKeys("This is assistance message.");
-//message_assistanceDialog_81016_81049_1510668367831205
-            WebElement button_Send = supervisor.findElement(By.xpath("//*[contains(@id,'send_assistanceDialog_81016_81049')]"));
-            button_Send.click();
+            By assistanceBoxSelector = By.xpath("//*[contains(@id,'message_assistanceDialog_" + supervisorUsername + "_" + agentUsername+ "')]");
+            WebElement supervisorAssistanceBox = supervisor.findElement(assistanceBoxSelector);
+            supervisorAssistanceBox.sendKeys("This is assistance message.");
 
-            System.out.println("Assist message.");
-//#assistLog_assistanceDialog_81058_81059_15106705893561180 > div:nth-child(8) > span.assistMessage
+            sikuliClickElement("button_Send");
 
-            WebDriverWait waitForAssistOnMyScreen = new WebDriverWait(supervisor, 10);
-            waitForAssistOnMyScreen.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='This is assistance message.']")));
+            String supervisorAssistanceBoxText = supervisorAssistanceBox.getText();
+            System.out.println(supervisorAssistanceBoxText);
+            Assert.assertTrue(supervisorAssistanceBoxText.equals(""));
 
-            //CHECK THAT ASSISTANCE BOX IS EMPTY
-            String assistanceBoxText = assistanceBox.getText();
-            Assert.assertTrue(assistanceBoxText.equals(""));
+            WebDriverWait waitForAgentAssistanceBox = new WebDriverWait(agent, 10);
+            waitForAgentAssistanceBox.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='This is assistance message.']")));
 
-            //Check that message received in chrome.
-       /* Methods.switchFocus();
-        WebDriverWait waitForGrowlSocketMessage_container = new WebDriverWait(agent, 10);
-        waitForGrowlSocketMessage_container.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#growlSocketMessage_container")));
-        WebElement growlSocketMessage_container = agent.findElement(By.cssSelector("#growlSocketMessage_container"));
-        Assert.assertTrue(growlSocketMessage_container.isDisplayed());
-        Assert.assertTrue(growlSocketMessage_container.getText().contains("This is notification."));
+        System.out.println("Notification arrived.");
 
-        System.out.println("Notification arrived.");*/
-            utils.TestTeardown.teardown(agent, "blindTransferToNumber");
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -340,31 +259,48 @@ public class Supervisor {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void changeStatus() throws InterruptedException, IOException, FindFailed {
+       // setup(dummiDriver, "Change status");
+        supervisor = login(supervisor, supervisorUsername, "\\!test_group5_5220",  false);
+        agent = login(agent, agentUsername, "\\!test_group5_5220",  true);
+        clickUsername(supervisor, agentUsername);
 
+        WebDriverWait waitForButton_Assist = new WebDriverWait(supervisor, 10);
+        waitForButton_Assist.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#tabView\\:supervisorChangeStatus")));
+        sikuliClickElement("button_ChangeStatus");
+        sleep(2000);
+        WebElement changeStatusAux = supervisor.findElement(By.cssSelector("#tabView\\3a supervisorChangeStatus_menu > ul > li:nth-child(5) > a > span"));
+        changeStatusAux.click();
+        Methods.checkStatus(agent, "AUX", 10);
+        Thread.sleep(3000);
+        //TestTeardown.teardown(dummiDriver, "Change status");
     }
 
 
-  /*  @BeforeMethod
+    @BeforeMethod
     public void open() throws InterruptedException, FindFailed, IOException {
-        Methods.openCXphone(100);
+        Methods.openCXphone(30);
         //before groups to launch ie browser
-    }*/
+    }
 
-    //alailability schedule for transfer point - not really needed
-    @AfterMethod
+
+    @AfterMethod(alwaysRun = true)
     public void teardown() throws IOException {
         try {
-            boolean isIE = Flags.isIE(agent);
+            Methods.logOut(agent);
+            Methods.logOut(supervisor);
             agent.quit();
             supervisor.quit();
 
-            if (isIE) {
-                Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
     }
 
+    public static void sleep(int timeMilliseconds) throws InterruptedException {
+        if(slow){
+            Thread.sleep(timeMilliseconds);
+        }
+    }
 }

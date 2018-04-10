@@ -49,11 +49,11 @@ public static String webchatServerUrl;
         STMethods.login(transferInitiator);
         STMethods.call(transferInitiator, callToNumber);
         STMethods.makeTransfer(transferInitiator, "attended", transferToAgent);
-        STMethods.switchWindow();
+
         STMethods.acceptTransfer(transferReceiver);
         Thread.sleep(5000);
         Methods.agentHangup(transferInitiator,1);
-        STMethods.switchWindow();
+
         Thread.sleep(5000);
         Methods.agentHangup(transferReceiver,1);
         STMethods.setResultCodeAndCheckAvailableStatus(transferReceiver);*/
@@ -183,4 +183,30 @@ public static String webchatServerUrl;
             log("OpenCXphone method called from setup method.", "DEBUG");
         }
     }*/
+
+         /*       By button_listen_selector = By.cssSelector("[id = 'tabView:supervisorListen']");
+            WebDriverWait waitForButtonListen = new WebDriverWait(supervisor, 5);
+            waitForButtonListen.until(ExpectedConditions.elementToBeClickable(button_listen_selector));
+
+            WebElement button_listen = supervisor.findElement(button_listen_selector);*/
+            /*executeJavaScriptOrClick(supervisor, button_listen, "runSupervisorAction('silent');" +
+                    "PrimeFaces.ab({source:'tabView:supervisorListen',update:'growl'});");
+*/
+    //can't do it on remote PC!
+           /* JavascriptExecutor js = (JavascriptExecutor) supervisor;
+            js.executeScript("runSupervisorAction('silent');PrimeFaces.ab({source:'tabView:supervisorListen',update:'growl'});");*/
+
+   /*WebDriverWait waitForButton_Notify = new WebDriverWait(supervisor, 10);
+            waitForButton_Notify.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#tabView\\:supervisorNotify")));
+            WebElement button_Notify = supervisor.findElement(By.cssSelector("#tabView\\:supervisorNotify"));
+            button_Notify.click();
+            WebElement supervisorNotify = supervisor.findElement(By.cssSelector("#tabView\\3a supervisorNotify"));
+            executeJavaScriptOrClick(supervisor, supervisorNotify, "PrimeFaces.ab({source:'tabView:supervisorNotify',update:'growl'});");
+            System.out.println("JavaScript has been executed.");*/
+    //listen.click();
+    //Methods.clickIEelement(supervisor, listen);
+
+
 }
+
+
