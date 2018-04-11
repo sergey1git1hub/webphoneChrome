@@ -26,8 +26,8 @@ public class AgentHangup extends CallOnTwoLinesBaseClass {
     @Video
     public  void agentHangup(ITestContext ctx) throws Exception {
         setup(testName);
-        CallOnTwoLinesBaseClass callOnTwoLines = new CallOnTwoLinesBaseClass();
-        callOnTwoLines.callOnTwoLines();
+        AgentHangup agentHangup = new AgentHangup();
+        agentHangup.callOnTwoLines();
         teardown(driver, testName);
     }
 

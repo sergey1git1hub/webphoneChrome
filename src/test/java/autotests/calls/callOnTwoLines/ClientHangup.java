@@ -23,8 +23,8 @@ public class ClientHangup extends CallOnTwoLinesBaseClass{
     public  void clientHangup() throws Exception {
 
         setup(testName);
-        CallOnTwoLinesBaseClass callOnTwoLines = new CallOnTwoLinesBaseClass();
-        callOnTwoLines.callOnTwoLines();
+        ClientHangup clientHangup = new ClientHangup();
+        clientHangup.callOnTwoLines();
         teardown(agent.getDriver(), testName);
 
     }

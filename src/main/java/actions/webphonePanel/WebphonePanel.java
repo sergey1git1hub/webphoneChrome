@@ -144,7 +144,7 @@ public class WebphonePanel {
 
     public static WebDriver switchLine(WebDriver driver, int line) throws FindFailed, InterruptedException, UnknownHostException {
         String hostName = InetAddress.getLocalHost().getHostName();
-        if (driver.equals("chrome") && isLocal()) {
+        if (isChrome(driver) && isLocal()) {
             System.out.println("Browser is chrome.");
             WebDriverWait waitForLineElement = new WebDriverWait(driver, 2);
             waitForLineElement.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[id = 'btn_line_" + line + "_span']")));
@@ -155,13 +155,14 @@ public class WebphonePanel {
         } else {
             /*System.out.println("Browser is not chrome or running on Jenkns.");
             if (!isLocal()) {
-                WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
+
                 lineElement.sendKeys(Keys.ENTER);
             } else*/
             try {
+                WebElement lineElement = driver.findElement(By.cssSelector("[id = 'btn_line_" + line + "_span']"));
                 if (driver instanceof JavascriptExecutor) {
                     ((JavascriptExecutor) driver)
-                            .executeScript("wp_common.wp_ChangeLine(" + line + "); log(event);");
+                            .executeScript("wp_common.wp_ChangeLine(" + line + "); log(event);", lineElement);
                     System.out.println("Line switched by javascript.");
                 }
             } catch (Exception e) {
