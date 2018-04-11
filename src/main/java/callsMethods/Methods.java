@@ -18,10 +18,12 @@ import static utils.NativeServiceUpdate.updateNativeService;
  */
 
 public class Methods {
-
-
+    public static String browser;
+    public static boolean onJenkins;
+    static boolean killProcess = true;
     static boolean debug = Boolean.parseBoolean(System.getProperty("debug"));
     public static File manualLogFile;
+
     static boolean fast = true;
 
 
