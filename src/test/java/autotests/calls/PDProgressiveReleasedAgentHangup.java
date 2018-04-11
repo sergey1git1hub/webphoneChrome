@@ -1,4 +1,4 @@
-package calls;
+package autotests.calls;
 
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
@@ -15,6 +15,14 @@ import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 
+import static actions.client.Client.cxAnswer;
+import static actions.client.Client.openCXphone;
+import static actions.database.Powerdialer.runSqlQuery;
+import static actions.login.Login.login;
+import static actions.login.Login.openWebphoneLoginPage;
+import static actions.webphonePanel.WebphonePanel.changeStatus;
+import static actions.webphonePanel.WebphonePanel.checkStatus;
+import static actions.webphonePanel.WebphonePanel.setWebphoneResultCode;
 import static callsMethods.Methods.log;
 import static data.Data.createData;
 import static utils.Flags.isLocal;
@@ -40,24 +48,24 @@ public class PDProgressiveReleasedAgentHangup {
             data.group = "Automation Progressive Released Jenkins";
         }
         Methods.browser = data.browser;
-        driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
-        Methods.login(driver, data.method, data.username, data.group);
-        Methods.checkStatus(driver, "Available", 10);
+        driver = openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
+        login(driver, data.method, data.username, data.group);
+        checkStatus(driver, "Available", 10);
     }
 
     public static void changeStatusToAUX() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
-        Methods.changeStatus(driver, "AUX");
+        changeStatus(driver, "AUX");
     }
 
 
     public static void runSQLQuery() throws SQLException, ClassNotFoundException, InterruptedException, FindFailed, IOException {
         if (isLocal()) {
-            Methods.runSqlQuery("pd_automation_progressive_released_local", "94949");
+            runSqlQuery("pd_automation_progressive_released_local", "94949");
         } else {
-            Methods.runSqlQuery("pd_automation_progressive_released_jenkins", "94944");
+            runSqlQuery("pd_automation_progressive_released_jenkins", "94944");
         }
 
-        Methods.openCXphone(2000);
+        openCXphone(2000);
     }
 
 
@@ -69,29 +77,29 @@ public class PDProgressiveReleasedAgentHangup {
     }
 
     public static void changeStatusToAvailable() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
-        Methods.changeStatus(driver, "Available");
+        changeStatus(driver, "Available");
     }
 
 
     public static void answerCallOnClientSide() throws FindFailed, InterruptedException, UnknownHostException, UnsupportedEncodingException {
-        Methods.cxAnswer();
-        Methods.checkStatus(driver, "Incall", 5);
+        cxAnswer();
+        checkStatus(driver, "Incall", 5);
     }
 
     public static void answerCallOnClientSide(int waitTime) throws FindFailed, InterruptedException, UnknownHostException, UnsupportedEncodingException {
-        Methods.cxAnswer(waitTime);
-        Methods.checkStatus(driver, "Incall", 5);
+       cxAnswer(waitTime);
+       checkStatus(driver, "Incall", 5);
     }
 
     public static void agentHangup() throws InterruptedException, FindFailed, UnknownHostException {
         Thread.sleep(2000);
-        Methods.agentHangup(driver, 1);
+        actions.webphonePanel.WebphonePanel.agentHangup(driver, 1);
     }
 
 
     public static void setResultCodeAndCheckAvailableStatus() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
-        Methods.setWebphoneResultCode(driver);
-        Methods.checkStatus(driver, "Available", 3);
+        setWebphoneResultCode(driver);
+        checkStatus(driver, "Available", 3);
 
     }
 
@@ -99,7 +107,7 @@ public class PDProgressiveReleasedAgentHangup {
     @Video
     public static void pDProgressiveReleasedAgentHangup() throws Exception {
         try {
-            setup(driver, testName);
+            setup(testName);
             IELogin();
             changeStatusToAUX();
             runSQLQuery();

@@ -8,21 +8,21 @@
 
     <test name="Call on two lines with hangup on agent side">
         <classes>
-            <class name="calls.TwoLinesAgentHangup"/>
+            <class name="autotests.calls.callOnTwoLines.AgentHangup"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
     </test>
     <test name="Simultaneous use of two lines with hangup on agent side">
         <classes>
-            <class name="calls.TwoLinesClientHangup"/>
+            <class name="autotests.calls.callOnTwoLines.ClientHangup"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
     </test>
     <test name="Hold and Mute functionality">
         <classes>
-            <class name="calls.HoldMute"/>
+            <class name="autotests.calls.HoldMute"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
@@ -30,7 +30,7 @@
 
     <test name="Incorrect logout when browser window closed">
         <classes>
-            <class name="calls.IncorrectLogoutCloseBrowser"/>
+            <class name="autotests.logouts.IncorrectLogoutCloseBrowser"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
@@ -38,7 +38,7 @@
 
     <test name="Incorrect logout when browser process killed">
         <classes>
-            <class name="calls.IncorrectLogoutKillProcess"/>
+            <class name="autotests.logouts.IncorrectLogoutKillProcess"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
@@ -46,7 +46,7 @@
 
        <test name="Receive call from queue">
         <classes>
-            <class name="calls.CallFromQueue"/>
+            <class name="autotests.calls.CallFromQueue"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
@@ -55,14 +55,14 @@
       <test name="Preview free call to agent">
           <classes>
 
-              <class name="calls.PDPreviewFreeCall"/>
+              <class name="autotests.calls.PDPreviewFreeCall"/>
               <class name="callsMethods.Methods"/>
               <class name="utils.BeforeAfter"/>
           </classes>
       </test>
       <test name="Agent doesn't receive preview free call in AUX status">
           <classes>
-              <class name="calls.PDPreviewFreeAUX"/>
+              <class name="autotests.calls.PDPreviewFreeAUX"/>
               <class name="callsMethods.Methods"/>
               <class name="utils.BeforeAfter"/>
           </classes>
@@ -70,7 +70,7 @@
 
     <test name="Progressive released call to agent with hangup on agent side">
         <classes>
-            <class name="calls.PDProgressiveReleasedAgentHangup"/>
+            <class name="autotests.calls.PDProgressiveReleasedAgentHangup"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>

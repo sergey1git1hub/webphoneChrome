@@ -1,4 +1,4 @@
-package calls;
+package autotests.test;
 
 import data.Data;
 import org.openqa.selenium.WebDriver;

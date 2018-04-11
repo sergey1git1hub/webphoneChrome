@@ -4,8 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import java.io.IOException;
 import java.net.InetAddress;
+
+import static actions.login.Logout.logOut;
 import static callsMethods.Methods.log;
-import static callsMethods.Methods.logOut;
 import static utils.BeforeAfter.killPhoneAndDrivers;
 import static utils.Logs.saveLogs;
 import static utils.Video.moveOnTeardown;

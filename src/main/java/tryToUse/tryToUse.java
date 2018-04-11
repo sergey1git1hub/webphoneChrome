@@ -27,7 +27,7 @@ public class tryToUse {
     @Video
     public static void moveVideoAndLogs() throws InterruptedException, FindFailed, IOException {
         WebDriver dummiDriver = null;
-        setup(dummiDriver, "moveVideoAndLogs");
+        setup("moveVideoAndLogs");
         System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.get("http://172.21.7.239/gbwebphone/");
@@ -39,7 +39,7 @@ public class tryToUse {
     @Video
     public static void moveVideoAndLogs2() throws InterruptedException, FindFailed, IOException {
         WebDriver dummiDriver = null;
-        setup(dummiDriver, "moveVideoAndLogs2");
+        setup("moveVideoAndLogs2");
         System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.get("http://172.21.7.239/gbwebphone/");

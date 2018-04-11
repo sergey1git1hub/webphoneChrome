@@ -9,7 +9,7 @@
         <classes>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
-            <class name="transfer_and_supervisor.Transfer">
+            <class name="autotests.transfer_and_supervisor.Transfer">
                 <methods>
                     <include name="blindTransferToNumber"/>
                     <include name="attendedTransferToNumber"/>

@@ -7,7 +7,7 @@
     </listeners>
     <test name="Test Suite Listener">
         <classes>
-            <class name="calls.TestClass">
+            <class name="autotests.test.TestClass">
                 <methods>
                     <include name="test1"/>
                     <include name="test2"/>

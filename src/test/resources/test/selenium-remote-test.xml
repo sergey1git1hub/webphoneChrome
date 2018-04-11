@@ -9,7 +9,7 @@
 
     <test name="Selenium Remote">
         <classes>
-            <class name="transfer_and_supervisor.SeleniumRemote"/>
+            <class name="autotests.test.SeleniumRemote"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>

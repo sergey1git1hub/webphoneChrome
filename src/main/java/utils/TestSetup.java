@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static actions.client.Client.openCXphone;
 import static callsMethods.Methods.log;
 import static utils.BeforeAfter.killPhoneAndDrivers;
-import static callsMethods.Methods.openCXphone;
 import static utils.Logs.createLogFile;
 
 /**
@@ -17,7 +17,7 @@ import static utils.Logs.createLogFile;
 public class TestSetup {
     public static File manualLogFile;
 
-    public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
+    public static void setup(String testName) throws InterruptedException, FindFailed, IOException {
 
         manualLogFile = createLogFile(testName + " ");
         FileWriter writer = new FileWriter(manualLogFile, true);

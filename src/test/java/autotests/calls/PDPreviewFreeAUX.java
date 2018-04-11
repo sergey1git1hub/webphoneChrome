@@ -1,4 +1,4 @@
-package calls;
+package autotests.calls;
 
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
@@ -9,6 +9,8 @@ import callsMethods.Methods;
 import callsMethods.PreviewFree;
 import utils.RetryAnalyzer;
 
+import static actions.agentdesktopTab.AgentdesktopTab.switchToAdTab;
+import static actions.database.Powerdialer.runSqlQuery;
 import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
@@ -27,15 +29,15 @@ public class PDPreviewFreeAUX {
     @Video
     public static void pDPreviewFreeAUX() throws Exception {
         try {
-            setup(PreviewFree.driver, testName);
+            setup(testName);
             PreviewFree.createTestData();
             PreviewFree.LoginAD();
-            Methods.switchToAdTab(PreviewFree.driver);
+            switchToAdTab(PreviewFree.driver);
             PreviewFree.changeStatusToAUX();
             if (isLocal()) {
-                Methods.runSqlQuery("pd_automation_preview_free_local", "94948");
+                runSqlQuery("pd_automation_preview_free_local", "94948");
             } else {
-                Methods.runSqlQuery("pd_automation_preview_free_jenkins", "94944");
+                runSqlQuery("pd_automation_preview_free_jenkins", "94944");
             }
             if (debug == true)
                 Thread.sleep(5000);

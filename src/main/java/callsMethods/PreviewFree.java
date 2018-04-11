@@ -10,6 +10,15 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 
+import static actions.agentdesktopTab.AgentdesktopTab.saveCRMCard;
+import static actions.client.Client.cxAnswer;
+import static actions.login.Login.login;
+import static actions.login.Login.openWebphoneLoginPage;
+import static actions.powerdialer.Powerdialer.loginToPD;
+import static actions.powerdialer.Powerdialer.runPDCampaign;
+import static actions.webphonePanel.WebphonePanel.agentAcceptCall;
+import static actions.webphonePanel.WebphonePanel.changeStatus;
+import static actions.webphonePanel.WebphonePanel.checkStatus;
 import static data.Data.createData;
 import static utils.Flags.isLocal;
 
@@ -34,41 +43,41 @@ public class PreviewFree {
     }
 
     public static void LoginAD() throws InterruptedException, IOException, FindFailed {
-        driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
-        Methods.login(driver, data.method, data.username, data.group);
-        Methods.checkStatus(driver, "Тренинг", 60);
+        driver = openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
+        login(driver, data.method, data.username, data.group);
+        checkStatus(driver, "Тренинг", 60);
     }
 
     public static void changeStatusToAvailable() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
-        Methods.changeStatus(driver, "Available");
-        Methods.checkStatus(driver, "Available", 3);
+        changeStatus(driver, "Available");
+        checkStatus(driver, "Available", 3);
 
     }
 
     public static void changeStatusToAUX() throws InterruptedException, FindFailed, UnknownHostException, UnsupportedEncodingException {
-        Methods.changeStatus(driver, "AUX");
-        Methods.checkStatus(driver, "AUX", 3);
+        changeStatus(driver, "AUX");
+        checkStatus(driver, "AUX", 3);
     }
 
 
     public static void processCall() throws InterruptedException, FindFailed, IOException {
         try {
             // Methods.openCXphone(5000);
-            Methods.agentAcceptCall(driver, 40, true);
+            agentAcceptCall(driver, 40, true);
         } catch (Exception e) {
             e.printStackTrace();
-            WebDriver driverTemp = Methods.loginToPD();
+            WebDriver driverTemp = loginToPD();
             if (isLocal()) {
-                Methods.runPDCampaign(driverTemp, 252);
+                runPDCampaign(driverTemp, 252);
             } else {
-                Methods.runPDCampaign(driverTemp, 280);
+                runPDCampaign(driverTemp, 280);
             }
-            Methods.agentAcceptCall(driver, 30, true);
+            agentAcceptCall(driver, 30, true);
         }
-        Methods.cxAnswer();
-        Methods.saveCRMCard(driver);
-        Methods.checkStatus(driver, "Relax", 3);
-        Methods.checkStatus(driver, "Available", 6);
+        cxAnswer();
+        saveCRMCard(driver);
+        checkStatus(driver, "Relax", 3);
+        checkStatus(driver, "Available", 6);
     }
 
 }

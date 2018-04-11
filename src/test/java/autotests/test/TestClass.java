@@ -1,4 +1,4 @@
-package calls;
+package autotests.test;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

@@ -1,12 +1,12 @@
-package transfer_and_supervisor;
+package autotests.transfer_and_supervisor;
 
-import callsMethods.CallOnTwoLines;
-import callsMethods.Methods;
+import actions.AgentAbstractionLayer;
+import actions.webphonePanel.WebphonePanel;
+import autotests.calls.callOnTwoLines.CallOnTwoLinesBaseClass;
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import data.Data;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,19 +17,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import utils.BeforeAfter;
-import utils.Flags;
 import utils.RetryAnalyzer;
-import utils.TestTeardown;
 
 import java.io.IOException;
 
-import static callsMethods.Methods.executeJavaScriptOrClick;
-import static callsMethods.Methods.log;
-import static callsMethods.Methods.sikuliClickElement;
+import static actions.client.Client.cxAnswer;
+import static actions.client.Client.openCXphone;
+import static actions.login.Logout.logOut;
+import static actions.webphonePanel.WebphonePanel.agentHangup;
+import static actions.webphonePanel.WebphonePanel.checkStatus;
+import static callsMethods.Methods.*;
 import static callsMethods.STMethods.*;
 import static utils.Flags.isLocal;
-import static utils.TestSetup.setup;
 
 
 /**
@@ -47,7 +46,7 @@ public class Supervisor {
     static String agentUsername;
     static WebDriver dummiDriver;
     static String group = "!test_group5_5220";
-
+    AgentAbstractionLayer agentEntity = new AgentAbstractionLayer();
 
     static {
 
@@ -66,16 +65,19 @@ public class Supervisor {
 
     }
 
-    public static void supervisorAction(String sikuliElement, String statusAfterAction, String testName) throws Exception {
+
+
+    public void supervisorAction(String sikuliElement, String statusAfterAction, String testName) throws Exception {
         try {
+
             supervisor = login(supervisor, supervisorUsername, group, false);
             //OPEN CHROME
             System.setProperty("browserName", "chrome");
             agent = login(agent, agentUsername, group, true);
 
-            Methods.openCXphone(5000);
-            Methods.call(agent, 1, "94949");
-            Methods.cxAnswer();
+            openCXphone(5000);
+            WebphonePanel.call(agent, 1, "94949");
+            cxAnswer();
             Thread.sleep(1000);
 
             //LISTEN FROM IE, CALL IN CHROME
@@ -84,15 +86,15 @@ public class Supervisor {
             Thread.sleep(1000);
             sikuliClickElement(sikuliElement);
             //END LISTENING IN IE
-            Methods.checkStatus(supervisor, statusAfterAction, 5);
+            checkStatus(supervisor, statusAfterAction, 5);
             Thread.sleep(5000);
-            Methods.agentHangup(supervisor, 1);
-            Methods.checkStatus(supervisor, "Available", 5);
+            agentHangup(supervisor, 1);
+            checkStatus(supervisor, "Available", 5);
 
             //END CALL IN CHROME
 
-            Methods.agentHangup(agent, 1);
-            CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+            agentHangup(agent, 1);
+            agentEntity.setResultCodeAndCheckAvailableStatus();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,10 +116,10 @@ public class Supervisor {
             clickUsername(supervisor, agentUsername);
             sikuliClickElement("button_Call");//can't do it on remote PC!
             Thread.sleep(5000);
-            Methods.checkStatus(supervisor, "Incall", 5);
+            checkStatus(supervisor, "Incall", 5);
             Thread.sleep(5000);
-            Methods.agentHangup(supervisor, 1);
-            Methods.checkStatus(supervisor, "Wrapup", 5);
+            agentHangup(supervisor, 1);
+            checkStatus(supervisor, "Wrapup", 5);
 
 
         } catch (Exception e) {
@@ -128,7 +130,7 @@ public class Supervisor {
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void listen() throws Exception {
+    public  void listen() throws Exception {
         supervisorAction("button_Listen", "Listening", "Supervisor Listen");
     }
 
@@ -136,7 +138,7 @@ public class Supervisor {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     //Whispering
-    public static void talkToUser() throws Exception {
+    public  void talkToUser() throws Exception {
         supervisorAction("button_TalkToUser", "Whispering", "Supervisor Talk to user");
     }
 
@@ -144,7 +146,7 @@ public class Supervisor {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     //Barged
-    public static void bargeIn() throws Exception {
+    public  void bargeIn() throws Exception {
         supervisorAction("button_BargeIn", "Barged", "Supervisor Talk to user");
     }
 
@@ -270,7 +272,7 @@ public class Supervisor {
         sleep(2000);
         WebElement changeStatusAux = supervisor.findElement(By.cssSelector("#tabView\\3a supervisorChangeStatus_menu > ul > li:nth-child(5) > a > span"));
         changeStatusAux.click();
-        Methods.checkStatus(agent, "AUX", 10);
+        checkStatus(agent, "AUX", 10);
         Thread.sleep(3000);
         //TestTeardown.teardown(dummiDriver, "Change status");
     }
@@ -278,7 +280,7 @@ public class Supervisor {
 
     @BeforeMethod
     public void open() throws InterruptedException, FindFailed, IOException {
-        Methods.openCXphone(30);
+        openCXphone(30);
         //before groups to launch ie browser
     }
 
@@ -286,8 +288,8 @@ public class Supervisor {
     @AfterMethod(alwaysRun = true)
     public void teardown() throws IOException {
         try {
-            Methods.logOut(agent);
-            Methods.logOut(supervisor);
+            logOut(agent);
+            logOut(supervisor);
             agent.quit();
             supervisor.quit();
 
@@ -298,9 +300,5 @@ public class Supervisor {
         Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
     }
 
-    public static void sleep(int timeMilliseconds) throws InterruptedException {
-        if(slow){
-            Thread.sleep(timeMilliseconds);
-        }
-    }
+
 }

@@ -1,17 +1,17 @@
-package calls;
+package autotests.calls;
 
-import callsMethods.CallOnTwoLines;
-import callsMethods.Methods;
+import actions.AgentAbstractionLayer;
+import autotests.calls.callOnTwoLines.CallOnTwoLinesBaseClass;
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import data.Data;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import utils.RetryAnalyzer;
 
+import static actions.client.Client.hangup;
+import static actions.webphonePanel.WebphonePanel.*;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
 
@@ -20,36 +20,33 @@ import static utils.TestTeardown.teardown;
  */
 @Listeners(VideoListener.class)
 public class HoldMute {
-    static Data data;
-    static WebDriver driver;
-    static boolean fast = false;
-    static int delay = 2;
+    AgentAbstractionLayer agent = new AgentAbstractionLayer();
     public static String testName = "Check Hold and Mute functionality";
+    WebDriver driver = agent.getDriver();
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void holdMute() throws Exception {
+    public  void holdMute() throws Exception {
 
-        setup(driver, testName);
-        CallOnTwoLines.call();
-        driver = CallOnTwoLines.driver;
-        data = CallOnTwoLines.data;
+        setup(testName);
+        agent.call();
+
 
         //hold, unhold
-        Methods.hold(driver);
+        hold(driver);
         Thread.sleep(4000);
-        Methods.unhold(driver);
+        unhold(driver);
 
         Thread.sleep(4000);
 
         //mute, unmute
-        Methods.mute(driver);
+        mute(driver);
         Thread.sleep(4000);
-        Methods.unmute(driver);
+        unmute(driver);
 
 
-        Methods.clientHangup(driver, 1);
-        CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+        hangup(1);
+        agent.setResultCodeAndCheckAvailableStatus();
         teardown(driver, testName);
 
 

@@ -17,6 +17,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import static actions.client.Client.cxAnswer;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -62,7 +63,7 @@ public static String webchatServerUrl;
 
     public static void answerCallOnClientSide() throws FindFailed, InterruptedException, UnknownHostException {
       /*  try {*/
-        Methods.cxAnswer();
+        cxAnswer();
      /*   } catch (Exception e) {
             e.printStackTrace();
             WebDriver driverTemp = Methods.loginToPD();

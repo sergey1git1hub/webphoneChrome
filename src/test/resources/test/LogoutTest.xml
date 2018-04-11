@@ -9,7 +9,7 @@
 
     <test name="Log out from IE11">
         <classes>
-            <class name="calls.LogOutFromIE"/>
+            <class name="autotests.logouts.LogOutFromIE"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>

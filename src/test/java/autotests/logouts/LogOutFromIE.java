@@ -1,7 +1,7 @@
-package calls;
+package autotests.logouts;
 
-import callsMethods.CallOnTwoLines;
-import callsMethods.Methods;
+import actions.AgentAbstractionLayer;
+import autotests.calls.callOnTwoLines.CallOnTwoLinesBaseClass;
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import data.Data;
@@ -16,21 +16,17 @@ import static utils.TestTeardown.teardown;
 
 @Listeners(VideoListener.class)
 public class LogOutFromIE {
-    static Data data;
-    static WebDriver driver;
-    static boolean fast = false;
-    static int delay = 2;
+
     public static String testName = "Log out from IE11";
+    AgentAbstractionLayer agent = new AgentAbstractionLayer();
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public void logOutFromIE() throws Exception {
-        setup(driver, testName);
-        CallOnTwoLines.login("Automation Call From Queue");
-        driver = CallOnTwoLines.driver;
-        data = CallOnTwoLines.data;
+        setup(testName);
+        agent.login("Automation Call From Queue");
 
-        teardown(driver, testName);
+        teardown(agent.getDriver(), testName);
 
     }
 
