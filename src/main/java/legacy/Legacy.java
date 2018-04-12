@@ -41,7 +41,7 @@ public static String webchatServerUrl;
         Methods.clientHangup(transferReceiver, 1);
         STMethods.setResultCodeAndCheckAvailableStatus(transferReceiver);*/
     } 
-
+ 
     //ATTENDED TRANSFER TO QUEUE SHOULD BE THE SAME AS TRANSFER TO AGENT EXCEPT 33333
     @Test(retryAnalyzer = RetryAnalyzer.class)
     //@Video
