@@ -59,10 +59,8 @@ public class LoggingService {
     }
 
     public static LoggingService getLoggingService(){
-        if(loggingService!=null){
+        if(loggingService==null){
             loggingService = new LoggingService();
-        } else {
-            loggingService =  new LoggingService();
         }
         return loggingService;
     }
@@ -73,19 +71,21 @@ public class LoggingService {
         String folderName = System.getProperty("folderName");
         String path = "videoAndLogs\\" + folderName + "VideoAndLogs" + dateFormat.format(date).replaceAll("\\s", "");
         File folder = new File(path);
-        folder.mkdir();
+        folder.mkdirs();
         this.folder = folder;
     }
 
 
 
-    public void  createLogFile(String methodName) throws IOException {
+    public void  createLogFile(String testName) throws IOException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");
         Date date = new Date();
-        File file = new File(folder, methodName + ".log");
-        file.mkdir();
+        File file = new File(folder, testName + dateFormat.format(date) + ".log");
         file.createNewFile();
         this.file = file;
+
+        writeLog(testName.toUpperCase() + "\n");
+
 
     }
 
@@ -123,10 +123,4 @@ public class LoggingService {
 
     }
 
-    //test
-    public static void main(String[] args) throws Exception {
-        LoggingService loggingService = LoggingService.getLoggingService();
-        loggingService.createLogFile("testFile");
-        loggingService.log("testString", "INFO");
-    }
 }
