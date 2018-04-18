@@ -43,10 +43,9 @@ public class PDPreviewFreeAUX {
             PreviewFree.changeStatusToAvailable();
             //no incoming call
             PreviewFree.processCall();
-            teardown(PreviewFree.driver, testName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
+        teardown(PreviewFree.driver, testName);
     }
 }

@@ -44,7 +44,6 @@ public class TwoLinesAgentHangup {
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
         teardown(driver, testName);
     }

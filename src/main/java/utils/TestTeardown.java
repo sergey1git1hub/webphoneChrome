@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import static callsMethods.Methods.log;
 import static callsMethods.Methods.logOut;
 import static utils.BeforeAfter.killPhoneAndDrivers;
+import static utils.Flags.isChrome;
+import static utils.Flags.isIE;
 import static utils.Logs.saveLogs;
 import static utils.Video.moveOnTeardown;
 
@@ -32,15 +34,16 @@ public class TestTeardown {
         driver.quit();
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
-            boolean isIE = Flags.isIE(driver);
-            System.out.println("isIE: " + isIE);
-            String hostName = InetAddress.getLocalHost().getHostName();
 
-            if (isIE) {
+
+            if (isIE(driver)) {
                 Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            } else {
+            } else if (isChrome(driver)) {
                 Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+            } else {
+                Runtime.getRuntime().exec("taskkill /F /IM opera.exe");
             }
+
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
             log("3CXPhone killed from teardown method.", "DEBUG");
         }

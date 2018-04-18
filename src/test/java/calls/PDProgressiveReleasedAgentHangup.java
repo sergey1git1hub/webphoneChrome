@@ -108,10 +108,9 @@ public class PDProgressiveReleasedAgentHangup {
             answerCallOnClientSide(40);
             agentHangup();
             setResultCodeAndCheckAvailableStatus();
-            teardown(driver, testName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
+        teardown(driver, testName);
     }
 }

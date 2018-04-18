@@ -42,11 +42,12 @@ public class TwoLinesClientHangup {
             Methods.clientHangup(driver, 2);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         }
-        teardown(driver, testName);
+
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
+        teardown(driver, testName);
+
     }
     }
 

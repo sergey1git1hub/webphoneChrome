@@ -20,17 +20,24 @@ public class Flags {
 
     }
 
-
-    public static boolean isIE(WebDriver driver) {
+    public static boolean isThisBrowser(WebDriver driver, String browser){
         Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
         String browserName = cap.getBrowserName().toLowerCase();
-        if (browserName.equals("internet explorer"))
+        if (browserName.equals(browser))
             return true;
         else return false;
     }
 
+    public static boolean isIE(WebDriver driver) {
+        return isThisBrowser(driver, "internet explorer");
+    }
+
     public static boolean isChrome(WebDriver driver){
-        return !isIE(driver);
+        return isThisBrowser(driver, "chrome");
+    }
+
+    public static boolean isOpera(WebDriver driver){
+        return isThisBrowser(driver, "opera");
     }
 
 }

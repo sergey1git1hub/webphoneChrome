@@ -38,10 +38,11 @@ public class PDPreviewFreeCall {
                 Methods.runSqlQuery("pd_automation_preview_free_jenkins", "94944");
             }
             PreviewFree.processCall();
-            teardown(PreviewFree.driver, testName);
+
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
+        teardown(PreviewFree.driver, testName);
     }
+
 }
