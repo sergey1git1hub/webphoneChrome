@@ -51,9 +51,10 @@ public class HoldMute {
             Methods.clientHangup(driver, 1);
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         } catch (Exception e) {
-            teardown(driver, testName);
             e.printStackTrace();
             throw e;
+        } finally{
+            teardown(driver, testName);
         }
 
 

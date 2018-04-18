@@ -109,9 +109,11 @@ public class PDProgressiveReleasedAgentHangup {
             agentHangup();
             setResultCodeAndCheckAvailableStatus();
         } catch (Exception e) {
-            teardown(driver, testName);
             e.printStackTrace();
             throw e;
+        } finally{
+            teardown(driver, testName);
+
         }
 
     }
