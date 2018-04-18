@@ -1,9 +1,7 @@
 package callsMethods;
 
 import data.Data;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.sikuli.script.FindFailed;
 
 import java.io.IOException;
@@ -34,7 +32,7 @@ public class PreviewFree {
     }
 
     public static void LoginAD() throws InterruptedException, IOException, FindFailed {
-        driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
+        driver = Methods.openWebphoneLoginPage(driver, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Тренинг", 60);
     }

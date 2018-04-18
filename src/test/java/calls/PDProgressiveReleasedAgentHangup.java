@@ -40,7 +40,7 @@ public class PDProgressiveReleasedAgentHangup {
             data.group = "Automation Progressive Released Jenkins";
         }
         Methods.browser = data.browser;
-        driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
+        driver = Methods.openWebphoneLoginPage(driver, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Available", 10);
     }

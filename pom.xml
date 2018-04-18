@@ -127,6 +127,14 @@
             <version>RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.opera/operadriver -->
+        <dependency>
+            <groupId>com.opera</groupId>
+            <artifactId>operadriver</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>

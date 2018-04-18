@@ -76,7 +76,7 @@ public static String webchatServerUrl;
     }
 
     public static WebDriver login(WebDriver driver) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get(webchatServerUrl);
         assertEquals(driver.getTitle(), "gbwebchat");

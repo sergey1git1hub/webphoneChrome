@@ -29,9 +29,9 @@ public class TestTeardown {
         String testName = ctx.getCurrentXmlTest().getName();
         saveLogs(driver, "b" + testName);
         logOut(driver);
+        driver.quit();
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
-            driver.quit();
             boolean isIE = Flags.isIE(driver);
             System.out.println("isIE: " + isIE);
             String hostName = InetAddress.getLocalHost().getHostName();

@@ -52,7 +52,11 @@ public class Data {
         String browser = System.getProperty("browserName");
         if (browser.equalsIgnoreCase("chrome")) {
             data = new ChromeData();
-        } else {
+        } else if(browser.equalsIgnoreCase("opera")){
+            data = new OperaData();
+        }
+
+        else {
             data = new IEData();
         }
         try {

@@ -40,7 +40,7 @@ public class CallOnTwoLines {
 
 
     public static void Login() throws InterruptedException, IOException, FindFailed {
-        driver = Methods.openWebphoneLoginPage(driver, data.browser, data.webphoneUrl);
+        driver = Methods.openWebphoneLoginPage(driver, data.webphoneUrl);
         Methods.login(driver, data.method, data.username, data.group);
         Methods.checkStatus(driver, "Available", 30);
     }

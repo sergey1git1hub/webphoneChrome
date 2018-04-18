@@ -6,6 +6,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -38,32 +40,31 @@ import static utils.NativeServiceUpdate.waitForServiceUpdate;
  */
 
 public class Methods {
-    public static String browser;
     public static boolean onJenkins;
     static boolean killProcess = true;
     static boolean debug = Boolean.parseBoolean(System.getProperty("debug"));
     public static File manualLogFile;
+    public static String browser;
 
     static boolean fast = true;
 
 
-    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, String webphoneUrl) throws InterruptedException, IOException, FindFailed {
-        return openWebphoneLoginPage(driver, browser, webphoneUrl, false);
+    public static WebDriver openWebphoneLoginPage(WebDriver driver, String webphoneUrl) throws InterruptedException, IOException, FindFailed {
+        return openWebphoneLoginPage(driver, webphoneUrl, false);
     }
 
+    public static WebDriver openWebphoneLoginPage(WebDriver driver, String webphoneUrl, Boolean remote) throws InterruptedException, IOException, FindFailed {
 
-    public static WebDriver openWebphoneLoginPage(WebDriver driver, String browser, String webphoneUrl, Boolean remote) throws InterruptedException, IOException, FindFailed {
         if (System.getProperty("webphoneUrl") != null) {
             webphoneUrl = System.getProperty("webphoneUrl");
         }
+
+        browser = System.getProperty("browserName");
         if (browser.equalsIgnoreCase("chrome")) {
 
-            System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/chromedriver.exe");
             ChromeOptions chromeOptions = setChromeLogs();
-            if (isLocal()) {
-            } else {
-                //         chromeOptions.addArguments("user-data-dir=C:/Users/sergey/AppData/Local/Google/Chrome/User Data");
-            }
+
             if (Boolean.getBoolean("autoOpenDevtoolsForTabs")) {
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
@@ -77,9 +78,23 @@ public class Methods {
             WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
             waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
             Assert.assertEquals(driver.getTitle(), "gbwebphone");
+
+
+        } else if (browser.equalsIgnoreCase("opera")) {
+            System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/operadriver.exe");
+            ChromeOptions options = new ChromeOptions();
+            options.setBinary("C:\\Program Files\\Opera\\52.0.2871.64\\opera.exe");
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+            driver = new ChromeDriver(capabilities);
+            driver.get(webphoneUrl);
+            driver.manage().window().maximize();
+            WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
+            waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
+            Assert.assertEquals(driver.getTitle(), "gbwebphone");
         } else {
 
-            System.setProperty("webdriver.ie.driver", "C:/iedriver32/IEDriverServer.exe");
+            System.setProperty("webdriver.ie.driver", "C:/seleniumdrivers/IEDriverServer.exe");
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
                     true);
@@ -391,7 +406,7 @@ public class Methods {
             Thread.sleep(1000);
             log("Sleep after Line switched.", "DEBUG");
             if (!(!isLocal() && isChrome(driver))) {
-               sikuliClickElement("phoneNumberField_Sikuli");
+                sikuliClickElement("phoneNumberField_Sikuli");
             }
             log("Sikuli clkicked phone number filed.", "DEBUG");
             WebElement phoneNumberField = driver.findElement(By.cssSelector("#PhoneNumber"));
@@ -458,7 +473,7 @@ public class Methods {
     }
 
     public static void executeJavaScriptOrClick(WebDriver driver, WebElement element, String script, Boolean inAllBrowsers) {
-        if (isIE(driver)||inAllBrowsers) {
+        if (isIE(driver) || inAllBrowsers) {
             try {
                 if (driver instanceof JavascriptExecutor) {
                     ((JavascriptExecutor) driver)
@@ -474,9 +489,10 @@ public class Methods {
             element.click();
         }
     }
+
     //@Deprecated
     public static void executeJavaScriptOrClick(WebDriver driver, WebElement element, Boolean inAllBrowsers) {
-        if ((isIE(driver)||inAllBrowsers)) {
+        if ((isIE(driver) || inAllBrowsers)) {
             try {
                 if (driver instanceof JavascriptExecutor) {
                     ((JavascriptExecutor) driver)
@@ -495,7 +511,7 @@ public class Methods {
 
     }
 
-    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element){
+    public static void executeJavaScriptOrClick(WebDriver driver, WebElement element) {
         executeJavaScriptOrClick(driver, element, true);
     }
 
@@ -682,7 +698,7 @@ public class Methods {
     }
 
     public static WebDriver loginToPD() throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/chromedriver.exe");
         WebDriver agentPD = new ChromeDriver();
         agentPD.manage().window().maximize();
         agentPD.get(Data.PDUrl);
@@ -771,7 +787,7 @@ public class Methods {
     }
 
     public static void logOut(WebDriver driver) throws InterruptedException {
-        if( driver.findElement(By.cssSelector("#btn_connect")).isDisplayed()){
+        if (driver.findElement(By.cssSelector("#btn_connect")).isDisplayed()) {
             return;
         }
         WebElement button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
@@ -885,7 +901,7 @@ public class Methods {
     public static void log(String text, String logLevel) { //INFO, DEBUG, ERROR
 
         String LOGLEVEL = System.getProperty("LOGLEVEL");
-        if (logLevel.equalsIgnoreCase(LOGLEVEL)||logLevel.equalsIgnoreCase("CONSOLE")) {
+        if (logLevel.equalsIgnoreCase(LOGLEVEL) || logLevel.equalsIgnoreCase("CONSOLE")) {
             System.out.println(text);
             writeLog(text);
         }

@@ -53,8 +53,10 @@ public class BeforeAfter {
         if (Boolean.getBoolean("closeBrowser")) {
             if (System.getProperty("browserName").equalsIgnoreCase("ie"))
                 Runtime.getRuntime().exec("taskkill /F /IM iedriverserver.exe");
-            if (System.getProperty("browserName").equalsIgnoreCase("ie"))
+            if (System.getProperty("browserName").equalsIgnoreCase("chrome"))
                 Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+            if (System.getProperty("browserName").equalsIgnoreCase("opera"))
+                Runtime.getRuntime().exec("taskkill /F /IM operadriver.exe");
             log("Drivers killed.", "DEBUG");
         }
     }
