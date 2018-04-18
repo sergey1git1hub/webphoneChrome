@@ -10,6 +10,7 @@ import static utils.BeforeAfter.killPhoneAndDrivers;
 import static utils.Flags.isChrome;
 import static utils.Flags.isIE;
 import static utils.Logs.saveLogs;
+import static utils.TestSetup.killBrowser;
 import static utils.Video.moveOnTeardown;
 
 
@@ -27,23 +28,14 @@ public class TestTeardown {
     }
 
 
-    public static void teardown(WebDriver driver, ITestContext ctx) throws IOException, InterruptedException {
+    public static void teardown(WebDriver driver, ITestContext ctx) throws Exception {
         String testName = ctx.getCurrentXmlTest().getName();
         saveLogs(driver, "b" + testName);
         logOut(driver);
         driver.quit();
         if (Boolean.getBoolean("closeBrowser")) {
             Thread.sleep(2000);
-
-
-            if (isIE(driver)) {
-                Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-            } else if (isChrome(driver)) {
-                Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-            } else {
-                Runtime.getRuntime().exec("taskkill /F /IM opera.exe");
-            }
-
+            killBrowser();
             Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
             log("3CXPhone killed from teardown method.", "DEBUG");
         }

@@ -60,7 +60,7 @@ public class IncorrectLogout {
 
     }
 
-    public void logoutHook() throws FindFailed, InterruptedException, IOException {
+    public void logoutHook() throws Exception {
 
     }
 

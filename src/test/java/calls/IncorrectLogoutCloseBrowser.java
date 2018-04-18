@@ -17,6 +17,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static callsMethods.Methods.sikuliClickElement;
+import static utils.Flags.isChrome;
 import static utils.Flags.isIE;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
@@ -39,24 +41,35 @@ public class IncorrectLogoutCloseBrowser extends IncorrectLogout {
     }
 
     @Override
-    public void logoutHook() throws FindFailed, InterruptedException {
+    public void logoutHook() throws Exception {
 
-        if (isIE(driver)) {
-            Screen screen = new Screen();
-            org.sikuli.script.Pattern closeIEWindow = new org.sikuli.script.Pattern("C:\\SikuliImages\\closeIEWindow.png");
-            screen.wait(closeIEWindow, 2);
-            screen.click(closeIEWindow);
-
-        } else {
-            Screen screen = new Screen();
-            org.sikuli.script.Pattern closeChromeWindow1 = new org.sikuli.script.Pattern("C:\\SikuliImages\\closeChromeWindow1.png");
-            screen.wait(closeChromeWindow1, 2);
-            screen.click(closeChromeWindow1);
+        if (isIE(driver)){
+            sikuliClickAnyElement("closeIEWindowInFocus,closeIEWindowWithoutFocus");
+        } else if(isChrome(driver)) {
+            sikuliClickAnyElement("closeChromeWindowInFocus,closeChromeWindowWithoutFocus");
+        } else{
+            sikuliClickAnyElement("closeOperaWindowInFocus,closeOperaWindowWithoutFocus");
         }
 
 //closeIEWindow.png
         Thread.sleep(2000);
         driver.switchTo().alert().accept();
+    }
+
+    public void sikuliClickAnyElement(String elementNamesSeparatedByComma) throws Exception {
+        int exception = 0;
+        String[] elementNames = elementNamesSeparatedByComma.split(",");
+        for(String element : elementNames){
+            try{
+            sikuliClickElement(element, 1);
+            } catch (Exception e){
+                e.printStackTrace();
+                exception++;
+            }
+        }
+        if(exception==2){
+            throw new Exception("Sikuli: " + elementNamesSeparatedByComma + " not found.");
+        }
     }
 
 }

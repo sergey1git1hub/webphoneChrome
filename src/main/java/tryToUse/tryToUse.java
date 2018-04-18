@@ -25,7 +25,7 @@ public class tryToUse {
 
     @Test
     @Video
-    public static void moveVideoAndLogs() throws InterruptedException, FindFailed, IOException {
+    public static void moveVideoAndLogs() throws Exception {
         WebDriver dummiDriver = null;
         setup(dummiDriver, "moveVideoAndLogs");
         System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/chromedriver.exe");
@@ -37,7 +37,7 @@ public class tryToUse {
 
     @Test
     @Video
-    public static void moveVideoAndLogs2() throws InterruptedException, FindFailed, IOException {
+    public static void moveVideoAndLogs2() throws Exception {
         WebDriver dummiDriver = null;
         setup(dummiDriver, "moveVideoAndLogs2");
         System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/chromedriver.exe");

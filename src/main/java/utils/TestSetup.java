@@ -9,6 +9,8 @@ import java.io.IOException;
 import static callsMethods.Methods.log;
 import static utils.BeforeAfter.killPhoneAndDrivers;
 import static callsMethods.Methods.openCXphone;
+import static utils.Flags.isChrome;
+import static utils.Flags.isIE;
 import static utils.Logs.createLogFile;
 
 /**
@@ -17,8 +19,8 @@ import static utils.Logs.createLogFile;
 public class TestSetup {
     public static File manualLogFile;
 
-    public static void setup(WebDriver driver, String testName) throws InterruptedException, FindFailed, IOException {
-
+    public static void setup(WebDriver driver, String testName) throws Exception {
+        killBrowser();
         manualLogFile = createLogFile(testName + " ");
         FileWriter writer = new FileWriter(manualLogFile, true);
         writer.write(testName.toUpperCase() + "\n");
@@ -29,6 +31,24 @@ public class TestSetup {
         openCXphone(30);
         log("OpenCXphone method called from setup method.", "DEBUG");
     }
+
+    public static void killBrowser() throws Exception{
+     if (Boolean.getBoolean("closeBrowser")) {
+        Thread.sleep(2000);
+        String browser = System.getProperty("browserName");
+
+        if (isIE()) {
+            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
+        } else if (isChrome()) {
+            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+        } else {
+            Runtime.getRuntime().exec("taskkill /F /IM opera.exe");
+        }
+
+        Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
+        log("3CXPhone killed from teardown method.", "DEBUG");
+    }
+}
 
 
 
