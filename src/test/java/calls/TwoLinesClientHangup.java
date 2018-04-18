@@ -44,9 +44,11 @@ public class TwoLinesClientHangup {
         }
 
         } catch (Exception e) {
+            teardown(driver, testName);
             e.printStackTrace();
+            throw e;
         }
-        teardown(driver, testName);
+
 
     }
     }

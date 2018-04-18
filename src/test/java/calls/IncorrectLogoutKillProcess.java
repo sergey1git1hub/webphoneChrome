@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static utils.Flags.isIE;
+import static utils.TestSetup.killBrowser;
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;
 
@@ -36,12 +37,8 @@ public class IncorrectLogoutKillProcess extends IncorrectLogout {
         teardown(driver, testName);
     }
 
-    public void logoutHook() throws IOException, InterruptedException {
-        if (isIE(driver)) {
-            Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
-        } else {
-            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-        }
+    public void logoutHook() throws Exception {
+        killBrowser();
     }
 
 }

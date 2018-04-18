@@ -29,28 +29,32 @@ public class HoldMute {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void holdMute() throws Exception {
+        try {
+            setup(driver, testName);
+            CallOnTwoLines.call();
+            driver = CallOnTwoLines.driver;
+            data = CallOnTwoLines.data;
 
-        setup(driver, testName);
-        CallOnTwoLines.call();
-        driver = CallOnTwoLines.driver;
-        data = CallOnTwoLines.data;
+            //hold, unhold
+            Methods.hold(driver);
+            Thread.sleep(4000);
+            Methods.unhold(driver);
 
-        //hold, unhold
-        Methods.hold(driver);
-        Thread.sleep(4000);
-        Methods.unhold(driver);
+            Thread.sleep(4000);
 
-        Thread.sleep(4000);
-
-        //mute, unmute
-        Methods.mute(driver);
-        Thread.sleep(4000);
-        Methods.unmute(driver);
+            //mute, unmute
+            Methods.mute(driver);
+            Thread.sleep(4000);
+            Methods.unmute(driver);
 
 
-        Methods.clientHangup(driver, 1);
-        CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-        teardown(driver, testName);
+            Methods.clientHangup(driver, 1);
+            CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+        } catch (Exception e) {
+            teardown(driver, testName);
+            e.printStackTrace();
+            throw e;
+        }
 
 
     }

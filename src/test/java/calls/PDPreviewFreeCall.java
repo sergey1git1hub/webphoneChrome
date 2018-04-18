@@ -40,9 +40,11 @@ public class PDPreviewFreeCall {
             PreviewFree.processCall();
 
         } catch (Exception e) {
+            teardown(PreviewFree.driver, testName);
             e.printStackTrace();
+            throw e;
         }
-        teardown(PreviewFree.driver, testName);
+
     }
 
 }

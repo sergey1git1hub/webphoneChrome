@@ -33,19 +33,24 @@ public class CallFromQueue {
     @Video
     public void callFromQueue() throws Exception {
         setup(driver, testName);
-        CallOnTwoLines.login("Automation Call From Queue");
-        driver = CallOnTwoLines.driver;
-        data = CallOnTwoLines.data;
-        Thread.sleep(2000);
+        try {
+            CallOnTwoLines.login("Automation Call From Queue");
+            driver = CallOnTwoLines.driver;
+            data = CallOnTwoLines.data;
+            Thread.sleep(2000);
 
-        Methods.callToQueue();
-        Methods.agentAcceptCall(driver, 30, false);
-        Thread.sleep(4000);
+            Methods.callToQueue();
+            Methods.agentAcceptCall(driver, 30, false);
+            Thread.sleep(4000);
 
-        Methods.agentHangup(driver, 1);
-        Thread.sleep(1000);
-        CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
-        teardown(driver, testName);
+            Methods.agentHangup(driver, 1);
+            Thread.sleep(1000);
+            CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+        } catch (Exception e) {
+            teardown(driver, testName);
+            e.printStackTrace();
+            throw e;
+        }
 
     }
 

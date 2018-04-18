@@ -44,8 +44,10 @@ public class PDPreviewFreeAUX {
             //no incoming call
             PreviewFree.processCall();
         } catch (Exception e) {
+            teardown(PreviewFree.driver, testName);
             e.printStackTrace();
+            throw e;
         }
-        teardown(PreviewFree.driver, testName);
+
     }
 }
