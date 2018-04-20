@@ -46,7 +46,7 @@
 
        <test name="Receive call from queue">
         <classes>
-            <class name="autotests.CallFromQueue"/>
+            <class name="autotests.calls.CallFromQueue"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
