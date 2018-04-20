@@ -21,9 +21,9 @@ public class BrowserFactory {
     private WebDriver driver;
     private String browserName = System.getProperty("browserName");
 
-    public WebDriver getDriver(boolean remote) throws Exception{
+    public WebDriver getBrowser(boolean remote) throws Exception {
 
-        if(browserName.equalsIgnoreCase("ie")){
+        if (browserName.equalsIgnoreCase("ie")) {
             System.setProperty("webdriver.ie.driver", "C:/iedriver32/IEDriverServer.exe");
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
@@ -43,7 +43,7 @@ public class BrowserFactory {
 
         }
 
-        if(browserName.equalsIgnoreCase("chrome")){
+        if (browserName.equalsIgnoreCase("chrome")) {
             System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/chromedriver.exe");
 
             DesiredCapabilities caps = DesiredCapabilities.chrome();
@@ -66,13 +66,31 @@ public class BrowserFactory {
             }
         }
 
-        if(browserName.equalsIgnoreCase("opera")){
-
+        if (browserName.equalsIgnoreCase("opera")) {
+            System.setProperty("webdriver.chrome.driver", "C:/seleniumdrivers/operadriver.exe");
+            ChromeOptions options = new ChromeOptions();
+            options.setBinary("C:\\Program Files\\Opera\\52.0.2871.64\\opera.exe");
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+            driver = new ChromeDriver(capabilities);
         }
 
         return new ChromeDriver();
     }
 
+
+    //Browser factory test
+    public static void main(String[] args) {
+        try {
+            System.setProperty("browserName", "chrome");
+
+            BrowserFactory browserFactory = new BrowserFactory();
+            WebDriver driver = browserFactory.getBrowser(false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
