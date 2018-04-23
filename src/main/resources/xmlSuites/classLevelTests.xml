@@ -10,6 +10,7 @@
 
     <test name="configs" preserve-order="true" parallel="false">
         <classes>
+            <class name="configs.HubAndNodeLauncher"/>
             <class name="configs.BrowserFactory"/>
         </classes>
     </test>

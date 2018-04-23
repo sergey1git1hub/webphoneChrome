@@ -114,15 +114,15 @@ public class BrowserFactory {
     }
 
 
-  /*  @Test
-    public void testChromeLocal() throws Exception {
-        testDriverFactory("chrome", false);
-    }*/
-
     @Test
+    private void testChromeLocal() throws Exception {
+        testDriverFactory("chrome", false);
+    }
+
+    /*@Test
     public void testChromeRemote() throws Exception {
         testDriverFactory("chrome", true);
-    }
+    }*/
 
    /* @Test
     public void testIeLocal() {

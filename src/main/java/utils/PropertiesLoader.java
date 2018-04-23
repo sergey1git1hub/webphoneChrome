@@ -57,7 +57,7 @@ public class PropertiesLoader {
 
     @BeforeSuite
     @Test
-    public void propertiesLoaderTest(){
+    private void propertiesLoaderTest(){
         PropertiesLoader propertiesLoader = new PropertiesLoader();
         propertiesLoader.loadProperties();
         String baseDriverPaht = System.getProperty("baseDriverPath");
