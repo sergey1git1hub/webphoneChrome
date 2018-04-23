@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+
+<suite name="Verify that functionlity in my classes not broken">
+    <test name="utils" preserve-order="true" parallel="false">
+        <classes>
+            <class name="utils.PropertiesLoader"/>
+        </classes>
+    </test>
+
+    <test name="configs" preserve-order="true" parallel="false">
+        <classes>
+            <class name="configs.BrowserFactory"/>
+        </classes>
+    </test>
+</suite>
