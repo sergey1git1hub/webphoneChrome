@@ -9,6 +9,7 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.Test;
 
 import java.net.URL;
 import java.util.logging.Level;
@@ -59,6 +60,7 @@ public class BrowserFactory {
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
             chromeOptions.addArguments("--preserve-log");
+            chromeOptions.addArguments("--lang=en");
             if (remote) {
                 driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
             } else {
@@ -75,7 +77,7 @@ public class BrowserFactory {
             driver = new ChromeDriver(capabilities);
         }
 
-        return new ChromeDriver();
+        return driver;
     }
 
 
@@ -87,10 +89,55 @@ public class BrowserFactory {
             BrowserFactory browserFactory = new BrowserFactory();
             WebDriver driver = browserFactory.getBrowser(false);
 
+            Thread.sleep(5000);
+            driver.quit();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+    private void testDriverFactory(String browserName, boolean remote) throws Exception {
+        System.setProperty("browserName", browserName);
+        BrowserFactory browserFactory = new BrowserFactory();
+        WebDriver driver = browserFactory.getBrowser(false);
+
+        Thread.sleep(5000);
+        driver.quit();
+
+    }
+
+
+    @Test
+    public void testChromeLocal() throws Exception {
+        testDriverFactory("chrome", false);
+    }
+
+    /*@Test
+    public void testChromeRemote() throws Exception {
+        testDriverFactory("chrome", true);
+    }
+
+    @Test
+    public void testIeLocal() {
+
+    }
+
+    @Test
+    public void testIeRemote() {
+
+    }
+
+    @Test
+    public void testOperaLocal() {
+
+    }
+
+    @Test
+    public void testOperaRemote() {
+
+    }*/
 
 
 }
