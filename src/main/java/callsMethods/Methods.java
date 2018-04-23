@@ -69,6 +69,7 @@ public class Methods {
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
             }
             chromeOptions.addArguments("--preserve-log");
+            chromeOptions.addArguments("--lang=en");
             if (remote) {
                 driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
             } else {
