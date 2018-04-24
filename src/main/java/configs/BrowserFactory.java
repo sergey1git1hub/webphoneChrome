@@ -132,18 +132,18 @@ public class BrowserFactory {
         testDriverFactory("chrome", true);
     }*/
 
-    @Test
+   /* @Test
     public void testIeLocal() throws Exception {
         testDriverFactory("ie", false);
+    }*/
+
+    @Test
+    public void testIeRemote() throws Exception{
+        testDriverFactory("ie", true);
         //Thread.sleep(100000);
     }
 
-   /* @Test
-    public void testIeRemote() {
-
-    }
-
-    @Test
+    /*@Test
     public void testOperaLocal() {
 
     }

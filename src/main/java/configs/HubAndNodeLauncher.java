@@ -27,9 +27,11 @@ public class HubAndNodeLauncher {
     public void launchHubAndNode() throws Exception {
         if (launchHubAndNode) {
             Process launchHubProcess = Runtime.getRuntime().exec(new String[]{launchHubScriptLocation});
-            printProcessStream(launchHubProcess);
+           /* printProcessStream(launchHubProcess);*/
+            Thread.sleep(2000); //waiting for hub to launch
             Process launchNodeProcess = Runtime.getRuntime().exec(new String[]{launchNodeScriptLocation});
             printProcessStream(launchNodeProcess);
+            Thread.sleep(1000);  //waiting for node to register on hub
             System.out.println("Hub and node has been launched.");
         }
     }
