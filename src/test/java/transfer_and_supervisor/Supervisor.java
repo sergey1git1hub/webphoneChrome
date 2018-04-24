@@ -92,7 +92,8 @@ public class Supervisor {
             //END CALL IN CHROME
 
             Methods.agentHangup(agent, 1);
-            CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
+            Methods.setWebphoneResultCode(agent);
+            Methods.checkStatus(agent, "Available", 5);
 
         } catch (Exception e) {
             e.printStackTrace();

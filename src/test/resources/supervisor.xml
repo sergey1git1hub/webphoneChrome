@@ -13,9 +13,9 @@
                 <methods>
                    <!-- <include name="call"/>-->
                    <include name="listen"/>
-                    <!-- <include name="talkToUser"/>
+                    <include name="talkToUser"/>
                     <include name="bargeIn"/>
-                    <include name="logUserOut"/>
+                    <!-- <include name="logUserOut"/>
                     <include name="sendNotification"/>
                      <include name="assist"/>
                      <include name="changeStatus"/>-->
