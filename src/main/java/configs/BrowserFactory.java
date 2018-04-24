@@ -7,6 +7,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -82,12 +84,10 @@ public class BrowserFactory {
         }
 
         if (browserName.equalsIgnoreCase("opera")) {
-            System.setProperty("webdriver.chrome.driver", baseDriverPath + "operadriver.exe");
-            ChromeOptions options = new ChromeOptions();
-            options.setBinary("C:\\Program Files\\Opera\\52.0.2871.64\\opera.exe");
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-            driver = new ChromeDriver(capabilities);
+            System.setProperty("webdriver.opera.driver", baseDriverPath + "operadriver.exe");
+            OperaOptions operaOptions = new OperaOptions();
+            operaOptions.setBinary("C:\\Program Files\\Opera\\52.0.2871.64\\opera.exe");
+            driver = new OperaDriver(operaOptions);
         }
 
         return driver;
@@ -137,18 +137,17 @@ public class BrowserFactory {
         testDriverFactory("ie", false);
     }*/
 
-    @Test
+   /* @Test
     public void testIeRemote() throws Exception{
         testDriverFactory("ie", true);
-        //Thread.sleep(100000);
+    }*/
+
+    @Test
+    public void testOperaLocal() throws Exception {
+        testDriverFactory("opera", false);
     }
 
     /*@Test
-    public void testOperaLocal() {
-
-    }
-
-    @Test
     public void testOperaRemote() {
 
     }*/
