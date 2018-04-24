@@ -26,7 +26,7 @@ public class BrowserFactory {
     private WebDriver driver;
     private String browserName = System.getProperty("browserName");
     private String baseDriverPath = System.getProperty("baseDriverPath");
-    private String operaBinaryPath = System.getProperty("operaBinary");
+    private String operaBinaryPath = System.getProperty("operaBinaryPath");
 
     public WebDriver getBrowser(boolean remote) throws Exception {
 
@@ -86,8 +86,13 @@ public class BrowserFactory {
         if (browserName.equalsIgnoreCase("opera")) {
             System.setProperty("webdriver.opera.driver", baseDriverPath + "operadriver.exe");
             OperaOptions operaOptions = new OperaOptions();
-            operaOptions.setBinary("C:\\Program Files\\Opera\\52.0.2871.64\\opera.exe");
-            driver = new OperaDriver(operaOptions);
+            operaOptions.setBinary(operaBinaryPath);
+            if (remote) {
+                //Start hub and node using batch files
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), operaOptions);
+            } else {
+                driver = new OperaDriver(operaOptions);
+            }
         }
 
         return driver;
@@ -142,15 +147,15 @@ public class BrowserFactory {
         testDriverFactory("ie", true);
     }*/
 
-    @Test
+   /* @Test
     public void testOperaLocal() throws Exception {
         testDriverFactory("opera", false);
-    }
-
-    /*@Test
-    public void testOperaRemote() {
-
     }*/
+
+    @Test
+    public void testOperaRemote() throws Exception {
+        testDriverFactory("opera", true);
+    }
 
 
 }
