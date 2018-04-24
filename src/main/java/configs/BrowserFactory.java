@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
@@ -43,21 +44,29 @@ public class BrowserFactory {
             ieCapabilities.setCapability("ignoreZoomSetting", true);
             /***************************************************/
 
-            driver = new InternetExplorerDriver(ieCapabilities);
+            InternetExplorerOptions ieOptions = new InternetExplorerOptions();
+            ieOptions.merge(ieCapabilities);
+
+            if (remote) {
+                //Start hub and node using batch files
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), ieOptions);
+            } else {
+                driver = new InternetExplorerDriver(ieOptions);
+            }
 
         }
 
         if (browserName.equalsIgnoreCase("chrome")) {
             System.setProperty("webdriver.chrome.driver", baseDriverPath + "chromedriver.exe");
 
-            DesiredCapabilities caps = DesiredCapabilities.chrome();
+            DesiredCapabilities chromeCapabilities = DesiredCapabilities.chrome();
             LoggingPreferences logPrefs = new LoggingPreferences();
             logPrefs.enable(LogType.BROWSER, Level.ALL);
 
-            caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs); //deprecated
+            chromeCapabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs); //deprecated
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--start-maximized");
-            chromeOptions.merge(caps);
+            chromeOptions.merge(chromeCapabilities);
 
             if (Boolean.getBoolean("autoOpenDevtoolsForTabs")) {
                 chromeOptions.addArguments("--auto-open-devtools-for-tabs");
@@ -65,7 +74,6 @@ public class BrowserFactory {
             chromeOptions.addArguments("--preserve-log");
             chromeOptions.addArguments("--lang=en");
             if (remote) {
-
                 //Start hub and node using batch files
                 driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
             } else {
@@ -108,7 +116,7 @@ public class BrowserFactory {
         BrowserFactory browserFactory = new BrowserFactory();
         WebDriver driver = browserFactory.getBrowser(remote);
         Assert.assertNotNull(driver);
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         driver.quit();
 
     }
@@ -119,15 +127,16 @@ public class BrowserFactory {
         testDriverFactory("chrome", false);
     }*/
 
-    @Test
+    /*@Test
     public void testChromeRemote() throws Exception {
         testDriverFactory("chrome", true);
-    }
+    }*/
 
-   /* @Test
+    @Test
     public void testIeLocal() throws Exception {
         testDriverFactory("ie", false);
-    }*/
+        //Thread.sleep(100000);
+    }
 
    /* @Test
     public void testIeRemote() {
