@@ -17,22 +17,25 @@ public class HubAndNodeLauncher {
     private String launchNodeScriptLocation = new File("src/main/resources/batchScripts/launchHubAndNode/" +
             "launchNode/launch-selenium-node.bat").getCanonicalPath();
 
+    private boolean launchHubAndNode = Boolean.getBoolean("launchHubAndNode");
+
 
     public HubAndNodeLauncher() throws Exception {
     }
 
 
     public void launchHubAndNode() throws Exception {
-
-        Process launchHubProcess = Runtime.getRuntime().exec(new String[]{launchHubScriptLocation});
-        printProcessStream(launchHubProcess);
-        Process launchNodeProcess = Runtime.getRuntime().exec(new String[]{launchNodeScriptLocation});
-        printProcessStream(launchNodeProcess);
-        System.out.println("Hub and node has been launched.");
+        if (launchHubAndNode) {
+            Process launchHubProcess = Runtime.getRuntime().exec(new String[]{launchHubScriptLocation});
+            printProcessStream(launchHubProcess);
+            Process launchNodeProcess = Runtime.getRuntime().exec(new String[]{launchNodeScriptLocation});
+            printProcessStream(launchNodeProcess);
+            System.out.println("Hub and node has been launched.");
+        }
     }
 
 
-    public  void printProcessStream(Process p) throws Exception {
+    public void printProcessStream(Process p) throws Exception {
         String line;
         BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
         while ((line = input.readLine()) != null) {

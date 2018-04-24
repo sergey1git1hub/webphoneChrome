@@ -125,11 +125,11 @@ public class BrowserFactory {
     }
 
    /* @Test
-    public void testIeLocal() {
+    public void testIeLocal() throws Exception {
+        testDriverFactory("ie", false);
+    }*/
 
-    }
-
-    @Test
+   /* @Test
     public void testIeRemote() {
 
     }
