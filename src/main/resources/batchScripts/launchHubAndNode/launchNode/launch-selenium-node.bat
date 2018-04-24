@@ -1,3 +1,2 @@
-echo "launching selenium node"
-
-rem remote batch script will be launched here
+"X:\selenium-remote\run-selenium-node.bat"
+cmd /k

@@ -108,21 +108,21 @@ public class BrowserFactory {
         BrowserFactory browserFactory = new BrowserFactory();
         WebDriver driver = browserFactory.getBrowser(remote);
         Assert.assertNotNull(driver);
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         driver.quit();
 
     }
 
 
-    @Test
+    /*@Test
     private void testChromeLocal() throws Exception {
         testDriverFactory("chrome", false);
-    }
+    }*/
 
-    /*@Test
+    @Test
     public void testChromeRemote() throws Exception {
         testDriverFactory("chrome", true);
-    }*/
+    }
 
    /* @Test
     public void testIeLocal() {
