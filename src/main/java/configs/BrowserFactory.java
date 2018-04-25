@@ -84,6 +84,19 @@ public class BrowserFactory {
         }
 
         if (browserName.equalsIgnoreCase("opera")) {
+            System.setProperty("webdriver.chrome.driver", baseDriverPath + "operadriver.exe");
+            OperaOptions operaOptions = new OperaOptions();
+            operaOptions.setBinary("C:\\Program Files\\Opera\\52.0.2871.64\\opera.exe");
+            if (remote) {
+                //Start hub and node using batch files
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), operaOptions);
+            } else {
+                driver = new ChromeDriver(operaOptions);
+            }
+        }
+
+        //using native opera driver
+        /*if (browserName.equalsIgnoreCase("opera")) {
             System.setProperty("webdriver.opera.driver", baseDriverPath + "operadriver.exe");
             OperaOptions operaOptions = new OperaOptions();
             operaOptions.setBinary(operaBinaryPath);
@@ -93,7 +106,7 @@ public class BrowserFactory {
             } else {
                 driver = new OperaDriver(operaOptions);
             }
-        }
+        }*/
 
         return driver;
     }
