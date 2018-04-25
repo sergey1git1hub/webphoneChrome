@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.Waiter;
 
@@ -32,6 +33,26 @@ public class WebphoneLoginPage {
             driver.get(webphone2Url);
         }
 
+        WebDriverWait waitForTitle = new WebDriverWait(driver, 10);
+        waitForTitle.until(ExpectedConditions.titleIs("gbwebphone"));
+        Assert.assertEquals(driver.getTitle(), "gbwebphone");
+
+    }
+
+    public void changeLanguage(WebDriver driver, String language){
+        By buttonConnectLable = By.cssSelector("#btn_connect > span.ui-button-text.ui-c");
+        WebElement buttonConnectLableElement = driver.findElement(buttonConnectLable);
+        if(buttonConnectLableElement.getText().equalsIgnoreCase("connect")){
+            return;
+        }
+
+        WebElement languageDropdown = driver.findElement(By.cssSelector("#lang_input_label"));
+        languageDropdown.click();
+
+        By languageSelector = By.xpath("//li[text() = '" + language + "']");
+
+        WebElement language_en = driver.findElement(languageSelector);
+        language_en.click();
     }
 
     public void login(WebDriver driver, String usernameValue) throws InterruptedException, IOException {
@@ -55,19 +76,59 @@ public class WebphoneLoginPage {
         WebElement button_Connect = driver.findElement(By.cssSelector("[name='btn_connect']"));
         button_Connect.click();
 
+        System.out.println("Breakpoint for debug.");
+
     }
 
     private void ssoLogin() {
         //not refactored yet
     }
 
-    @Test
-    private void testWebphoneLoginPage() throws Exception {
+    //TEST
+
+    private void testWebphoneLoginPage(String browserName, boolean remote) throws Exception {
+        //only for testing purposes
+        System.setProperty("browserName", browserName);
         BrowserFactory browserFactory = new BrowserFactory();
-        WebDriver driver = browserFactory.getBrowser(false);
+        WebDriver driver = browserFactory.getBrowser(remote);
         WebphoneLoginPage webphoneLoginPage = new WebphoneLoginPage();
 
         webphoneLoginPage.openWebphone(driver);
+        webphoneLoginPage.changeLanguage(driver, "English");
         webphoneLoginPage.login(driver, "81016");
+        Thread.sleep(3000);
+        driver.quit();
     }
+
+
+    @Test
+    private void testChromeLoginLocal() throws Exception {
+        testWebphoneLoginPage("chrome", false);
+    }
+
+    @Test
+    private void testChromeLoginRemote() throws Exception {
+        testWebphoneLoginPage("chrome", true);
+    }
+
+    @Test
+    private void testIeLoginLocal() throws Exception {
+        testWebphoneLoginPage("ie", false);
+    }
+
+    @Test
+    private void testIeLoginRemote() throws Exception {
+        testWebphoneLoginPage("ie", true);
+    }
+
+    @Test
+    private void testOperaLoginLocal() throws Exception {
+        testWebphoneLoginPage("opera", false);
+    }
+
+   /* @Test
+    private void testOperaLoginRemote() throws Exception {
+        testWebphoneLoginPage("opera", true);
+    }*/
+
 }

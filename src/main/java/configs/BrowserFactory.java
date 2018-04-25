@@ -126,7 +126,7 @@ public class BrowserFactory {
         BrowserFactory browserFactory = new BrowserFactory();
         WebDriver driver = browserFactory.getBrowser(remote);
         Assert.assertNotNull(driver);
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         driver.quit();
 
     }
