@@ -294,14 +294,19 @@ public class Methods {
     public static WebDriver changeStatus(WebDriver driver, String status) throws UnknownHostException, FindFailed, InterruptedException, UnsupportedEncodingException {
         //System.out.println("Changing status to " + status + ".");
         log("Change status to " + status + ".", "INFO");
-        String hostName = InetAddress.getLocalHost().getHostName();
+
+        By currentStatusSelector = By.cssSelector(
+                "#statusButton > span.ui-button-text.ui-c");
+        WebDriverWait waitForCurrentStatus = new WebDriverWait(driver, 5);
+        waitForCurrentStatus.until(ExpectedConditions.elementToBeClickable(currentStatusSelector));
+
+        WebElement currentStatus = driver.findElement(currentStatusSelector);
         if (!isLocal() && isIE(driver)) {
             changeStatusNewDontWork(driver, status);
             checkStatus(driver, status, 2);
             //System.out.println("Host is: kv1-it-pc-jtest and browser is not Chrome.");
         } else if (isChrome(driver)) {
-            WebElement currentStatus = driver.findElement(By.cssSelector(
-                    "#statusButton > span.ui-button-text.ui-c"));
+
             currentStatus.click();
             WebElement desirableStatus;
             if (!status.equals("AUX")) {
@@ -315,8 +320,6 @@ public class Methods {
             checkStatus(driver, status, 2);
             // System.out.println("Browser is Chrome.");
         } else {
-            WebElement currentStatus = driver.findElement(By.cssSelector(
-                    "#statusButton > span.ui-button-text.ui-c"));
             executeJavaScriptOrClick(driver, currentStatus);
             WebElement desirableStatus;
             if (!status.equals("AUX")) {

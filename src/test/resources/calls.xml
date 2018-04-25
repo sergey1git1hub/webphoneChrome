@@ -6,7 +6,7 @@
         <listener class-name="utils.SuiteListener" />
     </listeners>
 
-    <test name="Call on two lines with hangup on agent side">
+    <!--<test name="Call on two lines with hangup on agent side">
         <classes>
             <class name="calls.TwoLinesAgentHangup"/>
             <class name="callsMethods.Methods"/>
@@ -59,7 +59,7 @@
               <class name="callsMethods.Methods"/>
               <class name="utils.BeforeAfter"/>
           </classes>
-      </test>
+      </test>-->
       <test name="Agent doesn't receive preview free call in AUX status">
           <classes>
               <class name="calls.PDPreviewFreeAUX"/>
@@ -68,13 +68,13 @@
           </classes>
       </test>
 
-    <test name="Progressive released call to agent with hangup on agent side">
+   <!-- <test name="Progressive released call to agent with hangup on agent side">
         <classes>
             <class name="calls.PDProgressiveReleasedAgentHangup"/>
             <class name="callsMethods.Methods"/>
             <class name="utils.BeforeAfter"/>
         </classes>
-    </test>
+    </test>-->
 
 
 </suite>
