@@ -8,15 +8,11 @@
         </classes>
     </test>
 
-    <test name="login" preserve-order="true" parallel="false">
-        <classes>
-            <class name="uiLayer.login.WebphoneLoginPage"/>
-        </classes>
-    </test>
-
     <test name="configs" preserve-order="true" parallel="false">
         <classes>
-            <class name="configs.BeforeAfterSuiteTest"/>
+            <class name="configs.HubAndNodeLauncher"/>
+            <class name="configs.BrowserFactory"/>
+
         </classes>
     </test>
 </suite>

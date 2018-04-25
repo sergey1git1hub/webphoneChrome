@@ -114,22 +114,12 @@ public class BrowserFactory {
     }
 
 
-    //Browser factory test
-    public static void main(String[] args) {
-        try {
-            System.setProperty("browserName", "chrome");
 
-            BrowserFactory browserFactory = new BrowserFactory();
-            WebDriver driver = browserFactory.getBrowser(false);
 
-            Thread.sleep(5000);
-            driver.quit();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
+
+    //TEST
 
     private void testDriverFactory(String browserName, boolean remote) throws Exception {
         System.setProperty("browserName", browserName);
@@ -148,22 +138,22 @@ public class BrowserFactory {
     }
 
     @Test
-    public void testChromeRemote() throws Exception {
+    private void testChromeRemote() throws Exception {
         testDriverFactory("chrome", true);
     }
 
     @Test
-    public void testIeLocal() throws Exception {
+    private void testIeLocal() throws Exception {
         testDriverFactory("ie", false);
     }
 
     @Test
-    public void testIeRemote() throws Exception{
+    private void testIeRemote() throws Exception{
         testDriverFactory("ie", true);
     }
 
     @Test
-    public void testOperaLocal() throws Exception {
+    private void testOperaLocal() throws Exception {
         testDriverFactory("opera", false);
     }
 
