@@ -27,6 +27,7 @@ public class BrowserFactory {
     private String browserName = System.getProperty("browserName");
     private String baseDriverPath = System.getProperty("baseDriverPath");
     private String operaBinaryPath = System.getProperty("operaBinaryPath");
+    private String seleniumHubUrl = System.getProperty("seleniumHubUrl");
 
     public WebDriver getBrowser(boolean remote) throws Exception {
 
@@ -51,7 +52,7 @@ public class BrowserFactory {
 
             if (remote) {
                 //Start hub and node using batch files
-                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), ieOptions);
+                driver = new RemoteWebDriver(new URL(seleniumHubUrl), ieOptions);
             } else {
                 driver = new InternetExplorerDriver(ieOptions);
             }
@@ -77,36 +78,37 @@ public class BrowserFactory {
             chromeOptions.addArguments("--lang=en");
             if (remote) {
                 //Start hub and node using batch files
-                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
+                driver = new RemoteWebDriver(new URL(seleniumHubUrl), chromeOptions);
             } else {
                 driver = new ChromeDriver(chromeOptions);
             }
         }
 
-        if (browserName.equalsIgnoreCase("opera")) {
+        //opera driver and opera binary used instead
+        /*if (browserName.equalsIgnoreCase("opera")) {
             System.setProperty("webdriver.chrome.driver", baseDriverPath + "operadriver.exe");
-            OperaOptions operaOptions = new OperaOptions();
-            operaOptions.setBinary("C:\\Program Files\\Opera\\52.0.2871.64\\opera.exe");
+            ChromeOptions operaOptions = new ChromeOptions();
+            operaOptions.setBinary(operaBinaryPath);
             if (remote) {
                 //Start hub and node using batch files
-                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), operaOptions);
+                driver = new RemoteWebDriver(new URL(seleniumHubUrl), operaOptions);
             } else {
                 driver = new ChromeDriver(operaOptions);
             }
-        }
+        }*/
 
         //using native opera driver
-        /*if (browserName.equalsIgnoreCase("opera")) {
+        if (browserName.equalsIgnoreCase("opera")) {
             System.setProperty("webdriver.opera.driver", baseDriverPath + "operadriver.exe");
             OperaOptions operaOptions = new OperaOptions();
             operaOptions.setBinary(operaBinaryPath);
             if (remote) {
                 //Start hub and node using batch files
-                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), operaOptions);
+                driver = new RemoteWebDriver(new URL(seleniumHubUrl), operaOptions);
             } else {
                 driver = new OperaDriver(operaOptions);
             }
-        }*/
+        }
 
         return driver;
     }
@@ -140,35 +142,36 @@ public class BrowserFactory {
     }
 
 
-    /*@Test
+    @Test
     private void testChromeLocal() throws Exception {
         testDriverFactory("chrome", false);
-    }*/
-
-    /*@Test
-    public void testChromeRemote() throws Exception {
-        testDriverFactory("chrome", true);
-    }*/
-
-   /* @Test
-    public void testIeLocal() throws Exception {
-        testDriverFactory("ie", false);
-    }*/
-
-   /* @Test
-    public void testIeRemote() throws Exception{
-        testDriverFactory("ie", true);
-    }*/
-
-   /* @Test
-    public void testOperaLocal() throws Exception {
-        testDriverFactory("opera", false);
-    }*/
+    }
 
     @Test
+    public void testChromeRemote() throws Exception {
+        testDriverFactory("chrome", true);
+    }
+
+    @Test
+    public void testIeLocal() throws Exception {
+        testDriverFactory("ie", false);
+    }
+
+    @Test
+    public void testIeRemote() throws Exception{
+        testDriverFactory("ie", true);
+    }
+
+    @Test
+    public void testOperaLocal() throws Exception {
+        testDriverFactory("opera", false);
+    }
+
+//does not work for now
+   /* @Test
     public void testOperaRemote() throws Exception {
         testDriverFactory("opera", true);
-    }
+    }*/
 
 
 }
