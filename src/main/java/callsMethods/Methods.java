@@ -139,7 +139,11 @@ public class Methods {
                         //System.out.println("openWebphoneLoginPage.DoYouWantToRunThisApplication");
                         screen = new Screen();
                         org.sikuli.script.Pattern checkbox_acceptTheRisk = new org.sikuli.script.Pattern("C:\\SikuliImages\\checkbox_acceptTheRisk.png");
-                        screen.wait(checkbox_acceptTheRisk, 2);
+                        if (!isLocal()) {
+                            screen.wait(checkbox_acceptTheRisk, 2);
+                        } else {
+                            screen.wait(checkbox_acceptTheRisk, 5);
+                        }
                         screen.click(checkbox_acceptTheRisk);
                         org.sikuli.script.Pattern button_Run = new org.sikuli.script.Pattern("C:\\SikuliImages\\button_Run.png");
                         screen.wait(button_Run, 2);

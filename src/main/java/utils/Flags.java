@@ -13,10 +13,16 @@ import java.net.UnknownHostException;
  */
 public class Flags {
 
-    public static boolean isLocal() throws UnknownHostException {
-            String hostName = InetAddress.getLocalHost().getHostName();
-            boolean isLocal = hostName.equalsIgnoreCase(Data.localhostName);
-            return isLocal;
+    public static boolean isLocal() {
+        String hostName = "";
+        try{
+            hostName= InetAddress.getLocalHost().getHostName();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        boolean isLocal = hostName.equalsIgnoreCase(Data.localhostName);
+        return isLocal;
 
     }
 
