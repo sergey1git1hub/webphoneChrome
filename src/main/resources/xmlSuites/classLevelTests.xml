@@ -10,7 +10,7 @@
 
     <test name="login" preserve-order="true" parallel="false">
         <classes>
-            <class name="uiLayer.login.WebphoneLoginPage"/>
+            <class name="uiLayer.login.WebphoneLoginPageTest"/>
         </classes>
     </test>
 

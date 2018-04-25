@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import utils.Waiter;
 
@@ -78,57 +79,15 @@ public class WebphoneLoginPage {
 
         System.out.println("Breakpoint for debug.");
 
+        //Verification point
+        By button_BackSelector = By.cssSelector("[name='btn_power_group']");
+        WebDriverWait waitForButton_Back = new WebDriverWait(driver, 3);
+        waitForButton_Back.until(ExpectedConditions.elementToBeClickable(button_BackSelector));
     }
 
     private void ssoLogin() {
         //not refactored yet
     }
 
-    //TEST
-
-    private void testWebphoneLoginPage(String browserName, boolean remote) throws Exception {
-        //only for testing purposes
-        System.setProperty("browserName", browserName);
-        BrowserFactory browserFactory = new BrowserFactory();
-        WebDriver driver = browserFactory.getBrowser(remote);
-        WebphoneLoginPage webphoneLoginPage = new WebphoneLoginPage();
-
-        webphoneLoginPage.openWebphone(driver);
-        webphoneLoginPage.changeLanguage(driver, "English");
-        webphoneLoginPage.login(driver, "81016");
-        Thread.sleep(3000);
-        driver.quit();
-    }
-
-
-    @Test
-    private void testChromeLoginLocal() throws Exception {
-        testWebphoneLoginPage("chrome", false);
-    }
-
-    @Test
-    private void testChromeLoginRemote() throws Exception {
-        testWebphoneLoginPage("chrome", true);
-    }
-
-    @Test
-    private void testIeLoginLocal() throws Exception {
-        testWebphoneLoginPage("ie", false);
-    }
-
-    @Test
-    private void testIeLoginRemote() throws Exception {
-        testWebphoneLoginPage("ie", true);
-    }
-
-    @Test
-    private void testOperaLoginLocal() throws Exception {
-        testWebphoneLoginPage("opera", false);
-    }
-
-   /* @Test
-    private void testOperaLoginRemote() throws Exception {
-        testWebphoneLoginPage("opera", true);
-    }*/
 
 }
