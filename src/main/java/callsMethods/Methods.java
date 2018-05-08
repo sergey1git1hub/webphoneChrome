@@ -645,8 +645,13 @@ public class Methods {
         WebDriverWait waitForIncallStatus = new WebDriverWait(driver, 5);
         waitForIncallStatus.until(ExpectedConditions.textMatches(By.cssSelector(
                 "#statusButton > span.ui-button-text.ui-c"), Pattern.compile(".*\\bIncall\\b.*")));
-        Screen screen = new Screen();
 
+        By englishLanguageIconSelector = By.cssSelector("#content > div:nth-child(3) > a:nth-child(1) > img");
+
+        WebElement englishLanguageIcon = driver.findElement(englishLanguageIconSelector);
+        englishLanguageIcon.click();
+        
+        Screen screen = new Screen();
         org.sikuli.script.Pattern mltest;
         if (isChrome(driver)) {
             mltest = new org.sikuli.script.Pattern("C:\\SikuliImages\\mltestChrome.png");
