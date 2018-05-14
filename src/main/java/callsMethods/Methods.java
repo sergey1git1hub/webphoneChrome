@@ -647,10 +647,13 @@ public class Methods {
                 "#statusButton > span.ui-button-text.ui-c"), Pattern.compile(".*\\bIncall\\b.*")));
 
         By englishLanguageIconSelector = By.cssSelector("#content > div:nth-child(3) > a:nth-child(1) > img");
+        try {
+            WebElement englishLanguageIcon = driver.findElement(englishLanguageIconSelector);
+            englishLanguageIcon.click();
+        } catch (Exception e) {
 
-        WebElement englishLanguageIcon = driver.findElement(englishLanguageIconSelector);
-        englishLanguageIcon.click();
-        
+        }
+
         Screen screen = new Screen();
         org.sikuli.script.Pattern mltest;
         if (isChrome(driver)) {
