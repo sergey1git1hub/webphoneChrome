@@ -143,10 +143,14 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.20.1</version>
             <configuration>
+                <excludes>
+                    <exclude>**/${excludedClassName}</exclude>
+                        </excludes>
                 <systemPropertyVariables>
                     <closeBrowser>${closeBrowser}</closeBrowser>
                     <autoOpenDevtoolsForTabs>${autoOpenDevtoolsForTabs}</autoOpenDevtoolsForTabs>
                     <CHROME_LOG_FILE>${CHROME_LOG_FILE}</CHROME_LOG_FILE>
+                    <excludedClassName>${excludedClassName}</excludedClassName>
                 </systemPropertyVariables>
 
                 <suiteXmlFiles>
