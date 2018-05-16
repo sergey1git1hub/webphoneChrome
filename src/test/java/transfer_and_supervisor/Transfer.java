@@ -82,9 +82,8 @@ public class Transfer {
             utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
-        } finally {
             utils.TestTeardown.teardown(transferInitiator, testName);
+            throw e;
         }
     }
 
@@ -107,9 +106,8 @@ public class Transfer {
             utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
-        } finally {
             utils.TestTeardown.teardown(transferInitiator, testName);
+            throw e;
         }
     }
 
@@ -133,9 +131,8 @@ public class Transfer {
             utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
-        } finally {
             utils.TestTeardown.teardown(transferInitiator, testName);
+            throw e;
         }
         // Assert.assertTrue(false);
     }
@@ -160,9 +157,8 @@ public class Transfer {
             utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
-        } finally {
             utils.TestTeardown.teardown(transferInitiator, testName);
+            throw e;
         }
     }
 
@@ -184,9 +180,8 @@ public class Transfer {
             utils.TestTeardown.teardown(transferInitiator, testName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
-        } finally {
             utils.TestTeardown.teardown(transferInitiator, testName);
+            throw e;
         }
     }
 
