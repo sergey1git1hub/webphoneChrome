@@ -21,6 +21,7 @@ import java.io.IOException;
 import static callsMethods.Methods.log;
 import static utils.Flags.isLocal;
 import static utils.TestSetup.setup;
+import static utils.TestTeardown.teardown;
 
 
 /**
@@ -36,18 +37,19 @@ public class Transfer {
     static String transferToAgent;
     static String transferFromAgent;
     static WebDriver dummiDriver;
+    static String testName;
 
     static boolean fast = false;
     static int delay = 2;
 
-    static{
+    static {
         try {
-            if(isLocal()){
+            if (isLocal()) {
                 callToNumber = "94949";
                 transferToNumber = "94948";
                 transferToAgent = "81046";
                 transferFromAgent = "81047";
-            } else{
+            } else {
                 callToNumber = "94944";
                 transferToNumber = "94947";
                 transferToAgent = "81048";
@@ -63,7 +65,7 @@ public class Transfer {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void blindTransferToNumber() throws Exception {
-         String testName = "Blind transfer to number";
+        testName = "Blind transfer to number";
         try {
             setup(dummiDriver, testName);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
@@ -81,13 +83,15 @@ public class Transfer {
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
+        } finally {
+            utils.TestTeardown.teardown(transferInitiator, testName);
         }
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void attendedTransferToNumber() throws Exception {
-        String testName = "Attended transfer to number";
+        testName = "Attended transfer to number";
         try {
             setup(dummiDriver, testName);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
@@ -104,6 +108,8 @@ public class Transfer {
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
+        } finally {
+            utils.TestTeardown.teardown(transferInitiator, testName);
         }
     }
 
@@ -112,7 +118,7 @@ public class Transfer {
     @Video
     public static void blindTransferToAgent() throws Exception {
         try {
-            String testName = "Blind transfer to Agent";
+            testName = "Blind transfer to Agent";
             setup(dummiDriver, testName);
             transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent, true);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
@@ -128,15 +134,17 @@ public class Transfer {
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
+        } finally {
+            utils.TestTeardown.teardown(transferInitiator, testName);
         }
-       // Assert.assertTrue(false);
+        // Assert.assertTrue(false);
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void attendedTransferToAgent() throws Exception {
         try {
-            String testName = "Attended transfer to Agent";
+            testName = "Attended transfer to Agent";
             setup(dummiDriver, testName);
             transferReceiver = STMethods.loginReceiver(transferReceiver, transferToAgent, true);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
@@ -153,6 +161,8 @@ public class Transfer {
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
+        } finally {
+            utils.TestTeardown.teardown(transferInitiator, testName);
         }
     }
 
@@ -161,7 +171,7 @@ public class Transfer {
     @Video
     public static void blindTransferToPoint() throws Exception {
         try {
-            String testName = "Blind transfer to Point";
+            testName = "Blind transfer to Point";
             setup(dummiDriver, testName);
             transferInitiator = STMethods.loginInitiator(transferInitiator, transferFromAgent);
             STMethods.call(transferInitiator, callToNumber);
@@ -175,12 +185,14 @@ public class Transfer {
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
+        } finally {
+            utils.TestTeardown.teardown(transferInitiator, testName);
         }
-        }
+    }
 
-        //Threre is no guarantee of transfer to othrer agent, not to yourself
+    //Threre is no guarantee of transfer to othrer agent, not to yourself
 
-        // @Test
+    // @Test
 
     public static void attendedTransferToPoint() throws InterruptedException, IOException, FindFailed {
 
@@ -208,7 +220,7 @@ public class Transfer {
             }
         } catch (NullPointerException e) {
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
