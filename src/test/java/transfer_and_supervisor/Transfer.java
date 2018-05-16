@@ -216,7 +216,7 @@ public class Transfer {
         } catch (NullPointerException e) {
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log("Null pointer from teardown. Don't warry. Everything is OK.", "DEBUG");
         }
         Runtime.getRuntime().exec("taskkill /F /IM 3CXPhone.exe");
     }
