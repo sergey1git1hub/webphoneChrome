@@ -71,7 +71,7 @@ public class Methods {
             chromeOptions.addArguments("--preserve-log");
             chromeOptions.addArguments("--lang=en");
             if (remote) {
-                String hubUrl =  "http://localhost:4444/wd/hub";
+                String hubUrl = "http://localhost:4444/wd/hub";
                 driver = new RemoteWebDriver(new URL(hubUrl), chromeOptions);
             } else {
                 driver = new ChromeDriver(chromeOptions);
@@ -805,13 +805,13 @@ public class Methods {
 
     public static void logOut(WebDriver driver) throws InterruptedException {
         WebElement button_LogOut = null;
-        try{
-        if (driver.findElement(By.cssSelector("#btn_connect")).isDisplayed()) {
-            return;
-        }
-        button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
-        } catch (Exception e){
-            e.printStackTrace();   //we do not know if driver instance still excists
+        try {
+            if (driver.findElement(By.cssSelector("#btn_connect")).isDisplayed()) {
+                return;
+            }
+            button_LogOut = driver.findElement(By.cssSelector("#btn_power"));
+        } catch (Exception e) {
+            log("Null pointer from teardown. Don't warry. Everything is OK.", "DEBUG");  //we do not know if driver instance still excists
         }
         if (isIE(driver)) {
             try {
@@ -833,8 +833,13 @@ public class Methods {
             }
 
         } else {
-            button_LogOut.click();
-            log("Log out.", "INFO");
+            try {
+                button_LogOut.click();
+                log("Log out.", "INFO");
+            } catch (Exception e) {
+
+            }
+
         }
     }
 
