@@ -125,7 +125,6 @@ public class Supervisor {
             Methods.agentHangup(supervisor, 1);
             Methods.checkStatus(supervisor, "Wrapup", 5);
 
-
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -200,8 +199,6 @@ public class Supervisor {
             agent = login(agent, agentUsername, "\\!test_group5_5220", true);
 
             clickUsername(supervisor, agentUsername);
-
-
 
             sikuliClickElement("button_SendNotification");
             Thread.sleep(2000);
@@ -305,7 +302,9 @@ public class Supervisor {
     public void teardown() throws IOException {
         try {
             Methods.logOut(agent);
+            log("Agent logout.", "INFO");
             Methods.logOut(supervisor);
+            log("Supervisor logout.", "INFO");
             agent.quit();
             supervisor.quit();
 

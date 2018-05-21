@@ -203,7 +203,6 @@ public class Transfer {
     //alailability schedule for transfer point - not really needed
     @AfterMethod(alwaysRun = true)
     public static void teardown() throws Exception {
-        System.out.println("After method executed");
         try {
             Methods.logOut(transferReceiver);
             Methods.logOut(transferInitiator);
