@@ -539,7 +539,7 @@ public class Methods {
 
     public static WebDriver setWebphoneResultCode(WebDriver driver) throws InterruptedException, UnknownHostException, FindFailed {
 
-        String hostName = InetAddress.getLocalHost().getHostName();
+       /* String hostName = InetAddress.getLocalHost().getHostName();
         if (!isLocal()) {
             sikuliClickElement("resultCodeUdachno");
             Thread.sleep(1000); //necessary
@@ -554,7 +554,7 @@ public class Methods {
             Thread.sleep(1000);
             WebElement button_Save = driver.findElement(By.cssSelector("#btn_rslt > span.ui-button-text.ui-c"));
             button_Save.click();
-        } else {
+        } else {*/
             WebDriverWait waitForResultCode = new WebDriverWait(driver, 5);
             waitForResultCode.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='Удачно']")));
 
@@ -563,7 +563,7 @@ public class Methods {
             Thread.sleep(1000);
             WebElement button_Save = driver.findElement(By.cssSelector("#btn_rslt > span.ui-button-text.ui-c"));
             executeJavaScriptOrClick(driver, button_Save);
-        }
+        
         log("Select result code \"Udachno\".", "INFO");
         return driver;
 
