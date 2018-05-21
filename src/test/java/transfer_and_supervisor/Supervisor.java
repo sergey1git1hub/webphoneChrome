@@ -48,6 +48,7 @@ public class Supervisor {
     static WebDriver dummiDriver;
     static String group = "!test_group5_5220";
     static String callToNumber = "94944";
+    static String testName;
 
 
     static {
@@ -106,7 +107,9 @@ public class Supervisor {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void call() throws Exception {
+        testName = "Supervisor call to agent";
         try {
+            setup(dummiDriver, testName);
             log("This is a log message.", "DEBUG");
             supervisor = loginReceiver(supervisor, supervisorUsername, false);
 
@@ -132,6 +135,8 @@ public class Supervisor {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void listen() throws Exception {
+        testName = "Supervisor listen";
+        setup(dummiDriver, testName);
         supervisorAction("button_Listen", "Listening", "Supervisor Listen");
     }
 
@@ -140,6 +145,8 @@ public class Supervisor {
     @Video
     //Whispering
     public static void talkToUser() throws Exception {
+        testName = "Supervisor talk to user";
+        setup(dummiDriver, testName);
         supervisorAction("button_TalkToUser", "Whispering", "Supervisor Talk to user");
     }
 
@@ -148,14 +155,17 @@ public class Supervisor {
     @Video
     //Barged
     public static void bargeIn() throws Exception {
+        testName = "Supervisor barge in";
+        setup(dummiDriver, testName);
         supervisorAction("button_BargeIn", "Barged", "Supervisor Talk to user");
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void logUserOut() throws Exception {
+        testName = "Supervisor log user out.";
         try {
-
+            setup(dummiDriver, testName);
             supervisor = loginReceiver(supervisor, supervisorUsername, false);
 
             //OPEN CHROME
@@ -182,8 +192,10 @@ public class Supervisor {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void sendNotification() throws Exception {
+        testName = "Supervisor send notification";
         try {
             //OPEN IE
+            setup(dummiDriver, testName);
             supervisor = login(supervisor, supervisorUsername, "\\!test_group5_5220", false);
             agent = login(agent, agentUsername, "\\!test_group5_5220", true);
 
@@ -226,7 +238,9 @@ public class Supervisor {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
     public static void assist() throws Exception {
+        testName = "Supervisor assist";
         try {
+            setup(dummiDriver, testName);
             supervisor = login(supervisor, supervisorUsername, "\\!test_group5_5220",  false);
             agent = login(agent, agentUsername, "\\!test_group5_5220",  true);
             clickUsername(supervisor, agentUsername);
@@ -261,8 +275,9 @@ public class Supervisor {
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     @Video
-    public static void changeStatus() throws InterruptedException, IOException, FindFailed {
-       // setup(dummiDriver, "Change status");
+    public static void changeStatus() throws Exception {
+        testName = "Supervisor change status";
+        setup(dummiDriver, testName);
         supervisor = login(supervisor, supervisorUsername, "\\!test_group5_5220",  false);
         agent = login(agent, agentUsername, "\\!test_group5_5220",  true);
         clickUsername(supervisor, agentUsername);
@@ -280,8 +295,8 @@ public class Supervisor {
 
 
     @BeforeMethod
-    public void open() throws InterruptedException, FindFailed, IOException {
-        Methods.openCXphone(30);
+    public void open() throws Exception {
+        //Methods.openCXphone(30);
         //before groups to launch ie browser
     }
 
