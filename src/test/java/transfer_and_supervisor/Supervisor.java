@@ -321,4 +321,7 @@ public class Supervisor {
             Thread.sleep(timeMilliseconds);
         }
     }
+    public static void main(String[] args){
+        System.out.println("\u0443\u0434\u0430\u0447\u043D\u043E");
+    }
 }
