@@ -825,8 +825,6 @@ public class Methods {
                 } catch (Exception e) {
                     log("There is no logout alert in IE11.", "DEBUG");
                 }
-                WebDriverWait wait = new WebDriverWait(driver, 10);
-                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
                 log("Log out.", "INFO");
             } catch (Exception e) {
                 log("Logout failed in IE11.", "INFO");
@@ -835,6 +833,8 @@ public class Methods {
         } else {
             try {
                 button_LogOut.click();
+                WebDriverWait wait = new WebDriverWait(driver, 5);
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btn_connect")));
                 log("Log out.", "INFO");
             } catch (Exception e) {
 
