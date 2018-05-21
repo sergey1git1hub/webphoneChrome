@@ -556,9 +556,9 @@ public class Methods {
             button_Save.click();
         } else {*/
             WebDriverWait waitForResultCode = new WebDriverWait(driver, 5);
-            waitForResultCode.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='\u0443\u0434\u0430\u0447\u043D\u043E']"))); //удачно
+            waitForResultCode.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#resultCodeTable_data > tr > td"))); //удачно
 
-            WebElement resultCode = driver.findElement(By.xpath("//td[text()='\u0443\u0434\u0430\u0447\u043D\u043E']")); //удачно
+            WebElement resultCode = driver.findElement(By.cssSelector("#resultCodeTable_data > tr > td")); //удачно
             executeJavaScriptOrClick(driver, resultCode);
             Thread.sleep(1000);
             WebElement button_Save = driver.findElement(By.cssSelector("#btn_rslt > span.ui-button-text.ui-c"));
