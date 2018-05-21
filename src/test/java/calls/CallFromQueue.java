@@ -6,16 +6,10 @@ import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import data.Data;
 import org.openqa.selenium.WebDriver;
-import org.sikuli.script.FindFailed;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import utils.RetryAnalyzer;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static utils.TestSetup.setup;
 import static utils.TestTeardown.teardown;

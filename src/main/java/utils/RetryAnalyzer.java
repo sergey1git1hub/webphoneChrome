@@ -4,9 +4,12 @@ import data.Data;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
+import static utils.Flags.isLocal;
+
 public class RetryAnalyzer implements IRetryAnalyzer {
 
     int counter = 0;
+    int retryLimit;
 	/*
 	 * (non-Javadoc)
 	 * @see org.testng.IRetryAnalyzer#retry(org.testng.ITestResult)
@@ -21,8 +24,13 @@ public class RetryAnalyzer implements IRetryAnalyzer {
 	 */
 
     public boolean retry(ITestResult result) {
+        if(isLocal()){
+            retryLimit = Integer.parseInt(System.getProperty("localRetryLimit"));
+        } else {
+            retryLimit = Integer.parseInt(System.getProperty("jenkinsRetryLimit"));
+        }
 
-        if(counter < Data.retryLimit)
+        if(counter < retryLimit)
         {
             counter++;
             return true;
