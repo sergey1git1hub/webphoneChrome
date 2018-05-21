@@ -47,6 +47,7 @@ public class Supervisor {
     static String agentUsername;
     static WebDriver dummiDriver;
     static String group = "!test_group5_5220";
+    static String callToNumber = "94944";
 
 
     static {
@@ -55,10 +56,11 @@ public class Supervisor {
             if (isLocal()) {
                 supervisorUsername = "81046";
                 agentUsername = "81047";
-
+                callToNumber = "94949";
             } else {
                 supervisorUsername = "81048";
                 agentUsername = "81049";
+                callToNumber = "94944";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,7 +76,7 @@ public class Supervisor {
             agent = login(agent, agentUsername, group, true);
 
             Methods.openCXphone(5000);
-            Methods.call(agent, 1, "94949");
+            Methods.call(agent, 1, callToNumber);
             Methods.cxAnswer();
             Thread.sleep(1000);
 
