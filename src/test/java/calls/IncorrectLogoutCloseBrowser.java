@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static callsMethods.Methods.log;
 import static callsMethods.Methods.sikuliClickElement;
 import static utils.Flags.isChrome;
 import static utils.Flags.isIE;
@@ -63,7 +64,8 @@ public class IncorrectLogoutCloseBrowser extends IncorrectLogout {
             try{
             sikuliClickElement(element, 1);
             } catch (Exception e){
-                e.printStackTrace();
+                //e.printStackTrace();
+                log("Sikuli: " + elementNamesSeparatedByComma + " not found.", "DEBUG");
                 exception++;
             }
         }

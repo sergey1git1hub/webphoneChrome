@@ -46,7 +46,7 @@ public class Supervisor {
     static String supervisorUsername;
     static String agentUsername;
     static WebDriver dummiDriver;
-    static String group = "!test_group5_5220";
+    static String group;
     static String callToNumber = "94944";
     static String testName;
 
@@ -58,10 +58,12 @@ public class Supervisor {
                 supervisorUsername = "81046";
                 agentUsername = "81047";
                 callToNumber = "94949";
+                group = "Automation Supervisor Functionality Local";
             } else {
                 supervisorUsername = "81048";
                 agentUsername = "81049";
                 callToNumber = "94944";
+                group = "Automation Supervisor Functionality Jenkins";
             }
         } catch (Exception e) {
             e.printStackTrace();

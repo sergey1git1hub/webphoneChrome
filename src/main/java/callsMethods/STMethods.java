@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 
 import static callsMethods.Methods.agentAcceptCall;
 import static callsMethods.Methods.log;
+import static utils.Flags.isLocal;
 
 /**
  * Created by SChubuk on 15.11.2017.
@@ -22,6 +23,20 @@ import static callsMethods.Methods.log;
 public class STMethods {
 
     static boolean fast = false;
+    static String group;
+
+    static {
+        try {
+            if (isLocal()) {
+                group = "Automation Transfer Functionality Local";
+            } else {
+                group = "Automation Transfer Functionality Jenkins";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Deprecated
     public static WebDriver loginInitiator(WebDriver driver, String username) throws InterruptedException, FindFailed, IOException {
@@ -31,7 +46,7 @@ public class STMethods {
     public static WebDriver loginInitiator(WebDriver driver, String username, Boolean remote) throws InterruptedException, FindFailed, IOException {
        /* Methods.openCXphone(100);*/
         driver = Methods.openWebphoneLoginPage(driver, "http://172.21.7.239/gbwebphone/", remote);
-        Methods.login(driver, "usual", username, "!test_group5_5220");
+        Methods.login(driver, "usual", username, group);
         Methods.checkStatus(driver, "Available", 30);
         return driver;
     }
@@ -39,7 +54,7 @@ public class STMethods {
     @Deprecated
     public static WebDriver loginReceiver(WebDriver driver, String username, Boolean remote) throws InterruptedException, FindFailed, IOException {
         driver = Methods.openWebphoneLoginPage(driver, "http://172.21.7.239/gbwebphone/", remote);
-        Methods.login(driver, "usual", username, "\\!test_group5_5220");
+        Methods.login(driver, "usual", username, group);
         Methods.checkStatus(driver, "Available", 60);
 
         return driver;
