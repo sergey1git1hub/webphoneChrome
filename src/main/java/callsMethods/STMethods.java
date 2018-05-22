@@ -38,42 +38,23 @@ public class STMethods {
 
     }
 
-    @Deprecated
-    public static WebDriver loginInitiator(WebDriver driver, String username) throws InterruptedException, FindFailed, IOException {
+    public static WebDriver loginInitiator(WebDriver driver, String username) throws Exception {
         return loginInitiator(driver, username, false);
     }
-    @Deprecated
-    public static WebDriver loginInitiator(WebDriver driver, String username, Boolean remote) throws InterruptedException, FindFailed, IOException {
-       /* Methods.openCXphone(100);*/
+
+    public static WebDriver loginInitiator(WebDriver driver, String username, Boolean remote) throws Exception {
         driver = Methods.openWebphoneLoginPage(driver, "http://172.21.7.239/gbwebphone/", remote);
         Methods.login(driver, "usual", username, group);
         Methods.checkStatus(driver, "Available", 30);
+        log("Login as transfer initiator to " + group + "/" + username, "INFO");
         return driver;
     }
 
-    @Deprecated
     public static WebDriver loginReceiver(WebDriver driver, String username, Boolean remote) throws InterruptedException, FindFailed, IOException {
         driver = Methods.openWebphoneLoginPage(driver, "http://172.21.7.239/gbwebphone/", remote);
         Methods.login(driver, "usual", username, group);
         Methods.checkStatus(driver, "Available", 60);
-
-        return driver;
-    }
-
-    @Deprecated
-    public static WebDriver loginInitiator(WebDriver driver, String username, String group) throws InterruptedException, FindFailed, IOException {
-       /* Methods.openCXphone(100);*/
-        driver = Methods.openWebphoneLoginPage(driver, "http://172.21.7.239/gbwebphone/");
-        Methods.login(driver, "usual", username, group);
-        Methods.checkStatus(driver, "Available", 30);
-
-        return driver;
-    }
-    @Deprecated
-    public static WebDriver loginReceiver(WebDriver driver, String username, String group, Boolean remote) throws InterruptedException, FindFailed, IOException {
-        driver = Methods.openWebphoneLoginPage(driver, "http://172.21.7.239/gbwebphone/", remote);
-        Methods.login(driver, "usual", username, group);
-        Methods.checkStatus(driver, "Available", 60);
+        log("Login as transfer receiver to " + group + "/" + username, "INFO");
         return driver;
     }
 

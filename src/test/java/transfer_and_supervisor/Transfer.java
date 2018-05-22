@@ -205,7 +205,9 @@ public class Transfer {
     public static void teardown() throws Exception {
         try {
             Methods.logOut(transferReceiver);
+            log("Transfer receiver logout.", "INFO");
             Methods.logOut(transferInitiator);
+            log("Transfer initiator logout.", "INFO");
             transferInitiator.quit();
             transferReceiver.quit();
             boolean isIE = Flags.isIE(transferInitiator) || Flags.isIE(transferReceiver);
