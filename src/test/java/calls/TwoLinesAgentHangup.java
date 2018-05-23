@@ -44,6 +44,7 @@ public class TwoLinesAgentHangup {
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Is driver null? " + driver==null);
             if(driver == null){
                 driver = CallOnTwoLines.driver;
             }
