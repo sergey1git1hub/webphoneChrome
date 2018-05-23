@@ -19,12 +19,16 @@ import static utils.Video.moveOnTeardown;
  */
 public class TestTeardown {
     public static void teardown(WebDriver driver, String testName) throws IOException, InterruptedException {
+        try {
         saveLogs(driver, "b" + testName);
         logOut(driver);
         Thread.sleep(2000);
         driver.quit();
         killPhoneAndDrivers();
         moveOnTeardown();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
