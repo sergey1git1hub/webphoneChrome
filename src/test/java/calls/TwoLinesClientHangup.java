@@ -45,6 +45,9 @@ public class TwoLinesClientHangup {
 
         } catch (Exception e) {
             e.printStackTrace();
+            if(driver == null){
+                driver = CallOnTwoLines.driver;
+            }
             throw e;
         } finally{
             teardown(driver, testName);

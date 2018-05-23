@@ -30,7 +30,7 @@ public class TwoLinesAgentHangup {
     public static void twoLinesAgentHangup(ITestContext ctx) throws Exception {
         try {
             setup(driver, testName);
-            CallOnTwoLines.callOnTwoLines();
+            CallOnTwoLines.callOnTwoLines(); // driver will be initialized here
             driver = CallOnTwoLines.driver;
             data = CallOnTwoLines.data;
             Thread.sleep(1000);
@@ -44,6 +44,9 @@ public class TwoLinesAgentHangup {
             CallOnTwoLines.setResultCodeAndCheckAvailableStatus();
         } catch (Exception e) {
             e.printStackTrace();
+            if(driver == null){
+                driver = CallOnTwoLines.driver;
+            }
             teardown(driver, testName);
             throw e;
         }
